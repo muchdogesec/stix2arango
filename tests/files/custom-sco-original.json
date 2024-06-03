@@ -1,0 +1,12 @@
+{
+    "type": "bundle",
+    "id": "bundle--d45c6953-4fe3-409f-9e11-e564c3c40816",
+    "objects": [
+        {
+            "type": "custom-sco",
+            "spec_version": "2.1",
+            "id": "custom-sco--0306ac42-a167-4eb6-a67a-969c255a85ae",
+            "title": "old"
+        }
+    ]
+}

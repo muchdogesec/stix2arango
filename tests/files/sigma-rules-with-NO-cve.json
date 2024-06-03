@@ -1,0 +1,63 @@
+{
+    "type": "bundle",
+    "id": "bundle--894e567d-a1b2-4eda-9340-0d78349c5e4b",
+    "objects": [
+        {
+            "type": "indicator",
+            "spec_version": "2.1",
+            "id": "indicator--74904ec1-cff3-5737-a1d4-408c789dc8b1",
+            "created_by_ref": "identity--efccc0ba-d237-5c9a-ad41-4f8bb6791be4",
+            "created": "2022-06-04T00:00:00.000Z",
+            "modified": "2024-02-01T00:00:00.000Z",
+            "name": "Java Payload Strings",
+            "description": "Detects possible Java payloads in web access logs. The following false positives can result from this detection; Legitimate apps",
+            "indicator_types": [
+                "malicious-activity",
+                "anomalous-activity"
+            ],
+            "pattern": "{'title': 'Java Payload Strings', 'id': '583aa0a2-30b1-4d62-8bf3-ab73689efe6c', 'status': 'test', 'description': 'Detects possible Java payloads in web access logs', 'references': ['https://www.rapid7.com/blog/post/2022/06/02/active-exploitation-of-confluence-cve-2022-26134/', 'https://www.rapid7.com/blog/post/2021/09/02/active-exploitation-of-confluence-server-cve-2021-26084/', 'https://github.com/httpvoid/writeups/blob/62d3751945289d088ccfdf4d0ffbf61598a2cd7d/Confluence-RCE.md', 'https://twitter.com/httpvoid0x2f/status/1532924261035384832', 'https://medium.com/geekculture/text4shell-exploit-walkthrough-ebc02a01f035'], 'author': 'frack113, Harjot Singh, \"@cyb3rjy0t\" (update)', 'date': '2022/06/04', 'modified': '2023/01/19', 'tags': ['cve.2022.26134', 'cve.2021.26084', 'attack.initial_access', 'attack.t1190'], 'logsource': {'category': 'webserver'}, 'detection': {'keywords': ['%24%7B%28%23a%3D%40', '${(#a=@', '%24%7B%40java', '${@java', 'u0022java', '%2F%24%7B%23', '/${#', 'new+java.', 'getRuntime().exec(', 'getRuntime%28%29.exec%28'], 'condition': 'keywords'}, 'falsepositives': ['Legitimate apps'], 'level': 'high'}",
+            "pattern_type": "sigma",
+            "valid_from": "2022-06-04T00:00:00Z",
+            "labels": [
+                "level: high",
+                "status: test",
+                "author: frack113, Harjot Singh, \"@cyb3rjy0t\" (update)",
+                "license: None"
+            ],
+            "external_references": [
+                {
+                    "source_name": "rule",
+                    "url": "https://github.com/SigmaHQ/sigma/blob/master/rules/web/webserver_generic/web_java_payload_in_access_logs.yml"
+                },
+                {
+                    "source_name": "id",
+                    "url": "583aa0a2-30b1-4d62-8bf3-ab73689efe6c"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://www.rapid7.com/blog/post/2022/06/02/active-exploitation-of-confluence-cve-2022-26134/"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://www.rapid7.com/blog/post/2021/09/02/active-exploitation-of-confluence-server-cve-2021-26084/"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://github.com/httpvoid/writeups/blob/62d3751945289d088ccfdf4d0ffbf61598a2cd7d/Confluence-RCE.md"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://twitter.com/httpvoid0x2f/status/1532924261035384832"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://medium.com/geekculture/text4shell-exploit-walkthrough-ebc02a01f035"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--efccc0ba-d237-5c9a-ad41-4f8bb6791be4"
+            ]
+        }
+    ]
+}

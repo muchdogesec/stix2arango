@@ -1,0 +1,167 @@
+{
+    "type": "bundle",
+    "id": "bundle--243f01d3-6007-4f64-b3c6-53e6d2c28978",
+    "objects": [
+        {
+            "type": "relationship",
+            "spec_version": "2.1",
+            "id": "relationship--3089bdec-3d25-5d1b-a6ac-9d152ab14e35",
+            "created_by_ref": "identity--efccc0ba-d237-5c9a-ad41-4f8bb6791be4",
+            "created": "2020-10-16T00:00:00.000Z",
+            "modified": "2024-01-01T00:00:00.000Z",
+            "relationship_type": "similar",
+            "source_ref": "indicator--7a5dedb9-30f9-51c0-a49d-91aeda1fd7fd",
+            "target_ref": "indicator--6db31c45-1cf0-5652-a2b7-045f678539ab",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--efccc0ba-d237-5c9a-ad41-4f8bb6791be4"
+            ]
+        },
+        {
+            "type": "indicator",
+            "spec_version": "2.1",
+            "id": "indicator--7a5dedb9-30f9-51c0-a49d-91aeda1fd7fd",
+            "created_by_ref": "identity--efccc0ba-d237-5c9a-ad41-4f8bb6791be4",
+            "created": "2020-10-16T00:00:00.000Z",
+            "modified": "2024-01-01T00:00:00.000Z",
+            "name": "SECOND UPDATE",
+            "description": "Detects suspicious DACL modifications to deny access to a service that affects critical trustees. This can be used to hide services or make them unstoppable.. The following false positives can result from this detection; Unknown",
+            "indicator_types": [
+                "malicious-activity",
+                "anomalous-activity"
+            ],
+            "pattern": "{'title': 'Deny Service Access Using Security Descriptor Tampering Via Sc.EXE', 'id': '99cf1e02-00fb-4c0d-8375-563f978dfd37', 'related': [{'id': '98c5aeef-32d5-492f-b174-64a691896d25', 'type': 'similar'}, {'id': 'a537cfc3-4297-4789-92b5-345bfd845ad0', 'type': 'similar'}], 'status': 'test', 'description': 'Detects suspicious DACL modifications to deny access to a service that affects critical trustees. This can be used to hide services or make them unstoppable.', 'references': ['https://www.sans.org/blog/red-team-tactics-hiding-windows-services/', 'https://itconnect.uw.edu/tools-services-support/it-systems-infrastructure/msinf/other-help/understanding-sddl-syntax/', 'https://learn.microsoft.com/en-us/windows/win32/secauthz/sid-strings'], 'author': 'Jonhnathan Ribeiro, oscd.community', 'date': '2020/10/16', 'modified': '2023/02/28', 'tags': ['attack.persistence', 'attack.t1543.003'], 'logsource': {'category': 'process_creation', 'product': 'windows'}, 'detection': {'selection_sc': [{'Image|endswith': '\\\\sc.exe'}, {'OriginalFileName': 'sc.exe'}], 'selection_sdset': {'CommandLine|contains|all': ['sdset', 'D;']}, 'selection_trustee': {'CommandLine|contains': [';IU', ';SU', ';BA', ';SY', ';WD']}, 'condition': 'all of selection_*'}, 'falsepositives': ['Unknown'], 'level': 'high'}",
+            "pattern_type": "sigma",
+            "valid_from": "2020-10-16T00:00:00Z",
+            "labels": [
+                "level: high",
+                "status: test",
+                "author: Jonhnathan Ribeiro, oscd.community",
+                "license: None",
+                "attack.persistence",
+                "attack.t1543.003"
+            ],
+            "external_references": [
+                {
+                    "source_name": "rule",
+                    "url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sc_sdset_deny_service_access.yml"
+                },
+                {
+                    "source_name": "id",
+                    "url": "99cf1e02-00fb-4c0d-8375-563f978dfd37"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://www.sans.org/blog/red-team-tactics-hiding-windows-services/"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://itconnect.uw.edu/tools-services-support/it-systems-infrastructure/msinf/other-help/understanding-sddl-syntax/"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://learn.microsoft.com/en-us/windows/win32/secauthz/sid-strings"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--efccc0ba-d237-5c9a-ad41-4f8bb6791be4"
+            ]
+        },
+        {
+            "type": "indicator",
+            "spec_version": "2.1",
+            "id": "indicator--6db31c45-1cf0-5652-a2b7-045f678539ab",
+            "created_by_ref": "identity--efccc0ba-d237-5c9a-ad41-4f8bb6791be4",
+            "created": "2023-02-28T00:00:00.000Z",
+            "modified": "2023-02-28T00:00:00.000Z",
+            "name": "Service Security Descriptor Tampering Via Sc.EXE",
+            "description": "Detection of sc.exe utility adding a new service with special permission which hides that service.. The following false positives can result from this detection; Unknown",
+            "indicator_types": [
+                "malicious-activity",
+                "anomalous-activity"
+            ],
+            "pattern": "{'title': 'Service Security Descriptor Tampering Via Sc.EXE', 'id': '98c5aeef-32d5-492f-b174-64a691896d25', 'related': [{'id': '99cf1e02-00fb-4c0d-8375-563f978dfd37', 'type': 'similar'}, {'id': 'a537cfc3-4297-4789-92b5-345bfd845ad0', 'type': 'similar'}], 'status': 'experimental', 'description': 'Detection of sc.exe utility adding a new service with special permission which hides that service.', 'references': ['https://blog.talosintelligence.com/2021/10/threat-hunting-in-large-datasets-by.html', 'https://www.sans.org/blog/red-team-tactics-hiding-windows-services/', 'https://twitter.com/Alh4zr3d/status/1580925761996828672', 'https://twitter.com/0gtweet/status/1628720819537936386', 'https://itconnect.uw.edu/tools-services-support/it-systems-infrastructure/msinf/other-help/understanding-sddl-syntax/'], 'author': 'Nasreddine Bencherchali (Nextron Systems)', 'date': '2023/02/28', 'tags': ['attack.persistence', 'attack.defense_evasion', 'attack.privilege_escalation', 'attack.t1574.011'], 'logsource': {'category': 'process_creation', 'product': 'windows'}, 'detection': {'selection_img': [{'Image|endswith': '\\\\sc.exe'}, {'OriginalFileName': 'sc.exe'}], 'selection_cli': {'CommandLine|contains': 'sdset'}, 'condition': 'all of selection_*'}, 'falsepositives': ['Unknown'], 'level': 'medium'}",
+            "pattern_type": "sigma",
+            "valid_from": "2023-02-28T00:00:00Z",
+            "labels": [
+                "level: medium",
+                "status: experimental",
+                "author: Nasreddine Bencherchali (Nextron Systems)",
+                "license: None",
+                "attack.persistence",
+                "attack.defense_evasion",
+                "attack.privilege_escalation",
+                "attack.t1574.011"
+            ],
+            "external_references": [
+                {
+                    "source_name": "rule",
+                    "url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sc_sdset_modification.yml"
+                },
+                {
+                    "source_name": "id",
+                    "url": "98c5aeef-32d5-492f-b174-64a691896d25"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://blog.talosintelligence.com/2021/10/threat-hunting-in-large-datasets-by.html"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://www.sans.org/blog/red-team-tactics-hiding-windows-services/"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://twitter.com/Alh4zr3d/status/1580925761996828672"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://twitter.com/0gtweet/status/1628720819537936386"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://itconnect.uw.edu/tools-services-support/it-systems-infrastructure/msinf/other-help/understanding-sddl-syntax/"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--efccc0ba-d237-5c9a-ad41-4f8bb6791be4"
+            ]
+        },
+        {
+            "type": "identity",
+            "spec_version": "2.1",
+            "id": "identity--efccc0ba-d237-5c9a-ad41-4f8bb6791be4",
+            "created_by_ref": "identity--aae8eb2d-ea6c-56d6-a606-cc9f755e2dd3",
+            "created": "2020-01-01T00:00:00.000Z",
+            "modified": "2020-01-01T00:00:00.000Z",
+            "name": "sigma2stix",
+            "description": "https://github.com/signalscorps/sigma2stix",
+            "identity_class": "system",
+            "sectors": [
+                "technology"
+            ],
+            "contact_information": "https://www.signalscorps.com/contact/",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--3f588e96-e413-57b5-b735-f0ec6c3a8771"
+            ]
+        },
+        {
+            "type": "marking-definition",
+            "spec_version": "2.1",
+            "id": "marking-definition--efccc0ba-d237-5c9a-ad41-4f8bb6791be4",
+            "created_by_ref": "identity--aae8eb2d-ea6c-56d6-a606-cc9f755e2dd3",
+            "created": "2020-01-01T00:00:00.000Z",
+            "definition_type": "statement",
+            "definition": {
+                "statement": "This object was created using: https://github.com/signalscorps/sigma2stix"
+            },
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--3f588e96-e413-57b5-b735-f0ec6c3a8771"
+            ]
+        }
+    ]
+}

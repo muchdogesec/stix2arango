@@ -1,0 +1,62 @@
+{
+    "type": "bundle",
+    "id": "bundle--86d3e075-79d7-465d-b234-0b3ac22fc476",
+    "objects": [
+        {
+            "type": "custom-sdo",
+            "spec_version": "2.1",
+            "id": "custom-sdo--cbc0b79a-ecbd-59f1-b45b-ea4730df1c2e",
+            "created_by_ref": "identity--762246cb-c8a1-53a7-94b3-eafe3ed511c9",
+            "created": "2017-01-02T00:00:00.000Z",
+            "modified": "2023-10-26T00:00:00.000Z",
+            "name": "Sensitive Cookie Without 'HttpOnly' Flag",
+            "description": "The product uses a cookie to store sensitive information, but the cookie is not marked with the HttpOnly flag. The HttpOnly flag directs compatible browsers to prevent client-side script from accessing cookies. Including the HttpOnly flag in the Set-Cookie HTTP response header helps mitigate the risk associated with Cross-Site Scripting (XSS) where an attacker's script code might attempt to read the contents of a cookie and exfiltrate information obtained. When set, browsers that support the flag will not reveal the contents of the cookie to a third party via client-side script executed via XSS.",
+            "labels": [
+                "Phase: Implementation",
+                "Likelihood of Exploit: Medium",
+                "Impact: Read Application Data",
+                "Impact: Gain Privileges or Assume Identity"
+            ],
+            "external_references": [
+                {
+                    "source_name": "cwe",
+                    "url": "http://cwe.mitre.org/data/definitions/1004.html",
+                    "external_id": "CWE-1004"
+                },
+                {
+                    "source_name": "OWASP",
+                    "description": "HttpOnly",
+                    "url": "https://owasp.org/www-community/HttpOnly",
+                    "external_id": "REF-2"
+                },
+                {
+                    "source_name": "Michael Howard",
+                    "description": "Some Bad News and Some Good News",
+                    "url": "https://learn.microsoft.com/en-us/previous-versions/ms972826(v=msdn.10)?redirectedfrom=MSDN",
+                    "external_id": "REF-3"
+                },
+                {
+                    "source_name": "Troy Hunt",
+                    "description": "C is for cookie, H is for hacker - understanding HTTP only and Secure cookies",
+                    "url": "https://www.troyhunt.com/c-is-for-cookie-h-is-for-hacker/",
+                    "external_id": "REF-4"
+                },
+                {
+                    "source_name": "Microsoft",
+                    "description": "Mitigating Cross-site Scripting With HTTP-only Cookies",
+                    "url": "https://learn.microsoft.com/en-us/previous-versions//ms533046(v=vs.85)?redirectedfrom=MSDN",
+                    "external_id": "REF-5"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--762246cb-c8a1-53a7-94b3-eafe3ed511c9"
+            ],
+            "extensions": {
+                "extension-definition--51650285-49b2-50ee-916c-20836485532d": {
+                    "extension_type": "new-sdo"
+                }
+            }
+        }
+    ]
+}

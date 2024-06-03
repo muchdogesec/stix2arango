@@ -1,0 +1,104 @@
+{
+    "type": "bundle",
+    "id": "bundle--2aff6aed-10af-4981-aacf-5524d2202190",
+    "objects": [
+        {
+            "type": "weakness",
+            "spec_version": "2.1",
+            "id": "weakness--e7a435fe-cc39-5a78-a362-eecdc61c80e5",
+            "created_by_ref": "identity--762246cb-c8a1-53a7-94b3-eafe3ed511c9",
+            "created": "2006-07-19T00:00:00.000Z",
+            "modified": "2024-01-01T00:00:00.000Z",
+            "name": "UPDATED 1st",
+            "description": "The product does not require that users should have strong passwords, which makes it easier for attackers to compromise user accounts. Authentication mechanisms often rely on a memorized secret (also known as a password) to provide an assertion of identity for a user of a system. It is therefore important that this password be of sufficient complexity and impractical for an adversary to guess. The specific requirements around how complex a password needs to be depends on the type of system being protected. Selecting the correct password requirements and enforcing them through implementation are critical to the overall success of the authentication mechanism.",
+            "labels": [
+                "Likelihood of Exploit: None",
+                "Impact: Scope",
+                "Impact: Impact",
+                "Impact: Note"
+            ],
+            "external_references": [
+                {
+                    "source_name": "cwe",
+                    "url": "http://cwe.mitre.org/data/definitions/521.html",
+                    "external_id": "CWE-521"
+                },
+                {
+                    "source_name": "Michael Howard, David LeBlanc, John Viega",
+                    "description": "24 Deadly Sins of Software Security",
+                    "external_id": "REF-44"
+                },
+                {
+                    "source_name": "NIST",
+                    "description": "Digital Identity Guidelines (SP 800-63B)",
+                    "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-63b.pdf",
+                    "external_id": "REF-1053"
+                },
+                {
+                    "source_name": "OWASP Top Ten 2004",
+                    "description": "Broken Authentication and Session Management",
+                    "external_id": "A3"
+                },
+                {
+                    "source_name": "capec",
+                    "url": "https://capec.mitre.org/data/definitions/112.html",
+                    "external_id": "CAPEC-112"
+                },
+                {
+                    "source_name": "capec",
+                    "url": "https://capec.mitre.org/data/definitions/16.html",
+                    "external_id": "CAPEC-16"
+                },
+                {
+                    "source_name": "capec",
+                    "url": "https://capec.mitre.org/data/definitions/49.html",
+                    "external_id": "CAPEC-49"
+                },
+                {
+                    "source_name": "capec",
+                    "url": "https://capec.mitre.org/data/definitions/509.html",
+                    "external_id": "CAPEC-509"
+                },
+                {
+                    "source_name": "capec",
+                    "url": "https://capec.mitre.org/data/definitions/55.html",
+                    "external_id": "CAPEC-55"
+                },
+                {
+                    "source_name": "capec",
+                    "url": "https://capec.mitre.org/data/definitions/555.html",
+                    "external_id": "CAPEC-555"
+                },
+                {
+                    "source_name": "capec",
+                    "url": "https://capec.mitre.org/data/definitions/561.html",
+                    "external_id": "CAPEC-561"
+                },
+                {
+                    "source_name": "capec",
+                    "url": "https://capec.mitre.org/data/definitions/565.html",
+                    "external_id": "CAPEC-565"
+                },
+                {
+                    "source_name": "capec",
+                    "url": "https://capec.mitre.org/data/definitions/70.html",
+                    "external_id": "CAPEC-70"
+                },
+                {
+                    "source_name": "capec",
+                    "url": "https://capec.mitre.org/data/definitions/10.html",
+                    "external_id": "CAPEC-10"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--762246cb-c8a1-53a7-94b3-eafe3ed511c9"
+            ],
+            "extensions": {
+                "extension-definition--51650285-49b2-50ee-916c-20836485532d": {
+                    "extension_type": "new-sdo"
+                }
+            }
+        }
+    ]
+}

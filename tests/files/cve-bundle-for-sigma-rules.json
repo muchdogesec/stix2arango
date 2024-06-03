@@ -1,0 +1,373 @@
+{
+    "type": "bundle",
+    "id": "bundle--2e6244fa-741c-4d5b-a2a4-06873ee8e79d",
+    "objects": [
+        {
+            "type": "indicator",
+            "spec_version": "2.1",
+            "id": "indicator--5d45090c-57fe-543e-96a9-bbd5ea9d6cb6",
+            "created_by_ref": "identity--162e1800-92bd-573c-abbd-f359594ffad9",
+            "created": "2023-10-31T15:15:08.573Z",
+            "modified": "2023-12-19T16:15:07.883Z",
+            "name": "CVE-2023-22518",
+            "description": "All versions of Confluence Data Center and Server are affected by this unexploited vulnerability. This Improper Authorization vulnerability allows an unauthenticated attacker to reset Confluence and create a Confluence instance administrator account. Using this account, an attacker can then perform all administrative actions that are available to\u00a0Confluence instance administrator leading to - but not limited to - full loss of confidentiality, integrity and availability.\u00a0\n\nAtlassian Cloud sites are not affected by this vulnerability. If your Confluence site is accessed via an atlassian.net domain, it is hosted by Atlassian and is not vulnerable to this issue.",
+            "indicator_types": [
+                "compromised"
+            ],
+            "pattern": "([(software:cpe='cpe:2.3:a:atlassian:confluence_server:7.19.9:*:*:*:*:*:*:*') OR (software:cpe='cpe:2.3:a:atlassian:confluence_server:7.19.7:*:*:*:*:*:*:*')])",
+            "pattern_type": "stix",
+            "pattern_version": "2.1",
+            "valid_from": "2023-10-31T15:15:08.573Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--162e1800-92bd-573c-abbd-f359594ffad9"
+            ]
+        },
+        {
+            "type": "vulnerability",
+            "spec_version": "2.1",
+            "id": "vulnerability--5d45090c-57fe-543e-96a9-bbd5ea9d6cb6",
+            "created_by_ref": "identity--162e1800-92bd-573c-abbd-f359594ffad9",
+            "created": "2023-10-31T15:15:08.573Z",
+            "modified": "2023-12-19T16:15:07.883Z",
+            "name": "CVE-2023-22518",
+            "description": "All versions of Confluence Data Center and Server are affected by this unexploited vulnerability. This Improper Authorization vulnerability allows an unauthenticated attacker to reset Confluence and create a Confluence instance administrator account. Using this account, an attacker can then perform all administrative actions that are available to\u00a0Confluence instance administrator leading to - but not limited to - full loss of confidentiality, integrity and availability.\u00a0\n\nAtlassian Cloud sites are not affected by this vulnerability. If your Confluence site is accessed via an atlassian.net domain, it is hosted by Atlassian and is not vulnerable to this issue.",
+            "labels": [
+                "cvssMetricV31-vectorString: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "cvssMetricV31-exploitabilityScore: 3.9",
+                "cvssMetricV31-impactScore: 5.9",
+                "epssScore: 0.965250000",
+                "epssPercentile: 0.995100000"
+            ],
+            "external_references": [
+                {
+                    "source_name": "cve",
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-22518",
+                    "external_id": "CVE-2023-22518"
+                },
+                {
+                    "source_name": "cwe",
+                    "url": "https://cwe.mitre.org/data/definitions/CWE-863.html",
+                    "external_id": "CWE-863"
+                },
+                {
+                    "source_name": "cwe",
+                    "url": "https://cwe.mitre.org/data/definitions/CWE-863.html",
+                    "external_id": "CWE-863"
+                },
+                {
+                    "source_name": "security@atlassian.com",
+                    "description": "",
+                    "url": "http://packetstormsecurity.com/files/176264/Atlassian-Confluence-Improper-Authorization-Code-Execution.html"
+                },
+                {
+                    "source_name": "security@atlassian.com",
+                    "description": "Issue Tracking,Mitigation,Vendor Advisory",
+                    "url": "https://confluence.atlassian.com/pages/viewpage.action?pageId=1311473907"
+                },
+                {
+                    "source_name": "security@atlassian.com",
+                    "description": "Issue Tracking,Mitigation,Vendor Advisory",
+                    "url": "https://jira.atlassian.com/browse/CONFSERVER-93142"
+                },
+                {
+                    "source_name": "EPSS",
+                    "description": "2024-01-21",
+                    "url": "https://api.first.org/data/v1/epss?cve=CVE-2023-22518"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--162e1800-92bd-573c-abbd-f359594ffad9"
+            ]
+        },
+        {
+            "type": "indicator",
+            "spec_version": "2.1",
+            "id": "indicator--570304ae-02cf-542b-ab7a-77e7ada2f48e",
+            "created_by_ref": "identity--162e1800-92bd-573c-abbd-f359594ffad9",
+            "created": "2023-09-20T06:15:10.950Z",
+            "modified": "2023-09-22T02:06:59.813Z",
+            "name": "CVE-2023-43621",
+            "description": "An issue was discovered in Croc through 9.6.5. The shared secret, located on a command line, can be read by local users who list all processes and their arguments.",
+            "indicator_types": [
+                "compromised"
+            ],
+            "pattern": "([(software:cpe='cpe:2.3:a:schollz:croc:9.6.5:*:*:*:*:*:*:*')])",
+            "pattern_type": "stix",
+            "pattern_version": "2.1",
+            "valid_from": "2023-09-20T06:15:10.95Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--162e1800-92bd-573c-abbd-f359594ffad9"
+            ]
+        },
+        {
+            "type": "vulnerability",
+            "spec_version": "2.1",
+            "id": "vulnerability--570304ae-02cf-542b-ab7a-77e7ada2f48e",
+            "created_by_ref": "identity--162e1800-92bd-573c-abbd-f359594ffad9",
+            "created": "2023-09-20T06:15:10.950Z",
+            "modified": "2023-09-22T02:06:59.813Z",
+            "name": "CVE-2023-43621",
+            "description": "An issue was discovered in Croc through 9.6.5. The shared secret, located on a command line, can be read by local users who list all processes and their arguments.",
+            "labels": [
+                "cvssMetricV31-vectorString: CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:N/A:N",
+                "cvssMetricV31-exploitabilityScore: 1.0",
+                "cvssMetricV31-impactScore: 3.6",
+                "epssScore: 0.000420000",
+                "epssPercentile: 0.057280000"
+            ],
+            "external_references": [
+                {
+                    "source_name": "cve",
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-43621",
+                    "external_id": "CVE-2023-43621"
+                },
+                {
+                    "source_name": "cwe",
+                    "url": "https://cwe.mitre.org/data/definitions/NVD-CWE-noinfo.html",
+                    "external_id": "NVD-CWE-noinfo"
+                },
+                {
+                    "source_name": "cve@mitre.org",
+                    "description": "Mailing List",
+                    "url": "http://www.openwall.com/lists/oss-security/2023/09/21/5"
+                },
+                {
+                    "source_name": "cve@mitre.org",
+                    "description": "Exploit,Issue Tracking,Third Party Advisory",
+                    "url": "https://github.com/schollz/croc/issues/598"
+                },
+                {
+                    "source_name": "cve@mitre.org",
+                    "description": "Exploit,Mailing List,Third Party Advisory",
+                    "url": "https://www.openwall.com/lists/oss-security/2023/09/08/2"
+                },
+                {
+                    "source_name": "EPSS",
+                    "description": "2024-01-19",
+                    "url": "https://api.first.org/data/v1/epss?cve=CVE-2023-43621"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--162e1800-92bd-573c-abbd-f359594ffad9"
+            ]
+        },
+        {
+            "type": "report",
+            "spec_version": "2.1",
+            "id": "report--b4fd2041-12ff-5a64-9c00-51ba39b29fe4",
+            "created_by_ref": "identity--162e1800-92bd-573c-abbd-f359594ffad9",
+            "created": "2022-06-03T22:15:07.717Z",
+            "modified": "2023-08-08T14:22:24.967Z",
+            "name": "CISA KEV: Atlassian Confluence Server and Data Center Remote Code Execution Vulnerability",
+            "description": "Immediately block all internet traffic to and from affected products AND apply the update per vendor instructions [https://confluence.atlassian.com/doc/confluence-security-advisory-2022-06-02-1130377146.html] OR remove the affected products by the due date on the right. Note: Once the update is successfully deployed, agencies can reassess the internet blocking rules. Action due by: 2022-06-06",
+            "report_types": [
+                "vulnerability"
+            ],
+            "published": "2022-06-03T22:15:07.717Z",
+            "object_refs": [
+                "vulnerability--b4fd2041-12ff-5a64-9c00-51ba39b29fe4"
+            ],
+            "external_references": [
+                {
+                    "source_name": "cve",
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-26134",
+                    "external_id": "CVE-2022-26134"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--162e1800-92bd-573c-abbd-f359594ffad9"
+            ]
+        },
+        {
+            "type": "indicator",
+            "spec_version": "2.1",
+            "id": "indicator--b4fd2041-12ff-5a64-9c00-51ba39b29fe4",
+            "created_by_ref": "identity--162e1800-92bd-573c-abbd-f359594ffad9",
+            "created": "2022-06-03T22:15:07.717Z",
+            "modified": "2023-08-08T14:22:24.967Z",
+            "name": "CVE-2022-26134",
+            "description": "In affected versions of Confluence Server and Data Center, an OGNL injection vulnerability exists that would allow an unauthenticated attacker to execute arbitrary code on a Confluence Server or Data Center instance. The affected versions are from 1.3.0 before 7.4.17, from 7.13.0 before 7.13.7, from 7.14.0 before 7.14.3, from 7.15.0 before 7.15.2, from 7.16.0 before 7.16.4, from 7.17.0 before 7.17.4, and from 7.18.0 before 7.18.1.",
+            "indicator_types": [
+                "compromised"
+            ],
+            "pattern": "([(software:cpe='cpe:2.3:a:atlassian:confluence_server:7.17.2:*:*:*:*:*:*:*') OR (software:cpe='cpe:2.3:a:atlassian:confluence_server:7.17.3:*:*:*:*:*:*:*')])",
+            "pattern_type": "stix",
+            "pattern_version": "2.1",
+            "valid_from": "2022-06-03T22:15:07.717Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--162e1800-92bd-573c-abbd-f359594ffad9"
+            ]
+        },
+        {
+            "type": "vulnerability",
+            "spec_version": "2.1",
+            "id": "vulnerability--b4fd2041-12ff-5a64-9c00-51ba39b29fe4",
+            "created_by_ref": "identity--162e1800-92bd-573c-abbd-f359594ffad9",
+            "created": "2022-06-03T22:15:07.717Z",
+            "modified": "2023-08-08T14:22:24.967Z",
+            "name": "CVE-2022-26134",
+            "description": "In affected versions of Confluence Server and Data Center, an OGNL injection vulnerability exists that would allow an unauthenticated attacker to execute arbitrary code on a Confluence Server or Data Center instance. The affected versions are from 1.3.0 before 7.4.17, from 7.13.0 before 7.13.7, from 7.14.0 before 7.14.3, from 7.15.0 before 7.15.2, from 7.16.0 before 7.16.4, from 7.17.0 before 7.17.4, and from 7.18.0 before 7.18.1.",
+            "labels": [
+                "cvssMetricV31-vectorString: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "cvssMetricV31-exploitabilityScore: 3.9",
+                "cvssMetricV31-impactScore: 5.9",
+                "epssScore: 0.975350000",
+                "epssPercentile: 0.999930000"
+            ],
+            "external_references": [
+                {
+                    "source_name": "cve",
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-26134",
+                    "external_id": "CVE-2022-26134"
+                },
+                {
+                    "source_name": "cwe",
+                    "url": "https://cwe.mitre.org/data/definitions/CWE-917.html",
+                    "external_id": "CWE-917"
+                },
+                {
+                    "source_name": "security@atlassian.com",
+                    "description": "Exploit,Third Party Advisory,VDB Entry",
+                    "url": "http://packetstormsecurity.com/files/167430/Confluence-OGNL-Injection-Remote-Code-Execution.html"
+                },
+                {
+                    "source_name": "security@atlassian.com",
+                    "description": "Third Party Advisory,VDB Entry",
+                    "url": "http://packetstormsecurity.com/files/167431/Through-The-Wire-CVE-2022-26134-Confluence-Proof-Of-Concept.html"
+                },
+                {
+                    "source_name": "security@atlassian.com",
+                    "description": "Third Party Advisory,VDB Entry",
+                    "url": "http://packetstormsecurity.com/files/167432/Confluence-OGNL-Injection-Proof-Of-Concept.html"
+                },
+                {
+                    "source_name": "security@atlassian.com",
+                    "description": "Exploit,Third Party Advisory,VDB Entry",
+                    "url": "http://packetstormsecurity.com/files/167449/Atlassian-Confluence-Namespace-OGNL-Injection.html"
+                },
+                {
+                    "source_name": "security@atlassian.com",
+                    "description": "",
+                    "url": "https://confluence.atlassian.com/doc/confluence-security-advisory-2022-06-02-1130377146.html"
+                },
+                {
+                    "source_name": "security@atlassian.com",
+                    "description": "Patch,Vendor Advisory",
+                    "url": "https://jira.atlassian.com/browse/CONFSERVER-79016"
+                },
+                {
+                    "source_name": "EPSS",
+                    "description": "2024-01-19",
+                    "url": "https://api.first.org/data/v1/epss?cve=CVE-2022-26134"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--162e1800-92bd-573c-abbd-f359594ffad9"
+            ]
+        },
+        {
+            "type": "indicator",
+            "spec_version": "2.1",
+            "id": "indicator--ff040ea3-f2d9-5d38-80ae-065a2db41e64",
+            "created_by_ref": "identity--162e1800-92bd-573c-abbd-f359594ffad9",
+            "created": "2021-08-30T07:15:06.587Z",
+            "modified": "2023-08-08T14:21:49.707Z",
+            "name": "CVE-2021-26084",
+            "description": "In affected versions of Confluence Server and Data Center, an OGNL injection vulnerability exists that would allow an unauthenticated attacker to execute arbitrary code on a Confluence Server or Data Center instance. The affected versions are before version 6.13.23, from version 6.14.0 before 7.4.11, from version 7.5.0 before 7.11.6, and from version 7.12.0 before 7.12.5.",
+            "indicator_types": [
+                "compromised"
+            ],
+            "pattern": "([(software:cpe='cpe:2.3:a:atlassian:confluence_server:6.15.0:*:*:*:*:*:*:*')])",
+            "pattern_type": "stix",
+            "pattern_version": "2.1",
+            "valid_from": "2021-08-30T07:15:06.587Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--162e1800-92bd-573c-abbd-f359594ffad9"
+            ]
+        },
+        {
+            "type": "report",
+            "spec_version": "2.1",
+            "id": "report--ff040ea3-f2d9-5d38-80ae-065a2db41e64",
+            "created_by_ref": "identity--162e1800-92bd-573c-abbd-f359594ffad9",
+            "created": "2021-08-30T07:15:06.587Z",
+            "modified": "2023-08-08T14:21:49.707Z",
+            "name": "CISA KEV: Atlassian Confluence Server and Data Center Object-Graph Navigation Language (OGNL) Injection Vulnerability",
+            "description": "Apply updates per vendor instructions. Action due by: 2021-11-17",
+            "report_types": [
+                "vulnerability"
+            ],
+            "published": "2021-08-30T07:15:06.587Z",
+            "object_refs": [
+                "vulnerability--ff040ea3-f2d9-5d38-80ae-065a2db41e64"
+            ],
+            "external_references": [
+                {
+                    "source_name": "cve",
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-26084",
+                    "external_id": "CVE-2021-26084"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--162e1800-92bd-573c-abbd-f359594ffad9"
+            ]
+        },
+        {
+            "type": "vulnerability",
+            "spec_version": "2.1",
+            "id": "vulnerability--ff040ea3-f2d9-5d38-80ae-065a2db41e64",
+            "created_by_ref": "identity--162e1800-92bd-573c-abbd-f359594ffad9",
+            "created": "2021-08-30T07:15:06.587Z",
+            "modified": "2023-08-08T14:21:49.707Z",
+            "name": "CVE-2021-26084",
+            "description": "In affected versions of Confluence Server and Data Center, an OGNL injection vulnerability exists that would allow an unauthenticated attacker to execute arbitrary code on a Confluence Server or Data Center instance. The affected versions are before version 6.13.23, from version 6.14.0 before 7.4.11, from version 7.5.0 before 7.11.6, and from version 7.12.0 before 7.12.5.",
+            "labels": [
+                "cvssMetricV31-vectorString: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "cvssMetricV31-exploitabilityScore: 3.9",
+                "cvssMetricV31-impactScore: 5.9",
+                "epssScore: 0.972350000",
+                "epssPercentile: 0.998110000"
+            ],
+            "external_references": [
+                {
+                    "source_name": "cve",
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-26084",
+                    "external_id": "CVE-2021-26084"
+                },
+                {
+                    "source_name": "cwe",
+                    "url": "https://cwe.mitre.org/data/definitions/CWE-917.html",
+                    "external_id": "CWE-917"
+                },
+                {
+                    "source_name": "security@atlassian.com",
+                    "description": "Exploit,Third Party Advisory,VDB Entry",
+                    "url": "http://packetstormsecurity.com/files/167449/Atlassian-Confluence-Namespace-OGNL-Injection.html"
+                },
+                {
+                    "source_name": "security@atlassian.com",
+                    "description": "Issue Tracking,Patch,Vendor Advisory",
+                    "url": "https://jira.atlassian.com/browse/CONFSERVER-67940"
+                },
+                {
+                    "source_name": "EPSS",
+                    "description": "2024-01-19",
+                    "url": "https://api.first.org/data/v1/epss?cve=CVE-2021-26084"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--162e1800-92bd-573c-abbd-f359594ffad9"
+            ]
+        }
+    ]
+}

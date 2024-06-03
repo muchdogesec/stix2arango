@@ -1,0 +1,179 @@
+{
+    "type": "bundle",
+    "id": "bundle--870cfbda-f29f-4b37-8211-1c4c8cb9fce5",
+    "objects": [
+        {
+            "type": "indicator",
+            "spec_version": "2.1",
+            "id": "indicator--4c5cfb71-e0ef-58a6-8307-302f27038700",
+            "created_by_ref": "identity--efccc0ba-d237-5c9a-ad41-4f8bb6791be4",
+            "created": "2023-11-14T00:00:00.000Z",
+            "modified": "2023-11-14T00:00:00.000Z",
+            "name": "CVE-2023-22518 Exploitation Attempt - Suspicious Confluence Child Process (Windows)",
+            "description": "Detects exploitation attempt of CVE-2023-22518 (Confluence Data Center / Confluence Server), where an attacker can exploit vulnerable endpoints to e.g. create admin accounts and execute arbitrary commands.\n. The following false positives can result from this detection; Unknown",
+            "indicator_types": [
+                "malicious-activity",
+                "anomalous-activity"
+            ],
+            "pattern": "{'title': 'CVE-2023-22518 Exploitation Attempt - Suspicious Confluence Child Process (Windows)', 'id': '1ddaa9a4-eb0b-4398-a9fe-7b018f9e23db', 'related': [{'id': 'f8987c03-4290-4c96-870f-55e75ee377f4', 'type': 'similar'}], 'status': 'experimental', 'description': 'Detects exploitation attempt of CVE-2023-22518 (Confluence Data Center / Confluence Server), where an attacker can exploit vulnerable endpoints to e.g. create admin accounts and execute arbitrary commands.\\n', 'references': ['https://confluence.atlassian.com/security/cve-2023-22518-improper-authorization-vulnerability-in-confluence-data-center-and-server-1311473907.html', 'https://www.huntress.com/blog/confluence-to-cerber-exploitation-of-cve-2023-22518-for-ransomware-deployment', 'https://github.com/ForceFledgling/CVE-2023-22518'], 'author': 'Andreas Braathen (mnemonic.io)', 'date': '2023/11/14', 'tags': ['detection.emerging_threats', 'attack.execution', 'attack.t1059', 'attack.initial_access', 'attack.t1190', 'cve.2023.22518'], 'logsource': {'category': 'process_creation', 'product': 'windows'}, 'detection': {'selection_parent': {'ParentImage|endswith': ['\\\\tomcat8.exe', '\\\\tomcat9.exe', '\\\\tomcat10.exe'], 'ParentCommandLine|contains': 'confluence'}, 'selection_child': [{'Image|endswith': ['\\\\cmd.exe', '\\\\powershell.exe']}, {'OriginalFileName': ['Cmd.Exe', 'PowerShell.EXE']}], 'condition': 'all of selection_*'}, 'falsepositives': ['Unknown'], 'level': 'medium'}",
+            "pattern_type": "sigma",
+            "valid_from": "2023-11-14T00:00:00Z",
+            "labels": [
+                "level: medium",
+                "status: experimental",
+                "author: Andreas Braathen (mnemonic.io)",
+                "license: None",
+                "detection.emerging_threats",
+                "attack.execution",
+                "attack.t1059",
+                "attack.initial_access",
+                "attack.t1190",
+                "cve.2023.22518"
+            ],
+            "external_references": [
+                {
+                    "source_name": "rule",
+                    "url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2023/Exploits/CVE-2023-22518/proc_creation_win_exploit_cve_2023_22518_confluence_tomcat_child_proc.yml"
+                },
+                {
+                    "source_name": "id",
+                    "url": "1ddaa9a4-eb0b-4398-a9fe-7b018f9e23db"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://confluence.atlassian.com/security/cve-2023-22518-improper-authorization-vulnerability-in-confluence-data-center-and-server-1311473907.html"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://www.huntress.com/blog/confluence-to-cerber-exploitation-of-cve-2023-22518-for-ransomware-deployment"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://github.com/ForceFledgling/CVE-2023-22518"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--efccc0ba-d237-5c9a-ad41-4f8bb6791be4"
+            ]
+        },
+        {
+            "type": "indicator",
+            "spec_version": "2.1",
+            "id": "indicator--57ddd7ed-0a84-57ad-8fc0-dd892346ec32",
+            "created_by_ref": "identity--efccc0ba-d237-5c9a-ad41-4f8bb6791be4",
+            "created": "2023-10-20T00:00:00.000Z",
+            "modified": "2023-10-30T00:00:00.000Z",
+            "name": "Potential Information Disclosure CVE-2023-43261 Exploitation - Web",
+            "description": "Detects exploitation attempts of CVE-2023-43261 and information disclosure in Milesight UR5X, UR32L, UR32, UR35, UR41 before v35.3.0.7 that allows attackers to access sensitive router components in access logs.\n. The following false positives can result from this detection; Unknown",
+            "indicator_types": [
+                "malicious-activity",
+                "anomalous-activity"
+            ],
+            "pattern": "{'title': 'Potential Information Disclosure CVE-2023-43261 Exploitation - Web', 'id': 'a2bcca38-9f3a-4d5e-b603-0c587e8569d7', 'related': [{'id': 'f48f5368-355c-4a1b-8bf5-11c13d589eaa', 'type': 'similar'}], 'status': 'experimental', 'description': 'Detects exploitation attempts of CVE-2023-43261 and information disclosure in Milesight UR5X, UR32L, UR32, UR35, UR41 before v35.3.0.7 that allows attackers to access sensitive router components in access logs.\\n', 'references': ['https://thehackernews.com/2023/10/experts-warn-of-severe-flaws-affecting.html', 'https://medium.com/@win3zz/inside-the-router-how-i-accessed-industrial-routers-and-reported-the-flaws-29c34213dfdf', 'https://github.com/win3zz/CVE-2023-43261', 'https://vulncheck.com/blog/real-world-cve-2023-43261'], 'author': 'Nasreddine Bencherchali (Nextron Systems), Thurein Oo', 'date': '2023/10/20', 'modified': '2023/10/30', 'tags': ['attack.initial_access', 'attack.t1190', 'cve.2023.43621', 'detection.emerging_threats'], 'logsource': {'category': 'webserver', 'definition': 'Requirements: In order for this detection to trigger, access logs of the router must be collected.'}, 'detection': {'selection': {'cs-method': 'GET', 'cs-uri-stem|contains': '/lang/log/httpd.log', 'sc-status': 200}, 'condition': 'selection'}, 'falsepositives': ['Unknown'], 'level': 'high'}",
+            "pattern_type": "sigma",
+            "valid_from": "2023-10-20T00:00:00Z",
+            "labels": [
+                "level: high",
+                "status: experimental",
+                "author: Nasreddine Bencherchali (Nextron Systems), Thurein Oo",
+                "license: None",
+                "attack.initial_access",
+                "attack.t1190",
+                "cve.2023.43621",
+                "detection.emerging_threats"
+            ],
+            "external_references": [
+                {
+                    "source_name": "rule",
+                    "url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2023/Exploits/CVE-2023-43261/web_exploit_cve_2023_43261_milesight_information_disclosure.yml"
+                },
+                {
+                    "source_name": "id",
+                    "url": "a2bcca38-9f3a-4d5e-b603-0c587e8569d7"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://thehackernews.com/2023/10/experts-warn-of-severe-flaws-affecting.html"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://medium.com/@win3zz/inside-the-router-how-i-accessed-industrial-routers-and-reported-the-flaws-29c34213dfdf"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://github.com/win3zz/CVE-2023-43261"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://vulncheck.com/blog/real-world-cve-2023-43261"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--efccc0ba-d237-5c9a-ad41-4f8bb6791be4"
+            ]
+        },
+        {
+            "type": "indicator",
+            "spec_version": "2.1",
+            "id": "indicator--74904ec1-cff3-5737-a1d4-408c789dc8b1",
+            "created_by_ref": "identity--efccc0ba-d237-5c9a-ad41-4f8bb6791be4",
+            "created": "2022-06-04T00:00:00.000Z",
+            "modified": "2023-01-19T00:00:00.000Z",
+            "name": "Java Payload Strings",
+            "description": "Detects possible Java payloads in web access logs. The following false positives can result from this detection; Legitimate apps",
+            "indicator_types": [
+                "malicious-activity",
+                "anomalous-activity"
+            ],
+            "pattern": "{'title': 'Java Payload Strings', 'id': '583aa0a2-30b1-4d62-8bf3-ab73689efe6c', 'status': 'test', 'description': 'Detects possible Java payloads in web access logs', 'references': ['https://www.rapid7.com/blog/post/2022/06/02/active-exploitation-of-confluence-cve-2022-26134/', 'https://www.rapid7.com/blog/post/2021/09/02/active-exploitation-of-confluence-server-cve-2021-26084/', 'https://github.com/httpvoid/writeups/blob/62d3751945289d088ccfdf4d0ffbf61598a2cd7d/Confluence-RCE.md', 'https://twitter.com/httpvoid0x2f/status/1532924261035384832', 'https://medium.com/geekculture/text4shell-exploit-walkthrough-ebc02a01f035'], 'author': 'frack113, Harjot Singh, \"@cyb3rjy0t\" (update)', 'date': '2022/06/04', 'modified': '2023/01/19', 'tags': ['cve.2022.26134', 'cve.2021.26084', 'attack.initial_access', 'attack.t1190'], 'logsource': {'category': 'webserver'}, 'detection': {'keywords': ['%24%7B%28%23a%3D%40', '${(#a=@', '%24%7B%40java', '${@java', 'u0022java', '%2F%24%7B%23', '/${#', 'new+java.', 'getRuntime().exec(', 'getRuntime%28%29.exec%28'], 'condition': 'keywords'}, 'falsepositives': ['Legitimate apps'], 'level': 'high'}",
+            "pattern_type": "sigma",
+            "valid_from": "2022-06-04T00:00:00Z",
+            "labels": [
+                "level: high",
+                "status: test",
+                "author: frack113, Harjot Singh, \"@cyb3rjy0t\" (update)",
+                "license: None",
+                "cve.2022.26134",
+                "cve.2021.26084",
+                "attack.initial_access",
+                "attack.t1190"
+            ],
+            "external_references": [
+                {
+                    "source_name": "rule",
+                    "url": "https://github.com/SigmaHQ/sigma/blob/master/rules/web/webserver_generic/web_java_payload_in_access_logs.yml"
+                },
+                {
+                    "source_name": "id",
+                    "url": "583aa0a2-30b1-4d62-8bf3-ab73689efe6c"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://www.rapid7.com/blog/post/2022/06/02/active-exploitation-of-confluence-cve-2022-26134/"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://www.rapid7.com/blog/post/2021/09/02/active-exploitation-of-confluence-server-cve-2021-26084/"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://github.com/httpvoid/writeups/blob/62d3751945289d088ccfdf4d0ffbf61598a2cd7d/Confluence-RCE.md"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://twitter.com/httpvoid0x2f/status/1532924261035384832"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://medium.com/geekculture/text4shell-exploit-walkthrough-ebc02a01f035"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--efccc0ba-d237-5c9a-ad41-4f8bb6791be4"
+            ]
+        }
+    ]
+}

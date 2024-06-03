@@ -1,0 +1,40 @@
+{
+    "type": "bundle",
+    "id": "bundle--956a753b-5dab-4a45-8b9e-23243fb928d0",
+    "objects": [
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--55388d12-8d7d-5ed1-b324-817a293a6854",
+            "name": "New name",
+            "cpe": "cpe:2.3:a:sha2_project:sha2:0.4.1:*:*:*:*:rust:*:*",
+            "swid": "8E3664E0-50A8-4AC3-8863-5552DD536F2F",
+            "languages": [
+                "en"
+            ],
+            "vendor": "sha2_project",
+            "version": "0.4.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--6d38c3e0-ea8b-5b83-b370-5407523589a9",
+            "name": "libpng 1.4.0 Beta 11",
+            "cpe": "cpe:2.3:a:libpng:libpng:1.4.0:beta11:*:*:*:*:*:*",
+            "swid": "64C059C9-B33E-45A8-8A2F-377BE87CA186",
+            "languages": [
+                "en"
+            ],
+            "vendor": "libpng",
+            "version": "1.4.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        }
+    ]
+}

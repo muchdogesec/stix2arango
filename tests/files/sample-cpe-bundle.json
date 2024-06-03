@@ -1,0 +1,3797 @@
+{
+    "type": "bundle",
+    "id": "bundle--fa096fe9-6447-42d4-b5cd-05a1ce13f630",
+    "objects": [
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--55388d12-8d7d-5ed1-b324-817a293a6854",
+            "name": "sha2 Project sha2 0.4.1 for Rust",
+            "cpe": "cpe:2.3:a:sha2_project:sha2:0.4.1:*:*:*:*:rust:*:*",
+            "swid": "8E3664E0-50A8-4AC3-8863-5552DD536F2F",
+            "languages": [
+                "en"
+            ],
+            "vendor": "sha2_project",
+            "version": "0.4.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--6d38c3e0-ea8b-5b83-b370-5407523589a9",
+            "name": "libpng 1.4.0 Beta 11",
+            "cpe": "cpe:2.3:a:libpng:libpng:1.4.0:beta11:*:*:*:*:*:*",
+            "swid": "64C059C9-B33E-45A8-8A2F-377BE87CA186",
+            "languages": [
+                "en"
+            ],
+            "vendor": "libpng",
+            "version": "1.4.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--079752b1-f6e9-541a-aba8-526365265eb3",
+            "name": "BuddyPress 7.3.1 for WordPress",
+            "cpe": "cpe:2.3:a:buddypress:buddypress:7.3.1:*:*:*:*:wordpress:*:*",
+            "swid": "86B23E23-F37A-4DF2-BF67-A9EBE8ED07E4",
+            "languages": [
+                "en"
+            ],
+            "vendor": "buddypress",
+            "version": "7.3.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--765a013a-796c-5d0c-9228-035d886e58a7",
+            "name": "Moxa UC-3111-T-EU-LX-NW",
+            "cpe": "cpe:2.3:h:moxa:uc-3111-t-eu-lx-nw:-:*:*:*:*:*:*:*",
+            "swid": "0F73EBE2-87CB-4C77-B2DB-DC38D70AE810",
+            "languages": [
+                "en"
+            ],
+            "vendor": "moxa",
+            "version": "-",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--cf81ccb5-e6a7-586b-a796-041488077376",
+            "name": "Shopware 5.7.9",
+            "cpe": "cpe:2.3:a:shopware:shopware:5.7.9:*:*:*:*:*:*:*",
+            "swid": "ECD46382-E6A4-4120-AEB6-22674CC93C3C",
+            "languages": [
+                "en"
+            ],
+            "vendor": "shopware",
+            "version": "5.7.9",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--2b69cffd-d299-5643-9889-cf1fa906f232",
+            "name": "Zimbra Zimbra 9.0.0 Patch 19",
+            "cpe": "cpe:2.3:a:zimbra:zimbra:9.0.0:p19:*:*:*:*:*:*",
+            "swid": "DF738197-2E18-4144-81DD-AAF57E6F7232",
+            "languages": [
+                "en"
+            ],
+            "vendor": "zimbra",
+            "version": "9.0.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--4536a29d-6070-56b8-91b7-cdbbd88be7dc",
+            "name": "wp-championship Project wp-championship 8.6 for WordPress",
+            "cpe": "cpe:2.3:a:wp-championship_project:wp-championship:8.6:*:*:*:*:wordpress:*:*",
+            "swid": "8AACB53B-581C-4F34-A428-3E008D506D05",
+            "languages": [
+                "en"
+            ],
+            "vendor": "wp-championship_project",
+            "version": "8.6",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--088a2d3f-aae6-57d2-8240-a6e2b8a27b26",
+            "name": "[DEPRECATED] OpenZeppelin Openzeppelin-contracts-upgradeable 3.1.0 Release Candidate 0 for Node.js",
+            "cpe": "cpe:2.3:a:openzeppelin:openzeppelin-contracts-upgradeable:3.1.0:rc0:*:*:*:node.js:*:*",
+            "swid": "DAB78B48-19CA-4F73-B563-C8037D6C9F21",
+            "languages": [
+                "en"
+            ],
+            "vendor": "openzeppelin",
+            "version": "3.1.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--65587773-7d2a-5c97-b66b-537f8ce9f7d9",
+            "name": "Adobe Adobe Reader 9.3",
+            "cpe": "cpe:2.3:a:adobe:adobe_reader:9.3:*:*:*:*:*:*:*",
+            "swid": "6C8EAA81-4498-41C8-8660-4376CB03A3A4",
+            "languages": [
+                "en"
+            ],
+            "vendor": "adobe",
+            "version": "9.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--81feb031-c765-56f0-8727-7a27c3fae18f",
+            "name": "[DEPRECATED] Nextcloud Server 14.0.0",
+            "cpe": "cpe:2.3:a:nextcloud:nextcloud_server:14.0.0:*:*:*:*:*:*:*",
+            "swid": "42749782-277C-4FAA-A39F-B74979C6E403",
+            "languages": [
+                "en"
+            ],
+            "vendor": "nextcloud",
+            "version": "14.0.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--d9278778-ce52-53e7-a5b3-fb8a44c1f594",
+            "name": "Cisco IP Phone 8865 Firmware 11.3.4",
+            "cpe": "cpe:2.3:o:cisco:ip_phone_8865_firmware:11.3.4:*:*:*:*:*:*:*",
+            "swid": "6FB250F8-AF1D-4F47-8BF1-12C7706FFC62",
+            "languages": [
+                "en"
+            ],
+            "vendor": "cisco",
+            "version": "11.3.4",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--2d1a43d1-df24-5bde-b988-6b2bfaf13126",
+            "name": "ZealousWeb Generate PDF using Contact Form 7 3.2 for WordPress",
+            "cpe": "cpe:2.3:a:zealousweb:generate_pdf_using_contact_form_7:3.2:*:*:*:*:wordpress:*:*",
+            "swid": "0A613D21-A011-4FD1-827E-70C3810712D2",
+            "languages": [
+                "en"
+            ],
+            "vendor": "zealousweb",
+            "version": "3.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--900700b0-1090-5038-8cb1-c18eb83c071e",
+            "name": "MetaSlider Slider, Gallery, And Carousel 2.2.1 for WordPress",
+            "cpe": "cpe:2.3:a:metaslider:slider\\,_gallery\\,_and_carousel:2.2.1:*:*:*:*:wordpress:*:*",
+            "swid": "28462560-33BB-4911-9355-E588453AF5E9",
+            "languages": [
+                "en"
+            ],
+            "vendor": "metaslider",
+            "version": "2.2.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--e0ffe705-da31-53d7-8f9a-82e4532ce8aa",
+            "name": "TinyWebGallery Advanced iFrame 5.10 for WordPress",
+            "cpe": "cpe:2.3:a:tinywebgallery:advanced_iframe:5.10:*:*:*:*:wordpress:*:*",
+            "swid": "0BB4BD4D-0D62-4382-A2A5-842A1905AE5E",
+            "languages": [
+                "en"
+            ],
+            "vendor": "tinywebgallery",
+            "version": "5.10",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--2f63c727-5b68-52bf-885d-b31f1e118e67",
+            "name": "Oro Inc OroPlatform 2.0.14",
+            "cpe": "cpe:2.3:a:oroinc:oroplatform:2.0.14:*:*:*:*:*:*:*",
+            "swid": "8416503F-E715-4330-820C-9CDA5F971512",
+            "languages": [
+                "en"
+            ],
+            "vendor": "oroinc",
+            "version": "2.0.14",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--fcdce3bc-45f3-5e58-8ab2-1f182b309640",
+            "name": "[DEPRECATED] Google Chrome OS 102.0.4975.2",
+            "cpe": "cpe:2.3:o:google:chrome_os:102.0.4975.2:*:*:*:*:*:*:*",
+            "swid": "F3E2B44D-4D09-4133-9F88-C50E100FB621",
+            "languages": [
+                "en"
+            ],
+            "vendor": "google",
+            "version": "102.0.4975.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--2329087e-84f1-5278-a5b5-fd1daa9fbfad",
+            "name": "Is My Json Valid Project Is My Json Valid 1.3.5 for Node.js",
+            "cpe": "cpe:2.3:a:is_my_json_valid_project:is_my_json_valid:1.3.5:*:*:*:*:node.js:*:*",
+            "swid": "5014114E-5593-4821-A87C-8029F9FE124C",
+            "languages": [
+                "en"
+            ],
+            "vendor": "is_my_json_valid_project",
+            "version": "1.3.5",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--c23dd1f4-eafe-50b5-91ef-95a5d6ed2222",
+            "name": "Sheetjs Sheetjs 0.16.1 for Node.js",
+            "cpe": "cpe:2.3:a:sheetjs:sheetjs:0.16.1:*:*:*:*:node.js:*:*",
+            "swid": "746F0EC9-D125-4944-84EC-D6C5A416E68C",
+            "languages": [
+                "en"
+            ],
+            "vendor": "sheetjs",
+            "version": "0.16.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--d2f1b1c9-8115-5120-b078-76b9b56f66db",
+            "name": "Etoile Web Design Ultimate Product Catalog 3.5.29 for WordPress",
+            "cpe": "cpe:2.3:a:etoilewebdesign:ultimate_product_catalog:3.5.29:*:*:*:*:wordpress:*:*",
+            "swid": "94F8FC9B-CD4C-40E2-A2E1-70C155666A77",
+            "languages": [
+                "en"
+            ],
+            "vendor": "etoilewebdesign",
+            "version": "3.5.29",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--0ee197e2-968b-5ff3-8318-850491af30bd",
+            "name": "SilverStripe Subsites 1.3.2",
+            "cpe": "cpe:2.3:a:silverstripe:subsites:1.3.2:*:*:*:*:*:*:*",
+            "swid": "F340FD83-D55A-43D8-BEFE-E03DDFBEDEF6",
+            "languages": [
+                "en"
+            ],
+            "vendor": "silverstripe",
+            "version": "1.3.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--e117bc37-8184-5d04-8b63-0d33d4ebc318",
+            "name": "Things for Restaurants Quick Restaurant Reservations 1.3.3 for WordPress",
+            "cpe": "cpe:2.3:a:thingsforrestaurants:quick_restaurant_reservations:1.3.3:*:*:*:*:wordpress:*:*",
+            "swid": "F957F7F0-21CC-4191-A222-B7C13074DE12",
+            "languages": [
+                "en"
+            ],
+            "vendor": "thingsforrestaurants",
+            "version": "1.3.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--b61fa191-d9e9-5caa-b630-655a4021d893",
+            "name": "Open Knowledge Foundation CKAN 2.8.11",
+            "cpe": "cpe:2.3:a:okfn:ckan:2.8.11:*:*:*:*:*:*:*",
+            "swid": "9A98A575-5B03-48D2-8C43-476C09B85166",
+            "languages": [
+                "en"
+            ],
+            "vendor": "okfn",
+            "version": "2.8.11",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--fc04c6d5-f928-58bb-a5f9-7077359d3e34",
+            "name": "Snyk Docker CLI 5.0.2 for Snyk",
+            "cpe": "cpe:2.3:a:snyk:snyk_docker_cli:5.0.2:*:*:*:*:snyk:*:*",
+            "swid": "920084CF-2692-4C4A-AF09-368554825B2D",
+            "languages": [
+                "en"
+            ],
+            "vendor": "snyk",
+            "version": "5.0.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--eddf4513-3ad2-5612-874e-a7a27edd3712",
+            "name": "Free amigos Manage Notification E-mails 1.0 for WordPress",
+            "cpe": "cpe:2.3:a:freeamigos:manage_notification_e-mails:1.0:*:*:*:*:wordpress:*:*",
+            "swid": "42C16108-40F6-49F1-9D13-ACA97C8544AD",
+            "languages": [
+                "en"
+            ],
+            "vendor": "freeamigos",
+            "version": "1.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--a1a4c6cb-b67d-54d9-94bf-58ffc735c2d1",
+            "name": "Zoho Corp ManageEngine Key Manager Plus 6.1.6",
+            "cpe": "cpe:2.3:a:zohocorp:manageengine_key_manager_plus:6.1.6:*:*:*:*:*:*:*",
+            "swid": "AF6EC33E-D443-4D6D-A54D-6F28775CD6E0",
+            "languages": [
+                "en"
+            ],
+            "vendor": "zohocorp",
+            "version": "6.1.6",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--0ebcad6c-90fd-535f-b5e3-b00b413685f5",
+            "name": "Shopify Hydrogen 0.6.2 for Node.js",
+            "cpe": "cpe:2.3:a:shopify:hydrogen:0.6.2:*:*:*:*:node.js:*:*",
+            "swid": "CF35BD14-7A0F-4EB7-A1BA-64CBD748CAC2",
+            "languages": [
+                "en"
+            ],
+            "vendor": "shopify",
+            "version": "0.6.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--d32b1d90-d229-51c5-9f8c-ce2969cae71a",
+            "name": "MinIO 2022-01-04T07-41-07Z",
+            "cpe": "cpe:2.3:a:minio:minio:2022-01-04t07-41-07z:*:*:*:*:*:*:*",
+            "swid": "F27F20A1-93F5-466A-B2C2-921B66838530",
+            "languages": [
+                "en"
+            ],
+            "vendor": "minio",
+            "version": "2022-01-04t07-41-07z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--cca82f14-a5e6-5443-8304-6de6ce2c9593",
+            "name": "MISP-Project Malware Information Sharing Platform (MISP) 2.4.134",
+            "cpe": "cpe:2.3:a:misp-project:malware_information_sharing_platform:2.4.134:*:*:*:*:*:*:*",
+            "swid": "DA894616-3A6F-491E-A327-7C20AA2FC198",
+            "languages": [
+                "en"
+            ],
+            "vendor": "misp-project",
+            "version": "2.4.134",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--fbe553a7-6b72-57be-a6d9-25b3a63cb9b8",
+            "name": "python-flask-restful-api Project python-flask-restful-api 2019-09-16",
+            "cpe": "cpe:2.3:a:python-flask-restful-api_project:python-flask-restful-api:2019-09-16:*:*:*:*:*:*:*",
+            "swid": "0A348873-A487-4082-8F6A-86B63C01CE3D",
+            "languages": [
+                "en"
+            ],
+            "vendor": "python-flask-restful-api_project",
+            "version": "2019-09-16",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--4335ef9e-6f26-52b1-a7c0-e2f7261a5cd6",
+            "name": "Restify 7.3.0 for Node.js",
+            "cpe": "cpe:2.3:a:restify:restify:7.3.0:*:*:*:*:node.js:*:*",
+            "swid": "5EAE0E34-C4A9-456F-892F-4D876CEAFF3D",
+            "languages": [
+                "en"
+            ],
+            "vendor": "restify",
+            "version": "7.3.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--0409c6ae-55ad-590d-887c-5d085f9775ae",
+            "name": "Obsidian 0.12.6",
+            "cpe": "cpe:2.3:a:obsidian:obsidian:0.12.6:*:*:*:*:*:*:*",
+            "swid": "611757FE-982E-418B-B5CE-2DCC4311C59B",
+            "languages": [
+                "en"
+            ],
+            "vendor": "obsidian",
+            "version": "0.12.6",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--012470d3-b613-5c92-841f-7ed5be92f199",
+            "name": "Google Chrome 100.0.4896.4",
+            "cpe": "cpe:2.3:a:google:chrome:100.0.4896.4:*:*:*:*:*:*:*",
+            "swid": "91A353D3-F339-45F3-A1C0-432EC4298A58",
+            "languages": [
+                "en"
+            ],
+            "vendor": "google",
+            "version": "100.0.4896.4",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--40e30f83-30ae-53e9-b574-66eae64b9ded",
+            "name": "Lexmark MS710 FIRMWARE LW80.DN2.P210",
+            "cpe": "cpe:2.3:o:lexmark:ms710_firmware:lw80.dn2.p210:*:*:*:*:*:*:*",
+            "swid": "732FB6DF-7FF0-4BC7-9DA1-C608056E8200",
+            "languages": [
+                "en"
+            ],
+            "vendor": "lexmark",
+            "version": "lw80.dn2.p210",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--0feed54e-5333-5b75-b6ab-96de88a41b06",
+            "name": "Django-mfa3 Project Django-mfa3 0.2.3",
+            "cpe": "cpe:2.3:a:django-mfa3_project:django-mfa3:0.2.3:*:*:*:*:*:*:*",
+            "swid": "5881AA91-F50A-446C-B9C3-32357F723CFA",
+            "languages": [
+                "en"
+            ],
+            "vendor": "django-mfa3_project",
+            "version": "0.2.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--257d8070-8469-5838-a736-f572dd0cc8c9",
+            "name": "Terser 3.0.22 for Node.js",
+            "cpe": "cpe:2.3:a:terser:terser:3.0.22:*:*:*:*:node.js:*:*",
+            "swid": "95D57920-C196-4A7E-AB32-0CE8D28E0928",
+            "languages": [
+                "en"
+            ],
+            "vendor": "terser",
+            "version": "3.0.22",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--b14d3fe0-2ca6-565d-af14-bd32ecd41612",
+            "name": "VTK 5.0.0",
+            "cpe": "cpe:2.3:a:vtk:vtk:5.0.0:*:*:*:*:*:*:*",
+            "swid": "0C1D0B09-BBF3-4E1C-B648-28C7726F26A1",
+            "languages": [
+                "en"
+            ],
+            "vendor": "vtk",
+            "version": "5.0.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--2c8b38dd-dab1-55cb-a78c-a66b08eecdf1",
+            "name": "DocSys Project DocSys 2.02.21",
+            "cpe": "cpe:2.3:a:docsys_project:docsys:2.02.21:*:*:*:*:*:*:*",
+            "swid": "EF009C23-0E24-4CD8-987A-83C5F0113DDF",
+            "languages": [
+                "en"
+            ],
+            "vendor": "docsys_project",
+            "version": "2.02.21",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--eb7f7d91-f69b-50f0-accc-baf40325629e",
+            "name": "markdown-link-extractor Project markdown-link-extractor 4.0.0 for Node.js",
+            "cpe": "cpe:2.3:a:markdown-link-extractor_project:markdown-link-extractor:4.0.0:*:*:*:*:node.js:*:*",
+            "swid": "D6E2D073-3F55-4729-AB81-4D4AA3BFAC3F",
+            "languages": [
+                "en"
+            ],
+            "vendor": "markdown-link-extractor_project",
+            "version": "4.0.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--27ba695c-f6ae-5800-9d44-ef6132fe3219",
+            "name": "PlantUML 1.2020.23",
+            "cpe": "cpe:2.3:a:plantuml:plantuml:1.2020.23:*:*:*:*:*:*:*",
+            "swid": "84988A0D-7760-40C1-ABF9-2A8E04118D8E",
+            "languages": [
+                "en"
+            ],
+            "vendor": "plantuml",
+            "version": "1.2020.23",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--5d6c9e74-9f4e-5d30-b132-3b2e2a601606",
+            "name": "SICK RFU630-04102 Firmware",
+            "cpe": "cpe:2.3:o:sick:rfu630-04102_firmware:-:*:*:*:*:*:*:*",
+            "swid": "D445B4A7-1894-4391-BC25-88BFDD101680",
+            "languages": [
+                "en"
+            ],
+            "vendor": "sick",
+            "version": "-",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--1f633a98-7a85-502f-b0bb-de3a85e586d8",
+            "name": "Argo Workflows Project Argo Workflows 3.0.0 Release Candidate 6 for Kubernetes",
+            "cpe": "cpe:2.3:a:argo_workflows_project:argo_workflows:3.0.0:rc6:*:*:*:kubernetes:*:*",
+            "swid": "530012CB-748E-470C-AC47-F8030610B855",
+            "languages": [
+                "en"
+            ],
+            "vendor": "argo_workflows_project",
+            "version": "3.0.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--e81d1322-3543-56cf-94d2-ea4ba4508314",
+            "name": "Saleor Saleor 3.1.0 Alpha 16",
+            "cpe": "cpe:2.3:a:saleor:saleor:3.1.0:alpha16:*:*:*:*:*:*",
+            "swid": "F1893951-E6A1-4CA1-92CB-11B542A6AA75",
+            "languages": [
+                "en"
+            ],
+            "vendor": "saleor",
+            "version": "3.1.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--e975bc4c-61b7-5634-ab5d-ede80ac870af",
+            "name": "Moxa AIG-301-AZU-LX Firmware 1.0",
+            "cpe": "cpe:2.3:o:moxa:aig-301-azu-lx_firmware:1.0:*:*:*:*:*:*:*",
+            "swid": "26FE887C-FE24-4AE7-A491-7E40699CDACA",
+            "languages": [
+                "en"
+            ],
+            "vendor": "moxa",
+            "version": "1.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--bc73d0a4-d23b-5304-967a-ab9c07f7e74f",
+            "name": "iJoomla Ad Agency 6.0.6 for Joomla!",
+            "cpe": "cpe:2.3:a:ijoomla:ad_agency:6.0.6:*:*:*:*:joomla\\!:*:*",
+            "swid": "5BCD2FFE-DC26-45C1-BD18-D0A06AE6E01C",
+            "languages": [
+                "en"
+            ],
+            "vendor": "ijoomla",
+            "version": "6.0.6",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--545bcb1f-ed43-5a6d-82cf-6c0a38722952",
+            "name": "Broadcom NetIron OS 5.8.00e",
+            "cpe": "cpe:2.3:o:broadcom:netiron_os:5.8.00e:*:*:*:*:*:*:*",
+            "swid": "C443A59B-7743-4683-8124-29F710EFE1BA",
+            "languages": [
+                "en"
+            ],
+            "vendor": "broadcom",
+            "version": "5.8.00e",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--37f46e13-8958-5186-b5fa-1c2a8b1ac999",
+            "name": "Codenotary Immudb 0.9.1",
+            "cpe": "cpe:2.3:a:codenotary:immudb:0.9.1:*:*:*:*:*:*:*",
+            "swid": "C83DB1CD-C2CB-454D-9AA3-3A61AFC349C4",
+            "languages": [
+                "en"
+            ],
+            "vendor": "codenotary",
+            "version": "0.9.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--3ff15d14-8183-58e5-ac58-ea9de321b2c3",
+            "name": "Octopus Server 2019.12.3",
+            "cpe": "cpe:2.3:a:octopus:octopus_server:2019.12.3:*:*:*:*:*:*:*",
+            "swid": "99382A29-E8F4-4C68-996C-C92946FD1B6E",
+            "languages": [
+                "en"
+            ],
+            "vendor": "octopus",
+            "version": "2019.12.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--d1b22ee4-03c6-5b3f-a985-18e394a1969a",
+            "name": "rust-OpenSSL 0.7.14 for Rust",
+            "cpe": "cpe:2.3:a:rust-openssl_project:rust-openssl:0.7.14:*:*:*:*:rust:*:*",
+            "swid": "EAD7D746-9A33-43F8-BAF1-27CFE4336828",
+            "languages": [
+                "en"
+            ],
+            "vendor": "rust-openssl_project",
+            "version": "0.7.14",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--9357af59-c783-530d-8aef-db9ac51fcec6",
+            "name": "PluginUs WooCommerce Currency Switcher (WOOCS) 1.0.9 for WordPress",
+            "cpe": "cpe:2.3:a:pluginus:woocommerce_currency_switcher:1.0.9:*:*:*:*:wordpress:*:*",
+            "swid": "16C00E6E-63A5-49F5-AC9E-55DED7E86006",
+            "languages": [
+                "en"
+            ],
+            "vendor": "pluginus",
+            "version": "1.0.9",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--fa28c355-f0b6-5bf4-a063-0e3c5ebebc4e",
+            "name": "Siemens Simocode Prov Profinet ",
+            "cpe": "cpe:2.3:h:siemens:simocode_prov_profinet:-:*:*:*:*:*:*:*",
+            "swid": "9A8D394D-3270-4142-829F-7964277CD1CF",
+            "languages": [
+                "en"
+            ],
+            "vendor": "siemens",
+            "version": "-",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--5432f1e0-e594-5118-b08c-b2a89703983a",
+            "name": "Opera Browser 38.0.2220.12",
+            "cpe": "cpe:2.3:a:opera:opera_browser:38.0.2220.12:*:*:*:*:*:*:*",
+            "swid": "2CB3F238-5A09-44FF-B6BD-E9DABA815B50",
+            "languages": [
+                "en"
+            ],
+            "vendor": "opera",
+            "version": "38.0.2220.12",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--fbbc6ca0-ddd5-5667-b1a1-c014109088ef",
+            "name": "[DEPRECATED] Signal Private Messenger 4.3.2 for Android",
+            "cpe": "cpe:2.3:a:signal:signal_private_messenger:4.3.2:*:*:*:*:android:*:*",
+            "swid": "8B6A31ED-AAE1-42AC-A6AB-B2876C565D06",
+            "languages": [
+                "en"
+            ],
+            "vendor": "signal",
+            "version": "4.3.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--ac438e41-d974-57bf-92fa-b4a3f335fe58",
+            "name": "HabitRPG Habitica 4.196.0",
+            "cpe": "cpe:2.3:a:habitica:habitica:4.196.0:*:*:*:*:*:*:*",
+            "swid": "B59BD774-167A-406E-8408-AE9AE9C03316",
+            "languages": [
+                "en"
+            ],
+            "vendor": "habitica",
+            "version": "4.196.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--034133d3-7480-595e-af8a-5f99a1eda5cc",
+            "name": "Explosion spaCy 2.0.0 Release Candidate 1 for Python",
+            "cpe": "cpe:2.3:a:explosion:spacy:2.0.0:rc1:*:*:*:python:*:*",
+            "swid": "BEDACE9D-051F-492C-96B6-816D8F6A4E78",
+            "languages": [
+                "en"
+            ],
+            "vendor": "explosion",
+            "version": "2.0.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--f82a41ce-082a-5f8c-a062-e086747038f6",
+            "name": "Vuetify 2.3.0 Beta 5",
+            "cpe": "cpe:2.3:a:vuetifyjs:vuetify:2.3.0:beta5:*:*:*:*:*:*",
+            "swid": "4BFB90F6-D469-48A1-8B3A-CA048011C3CC",
+            "languages": [
+                "en"
+            ],
+            "vendor": "vuetifyjs",
+            "version": "2.3.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--35b11356-fd85-52ac-9822-4d0ee2979aa0",
+            "name": "Intel AC 9260 FIRMWARE 22.100",
+            "cpe": "cpe:2.3:o:intel:ac_9260_firmware:22.100:*:*:*:*:*:*:*",
+            "swid": "5F13379C-D510-44D3-9E9D-70AF86C12731",
+            "languages": [
+                "en"
+            ],
+            "vendor": "intel",
+            "version": "22.100",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--5179d60a-e16b-519a-aede-a61952b89589",
+            "name": "Rust-lang Cargo 0.11.0 for Rust",
+            "cpe": "cpe:2.3:a:rust-lang:cargo:0.11.0:*:*:*:*:rust:*:*",
+            "swid": "FFD88C4B-45F0-4AF2-AD8B-8F19DB098385",
+            "languages": [
+                "en"
+            ],
+            "vendor": "rust-lang",
+            "version": "0.11.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--ed278ba0-b348-5e90-b1bc-102255807a3c",
+            "name": "XootiX Waitlist Woocommerce 2.3 for WordPress",
+            "cpe": "cpe:2.3:a:xootix:waitlist_woocommerce:2.3:*:*:*:*:wordpress:*:*",
+            "swid": "B96CA42F-F905-49E6-ABC1-2B3EA5CD780E",
+            "languages": [
+                "en"
+            ],
+            "vendor": "xootix",
+            "version": "2.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--7dfe64c0-8d49-5a96-9509-77a8f45cbcd9",
+            "name": "Phoronix Media Phoronix Test Suite 6.2.2",
+            "cpe": "cpe:2.3:a:phoronix-media:phoronix_test_suite:6.2.2:*:*:*:*:*:*:*",
+            "swid": "32B60AD0-B7D2-4104-A318-FDD2500C3192",
+            "languages": [
+                "en"
+            ],
+            "vendor": "phoronix-media",
+            "version": "6.2.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--6108b30a-cf29-52c1-8f56-e75a36de5a0f",
+            "name": "Elecom WMC-M1267GST2-W Firmware 1.24",
+            "cpe": "cpe:2.3:o:elecom:wmc-m1267gst2-w_firmware:1.24:*:*:*:*:*:*:*",
+            "swid": "1366B72D-EABC-4740-BC9A-DA07B4D66A4E",
+            "languages": [
+                "en"
+            ],
+            "vendor": "elecom",
+            "version": "1.24",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--504123d7-08ac-55df-a331-1e6ebfbc5d5b",
+            "name": "SmartBear Collaborator 4.0.814",
+            "cpe": "cpe:2.3:a:smartbear:collaborator:4.0.814:*:*:*:*:*:*:*",
+            "swid": "660E8006-D670-4052-B11D-AF03A987DCD6",
+            "languages": [
+                "en"
+            ],
+            "vendor": "smartbear",
+            "version": "4.0.814",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--0259b5ab-0e63-5ff2-9c54-250bf92c7906",
+            "name": "Fortinet FortiVoice 5.3.26 Entreprise Edition",
+            "cpe": "cpe:2.3:a:fortinet:fortivoice:5.3.26:*:*:*:entreprise:*:*:*",
+            "swid": "73C7B2B6-2929-4C81-8391-44AE3E7D2EED",
+            "languages": [
+                "en"
+            ],
+            "vendor": "fortinet",
+            "version": "5.3.26",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--5a38a990-af4c-5230-98a8-e99bf4e9a2bb",
+            "name": "Zlog Project Zlog 1.2.8",
+            "cpe": "cpe:2.3:a:zlog_project:zlog:1.2.8:*:*:*:*:*:*:*",
+            "swid": "3FD58806-8606-4C5F-9F1C-93A1AC8E7634",
+            "languages": [
+                "en"
+            ],
+            "vendor": "zlog_project",
+            "version": "1.2.8",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--d16cbc22-760a-518b-8d22-11abf85d5ad9",
+            "name": "Fidelis Cybersecurity Deception 9.4.5",
+            "cpe": "cpe:2.3:a:fidelissecurity:deception:9.4.5:*:*:*:*:*:*:*",
+            "swid": "1014794B-1BF1-471C-91BA-B36E4E1544EA",
+            "languages": [
+                "en"
+            ],
+            "vendor": "fidelissecurity",
+            "version": "9.4.5",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--59fcb4bd-9b09-5302-a5e9-93df57e7b872",
+            "name": "HP Spectre 13t-ak100",
+            "cpe": "cpe:2.3:h:hp:spectre_13t-ak100:-:*:*:*:*:*:*:*",
+            "swid": "0FAED89B-E140-4649-9DB8-69DA961B0247",
+            "languages": [
+                "en"
+            ],
+            "vendor": "hp",
+            "version": "-",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--76d0610b-079d-5a49-bd49-8650c6a55469",
+            "name": "Schneider Electric Wiser Smart EER21001 Firmware 4.5",
+            "cpe": "cpe:2.3:o:schneider-electric:wiser_smart_eer21001_firmware:4.5:*:*:*:*:*:*:*",
+            "swid": "6150EDA5-28F0-4D5E-AC77-6CD49CBFFD63",
+            "languages": [
+                "en"
+            ],
+            "vendor": "schneider-electric",
+            "version": "4.5",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--f63a77ef-eb5e-555d-bb87-90a57a398efd",
+            "name": "Easy Social Feed 5.1.2 Free Edition for WordPress",
+            "cpe": "cpe:2.3:a:easysocialfeed:easy_social_feed:5.1.2:*:*:*:free:wordpress:*:*",
+            "swid": "7839E309-1573-4477-B321-F2DD737C7D7A",
+            "languages": [
+                "en"
+            ],
+            "vendor": "easysocialfeed",
+            "version": "5.1.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--f584166a-c6bb-571f-a521-bed7a67255e3",
+            "name": "Schneider Electric 171CCC96020 Firmware",
+            "cpe": "cpe:2.3:o:schneider-electric:171ccc96020_firmware:-:*:*:*:*:*:*:*",
+            "swid": "833984EE-110B-4F4F-B43F-CE402BB01099",
+            "languages": [
+                "en"
+            ],
+            "vendor": "schneider-electric",
+            "version": "-",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--2ab5dd97-9db8-59f6-a4eb-e39213437c7e",
+            "name": "Devowl WordPress Real Cookie Banner 1.1.3 for WordPress",
+            "cpe": "cpe:2.3:a:devowl:wordpress_real_cookie_banner:1.1.3:*:*:*:*:wordpress:*:*",
+            "swid": "5E6A7B14-CD4D-4A28-B1AF-2A54BF99F6B3",
+            "languages": [
+                "en"
+            ],
+            "vendor": "devowl",
+            "version": "1.1.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--c7b62c99-2c6b-5383-a700-a39c1df1a787",
+            "name": "unicycle Project unicycle 0.1.7 for Rust",
+            "cpe": "cpe:2.3:a:unicycle_project:unicycle:0.1.7:*:*:*:*:rust:*:*",
+            "swid": "5546D1E8-3E47-42DA-ADC1-1F4BB3448782",
+            "languages": [
+                "en"
+            ],
+            "vendor": "unicycle_project",
+            "version": "0.1.7",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--510b32c4-84b3-54d4-84bb-774f59fc78f6",
+            "name": "Cisco Catalyst C6816-X-LE",
+            "cpe": "cpe:2.3:h:cisco:catalyst_c6816-x-le:-:*:*:*:*:*:*:*",
+            "swid": "4DAC439A-8582-40BF-BC6D-D9E997176FF3",
+            "languages": [
+                "en"
+            ],
+            "vendor": "cisco",
+            "version": "-",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--177c352b-10ba-5407-8fe8-53468cdfa736",
+            "name": "Google Drive 50.0",
+            "cpe": "cpe:2.3:a:google:drive:50.0:*:*:*:*:-:*:*",
+            "swid": "54B34F0E-485C-49D8-8F6F-D5A45E924254",
+            "languages": [
+                "en"
+            ],
+            "vendor": "google",
+            "version": "50.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--2490cd86-2b66-533d-a3dc-9f0aee991e4c",
+            "name": "[DEPRECATED] Oracle JDK 1.6.0 Update 65",
+            "cpe": "cpe:2.3:a:oracle:jdk:1.6.0:update_65:*:*:*:*:*:*",
+            "swid": "4C144508-E6AF-421A-9D9F-BC2E7C0A12FC",
+            "languages": [
+                "en"
+            ],
+            "vendor": "oracle",
+            "version": "1.6.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--cdae3072-24c9-5aae-9066-a8d2b0a57c2d",
+            "name": "Uatech Group (Uasoft) Badaso 2.5.1",
+            "cpe": "cpe:2.3:a:uatech:badaso:2.5.1:*:*:*:*:*:*:*",
+            "swid": "932BEFFD-5B2C-4773-93CD-7BB4017B8062",
+            "languages": [
+                "en"
+            ],
+            "vendor": "uatech",
+            "version": "2.5.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--5ab11cf2-e1cc-571e-aae5-c6592397c791",
+            "name": "Google Chrome 95.0.4638.11",
+            "cpe": "cpe:2.3:a:google:chrome:95.0.4638.11:*:*:*:*:*:*:*",
+            "swid": "FA07976C-600E-47EF-93C6-D5D7559E3A0E",
+            "languages": [
+                "en"
+            ],
+            "vendor": "google",
+            "version": "95.0.4638.11",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--ceb26749-05f1-5bff-84e2-92e17474fe0c",
+            "name": "OpenZeppelin Contracts Upgradeable 2.1.0 Release Candidate 2 for Node.js",
+            "cpe": "cpe:2.3:a:openzeppelin:contracts_upgradeable:2.1.0:rc2:*:*:*:node.js:*:*",
+            "swid": "F40DFE4A-1A68-4310-8418-1011C8F61763",
+            "languages": [
+                "en"
+            ],
+            "vendor": "openzeppelin",
+            "version": "2.1.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--a8e69fc3-4fe8-5ace-aac8-ca7c607fd994",
+            "name": "Livemesh Addons for Elementor 7.1.5 for WordPress",
+            "cpe": "cpe:2.3:a:livemeshelementor:addons_for_elementor:7.1.5:*:*:*:*:wordpress:*:*",
+            "swid": "D51766B9-3AFD-4797-B4F7-88D425D3AAD4",
+            "languages": [
+                "en"
+            ],
+            "vendor": "livemeshelementor",
+            "version": "7.1.5",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--0721aee0-38e1-5cff-821a-0146ad4fd12c",
+            "name": "[DEPRECATED] Teradici PCoIP Standard Agent 21.07.0 for Windows",
+            "cpe": "cpe:2.3:a:teradici:pcoip_stnadard_agent:21.07.0:*:*:*:*:windows:*:*",
+            "swid": "5D9BAD67-7AE4-448C-8A82-605AF880F69F",
+            "languages": [
+                "en"
+            ],
+            "vendor": "teradici",
+            "version": "21.07.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--2a1e1b44-80f3-58a4-83f7-f2cbd2e99431",
+            "name": "WPFront User Role Editor 2.1 for WordPress",
+            "cpe": "cpe:2.3:a:wpfront:wpfront_user_role_editor:2.1:*:*:*:*:wordpress:*:*",
+            "swid": "4AC6C638-9659-4352-AA48-670B5659B0E9",
+            "languages": [
+                "en"
+            ],
+            "vendor": "wpfront",
+            "version": "2.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--55e9c595-777b-5c6a-82b5-dffa729a4600",
+            "name": "WonderCMS 3.1.0",
+            "cpe": "cpe:2.3:a:wondercms:wondercms:3.1.0:*:*:*:*:*:*:*",
+            "swid": "5995C668-3CFE-4D17-9CC7-E48DDE8F118B",
+            "languages": [
+                "en"
+            ],
+            "vendor": "wondercms",
+            "version": "3.1.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--5b2baad7-3739-50fe-b424-616d9c8ce1bd",
+            "name": "Opera Browser 68.0.3618.63",
+            "cpe": "cpe:2.3:a:opera:opera_browser:68.0.3618.63:*:*:*:*:*:*:*",
+            "swid": "C1184DF0-AA44-448F-A03B-9B6B0C70DA58",
+            "languages": [
+                "en"
+            ],
+            "vendor": "opera",
+            "version": "68.0.3618.63",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--39f4fbc3-910b-54e5-b53e-a450d6b539c7",
+            "name": "Cisco AsyncOS 14.2.0",
+            "cpe": "cpe:2.3:o:cisco:asyncos:14.2.0:*:*:*:*:*:*:*",
+            "swid": "E6AB2A1E-AAC7-4DDA-81DC-7D56D4C1B4DB",
+            "languages": [
+                "en"
+            ],
+            "vendor": "cisco",
+            "version": "14.2.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--aa7474ea-95a4-51dd-b9c4-2422ada08ec9",
+            "name": "xmldom Project xmldom 0.7.6 for Node.js",
+            "cpe": "cpe:2.3:a:xmldom_project:xmldom:0.7.6:-:*:*:*:node.js:*:*",
+            "swid": "2042C325-C636-4050-87D7-EC4D6F8F562C",
+            "languages": [
+                "en"
+            ],
+            "vendor": "xmldom_project",
+            "version": "0.7.6",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--2858da81-5c6d-5e2d-8883-2224c92cd974",
+            "name": "ARM Adaptive Scalable Texture Compression Encoder 3.4",
+            "cpe": "cpe:2.3:a:arm:adaptive_scalable_texture_compression_encoder:3.4:*:*:*:*:*:*:*",
+            "swid": "B8C9F7B6-9790-43F5-B2D0-32D323AF9F77",
+            "languages": [
+                "en"
+            ],
+            "vendor": "arm",
+            "version": "3.4",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--af900300-d853-5a5b-b753-f40020ab15bf",
+            "name": "K-Link K-Box 0.19.1",
+            "cpe": "cpe:2.3:a:k-link:k-box:0.19.1:*:*:*:*:*:*:*",
+            "swid": "94607BC1-2F2D-47B3-BA50-BB607D0ACE85",
+            "languages": [
+                "en"
+            ],
+            "vendor": "k-link",
+            "version": "0.19.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--bd5043b7-af27-5b88-8e2c-70439820605e",
+            "name": "SQLPad 2.7.0",
+            "cpe": "cpe:2.3:a:sqlpad:sqlpad:2.7.0:*:*:*:*:*:*:*",
+            "swid": "8A0AF2AB-57D2-4727-A8F9-6601206F48B7",
+            "languages": [
+                "en"
+            ],
+            "vendor": "sqlpad",
+            "version": "2.7.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--fe8ba775-7815-5df4-9122-a656b97a8dbc",
+            "name": "MagePeople Event Manager And Tickets Selling For WooCommerce 3.5.6 for WordPress",
+            "cpe": "cpe:2.3:a:mage-people:event_manager_and_tickets_selling_for_woocommerce:3.5.6:*:*:*:*:wordpress:*:*",
+            "swid": "98418AD6-5A0B-4404-AAB9-3B4EFC4C6FE1",
+            "languages": [
+                "en"
+            ],
+            "vendor": "mage-people",
+            "version": "3.5.6",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--0fede880-73f1-5362-8750-80306246d1e3",
+            "name": "Demokratian 3.0.3",
+            "cpe": "cpe:2.3:a:demokratian:demokratian:3.0.3:*:*:*:*:*:*:*",
+            "swid": "61C03F74-FF7F-4823-B91C-C2D513EDF12D",
+            "languages": [
+                "en"
+            ],
+            "vendor": "demokratian",
+            "version": "3.0.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--ce3cde5a-c967-59d1-a96f-d920196ca6ea",
+            "name": "Oracle Java Runtime Environment (JRE) 1.1.8_006",
+            "cpe": "cpe:2.3:a:oracle:jre:1.1.8_006:*:*:*:*:*:*:*",
+            "swid": "471963D1-140C-4A68-B17C-3FF0B2A548D7",
+            "languages": [
+                "en"
+            ],
+            "vendor": "oracle",
+            "version": "1.1.8_006",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--43c81226-1ea1-5c87-a833-f6773779e315",
+            "name": "If-me Ifme 7.29.2",
+            "cpe": "cpe:2.3:a:if-me:ifme:7.29.2:*:*:*:*:*:*:*",
+            "swid": "A64C4AFB-4C24-4F8C-B8FA-EA7820877BB6",
+            "languages": [
+                "en"
+            ],
+            "vendor": "if-me",
+            "version": "7.29.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--f4d305ba-262b-5bcf-bbcc-f87c1ec3322c",
+            "name": "VMware Spring Boot 2.3.0 Milestone 2",
+            "cpe": "cpe:2.3:a:vmware:spring_boot:2.3.0:milestone2:*:*:*:*:*:*",
+            "swid": "F01FEAD8-D864-4C14-A94D-EF1F579D113B",
+            "languages": [
+                "en"
+            ],
+            "vendor": "vmware",
+            "version": "2.3.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--ac1723c6-c700-5ba5-af25-139c794f2706",
+            "name": "FINN Podium Proxy 4.2.59 for Node.js",
+            "cpe": "cpe:2.3:a:finn:podium_proxy:4.2.59:*:*:*:*:node.js:*:*",
+            "swid": "73371EA4-2327-4D20-B5CA-102627AAEE28",
+            "languages": [
+                "en"
+            ],
+            "vendor": "finn",
+            "version": "4.2.59",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--4c914b3f-d63b-5343-ac88-a89e2a4b72cf",
+            "name": "NETGEAR RAX45 Firmware 1.0.2.72",
+            "cpe": "cpe:2.3:o:netgear:rax45_firmware:1.0.2.72:*:*:*:*:*:*:*",
+            "swid": "238BA599-1BBD-4087-BBCC-9540EDBA761B",
+            "languages": [
+                "en"
+            ],
+            "vendor": "netgear",
+            "version": "1.0.2.72",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--07bad230-90e5-5526-af53-1296db41ddf5",
+            "name": "activerecord Project Active Record 6.1.2 for Ruby",
+            "cpe": "cpe:2.3:a:activerecord_project:activerecord:6.1.2:*:*:*:*:ruby:*:*",
+            "swid": "BDD068D2-A673-4773-BA60-19397329AAE5",
+            "languages": [
+                "en"
+            ],
+            "vendor": "activerecord_project",
+            "version": "6.1.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--276fea84-89da-5a0f-864b-5bf83569d7c6",
+            "name": "TOTOLINK A3000RU Firmware 4.1.2cu.5185 B20201128",
+            "cpe": "cpe:2.3:o:totolink:a3000ru_firmware:4.1.2cu.5185_b20201128:*:*:*:*:*:*:*",
+            "swid": "D774F02F-EF37-40A8-8432-D850B623F9A9",
+            "languages": [
+                "en"
+            ],
+            "vendor": "totolink",
+            "version": "4.1.2cu.5185_b20201128",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--77333658-bc90-5436-bc43-638411bd1f26",
+            "name": "AdGuard AdGuard Home 0.108 Beta 4",
+            "cpe": "cpe:2.3:a:adguard:adguardhome:0.108:beta4:*:*:*:*:*:*",
+            "swid": "326A1334-286F-44DF-9CC9-FFE1D2E142AB",
+            "languages": [
+                "en"
+            ],
+            "vendor": "adguard",
+            "version": "0.108",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--00f45d64-52ad-5550-b1aa-5bd96e6d2073",
+            "name": "OpenZeppelin Contracts Upgradeable 1.10.0 for Node.js",
+            "cpe": "cpe:2.3:a:openzeppelin:contracts_upgradeable:1.10.0:*:*:*:*:node.js:*:*",
+            "swid": "DE94E858-AAA3-4D20-9859-AF53B8F08AF1",
+            "languages": [
+                "en"
+            ],
+            "vendor": "openzeppelin",
+            "version": "1.10.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--89348157-fae0-5729-bdc8-b05014b65a12",
+            "name": "Django REST framework 3.7.3",
+            "cpe": "cpe:2.3:a:django-rest-framework:django_rest_framework:3.7.3:*:*:*:*:*:*:*",
+            "swid": "24B5B1F0-DC49-4E5C-A686-91E6FBE9C013",
+            "languages": [
+                "en"
+            ],
+            "vendor": "django-rest-framework",
+            "version": "3.7.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--5620e3ca-f7d6-5375-ae08-5feba1ee1502",
+            "name": "node-opcua Project node-opcua 2.0.0 Alpha 29 for Node.js",
+            "cpe": "cpe:2.3:a:node-opcua_project:node-opcua:2.0.0:alpha29:*:*:*:node.js:*:*",
+            "swid": "E2A7BFAD-96DE-451C-B387-8FF19534F66C",
+            "languages": [
+                "en"
+            ],
+            "vendor": "node-opcua_project",
+            "version": "2.0.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--d49cb8b4-f608-5565-99f4-1d72ff38b46a",
+            "name": "Octopus Server 2020.5.4",
+            "cpe": "cpe:2.3:a:octopus:octopus_server:2020.5.4:*:*:*:*:*:*:*",
+            "swid": "321B51F3-5785-4749-8038-6638A534AEC9",
+            "languages": [
+                "en"
+            ],
+            "vendor": "octopus",
+            "version": "2020.5.4",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--243d9dbe-caf7-55fa-b213-6a5e836f2305",
+            "name": "Acer ASPIRE X3995 ",
+            "cpe": "cpe:2.3:h:acer:aspire_x3995:-:*:*:*:*:*:*:*",
+            "swid": "186CCDB6-C0F6-4BCC-AFB6-3137EEB966DC",
+            "languages": [
+                "en"
+            ],
+            "vendor": "acer",
+            "version": "-",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--f5c98587-1981-5370-9e53-da5122f5d65b",
+            "name": "Mailcow: Dockerized 2022-01a",
+            "cpe": "cpe:2.3:a:mailcow:mailcow\\:_dockerized:2022-01a:*:*:*:*:*:*:*",
+            "swid": "2C4B3DC1-D1CB-4A0E-85CA-8AA03252F23F",
+            "languages": [
+                "en"
+            ],
+            "vendor": "mailcow",
+            "version": "_dockerized",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--3c083b82-23e6-51dd-ba22-db2fb1cd95bc",
+            "name": "SUSE Rancher 1.6.23",
+            "cpe": "cpe:2.3:a:suse:rancher:1.6.23:*:*:*:*:*:*:*",
+            "swid": "BDBD05EF-BBB7-49F3-A796-4737057DF902",
+            "languages": [
+                "en"
+            ],
+            "vendor": "suse",
+            "version": "1.6.23",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--4c151b0f-d93f-5d7d-beaf-23a91e4814b9",
+            "name": "Vite 2.5.8 for Node.js",
+            "cpe": "cpe:2.3:a:vitejs:vite:2.5.8:*:*:*:*:node.js:*:*",
+            "swid": "B22D46F6-DB49-48EF-B95E-D52AD5FD2877",
+            "languages": [
+                "en"
+            ],
+            "vendor": "vitejs",
+            "version": "2.5.8",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--82b810d5-0563-59cd-a5e1-74316c678d6a",
+            "name": "Stealjs Steal 0.12.0 Patchre.7 for Node.js",
+            "cpe": "cpe:2.3:a:stealjs:steal:0.12.0:patchre.7:*:*:*:node.js:*:*",
+            "swid": "0D468A63-A476-4837-A207-9DA23C90CE35",
+            "languages": [
+                "en"
+            ],
+            "vendor": "stealjs",
+            "version": "0.12.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--8301c9fc-dc98-55c8-b984-6df6a00bb554",
+            "name": "Softing OPC UA C++ Software Development Kit 5.21.2",
+            "cpe": "cpe:2.3:a:softing:opc_ua_c\\+\\+_software_development_kit:5.21.2:*:*:*:*:*:*:*",
+            "swid": "8FCECD3D-72EC-4896-ABD5-5D12DC0286AD",
+            "languages": [
+                "en"
+            ],
+            "vendor": "softing",
+            "version": "5.21.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--545b422c-9a0c-534e-bf7a-4535237243be",
+            "name": "OWASP Zed Attack Proxy (ZAP) 2.3.0",
+            "cpe": "cpe:2.3:a:owasp:zed_attack_proxy:2.3.0:*:*:*:*:*:*:*",
+            "swid": "687C55C3-6F07-4145-8B07-471E83498062",
+            "languages": [
+                "en"
+            ],
+            "vendor": "owasp",
+            "version": "2.3.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--a57150f7-214a-5539-829d-ee27107a2aaf",
+            "name": "Jenkins Plot 1.11 for Jenkins",
+            "cpe": "cpe:2.3:a:jenkins:plot:1.11:*:*:*:*:jenkins:*:*",
+            "swid": "5AA4BFEA-7CC9-4AB6-AE2F-768CB683AD4E",
+            "languages": [
+                "en"
+            ],
+            "vendor": "jenkins",
+            "version": "1.11",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--ce32b6ae-0613-54f8-a840-7ead969ae415",
+            "name": "Siemens SIMATIC HMI KTP400 BASIC FIRMWARE 17.0 Udpate1",
+            "cpe": "cpe:2.3:o:siemens:simatic_hmi_ktp400_basic_firmware:17.0:udpate1:*:*:*:*:*:*",
+            "swid": "50610897-B725-465D-B7EA-7101989B24F6",
+            "languages": [
+                "en"
+            ],
+            "vendor": "siemens",
+            "version": "17.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--9f213ef0-89de-5147-9735-dcfd00e1fb48",
+            "name": "Zalando Skipper 0.9.185",
+            "cpe": "cpe:2.3:a:zalando:skipper:0.9.185:*:*:*:*:*:*:*",
+            "swid": "A9BC2748-41F6-4C15-878C-90B50C9BA3E9",
+            "languages": [
+                "en"
+            ],
+            "vendor": "zalando",
+            "version": "0.9.185",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--2a559f9c-6c0e-51d7-8db4-5a96fd82ceb7",
+            "name": "Seamless Donations Project Seamless Donations 5.1.5 for WordPress",
+            "cpe": "cpe:2.3:a:seamless_donations_project:seamless_donations:5.1.5:*:*:*:*:wordpress:*:*",
+            "swid": "1207DEE3-35CB-40B1-8509-BEF462EAFB3F",
+            "languages": [
+                "en"
+            ],
+            "vendor": "seamless_donations_project",
+            "version": "5.1.5",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--f8454407-77d1-52ec-80ad-60aa7ff4dda1",
+            "name": "Appsmith 0.1.26",
+            "cpe": "cpe:2.3:a:appsmith:appsmith:0.1.26:*:*:*:*:*:*:*",
+            "swid": "58882B51-95BB-4604-8A60-9FD2711DDD4E",
+            "languages": [
+                "en"
+            ],
+            "vendor": "appsmith",
+            "version": "0.1.26",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--197ed8fb-7ded-561c-bc3b-b15896967659",
+            "name": "Zoho Corp ManageEngine Applications 14.4 Build14470",
+            "cpe": "cpe:2.3:a:zohocorp:manageengine_applications_manager:14.4:build14470:*:*:*:*:*:*",
+            "swid": "293F0AC6-0065-40AD-B5DB-CC6198890486",
+            "languages": [
+                "en"
+            ],
+            "vendor": "zohocorp",
+            "version": "14.4",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--44c21ca7-48d8-5a0f-b0c6-9c64461da676",
+            "name": "Korenix JetNet 6095 Firmware",
+            "cpe": "cpe:2.3:o:korenix:jetnet_6095_firmware:-:*:*:*:*:*:*:*",
+            "swid": "C9141690-2506-4593-9EFE-C6897038324D",
+            "languages": [
+                "en"
+            ],
+            "vendor": "korenix",
+            "version": "-",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--2b716ad7-ad07-5d1d-bab8-0b0d12e74c75",
+            "name": "LS Electric XGF-DC4S",
+            "cpe": "cpe:2.3:h:ls-electric:xgf-dc4s:-:*:*:*:*:*:*:*",
+            "swid": "AE896AAE-73C4-49BA-9BD3-0E09FBFBFB47",
+            "languages": [
+                "en"
+            ],
+            "vendor": "ls-electric",
+            "version": "-",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--1e96e581-024a-5fde-8660-f17484da2229",
+            "name": "Form.IO 1.22.19",
+            "cpe": "cpe:2.3:a:form:form.io:1.22.19:*:*:*:*:*:*:*",
+            "swid": "7A6F75BA-4798-4D68-828D-D906B8F380A5",
+            "languages": [
+                "en"
+            ],
+            "vendor": "form",
+            "version": "1.22.19",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--69477fef-fad6-5714-9ee0-7161d5e963dd",
+            "name": "Festo Servo CMMT-AS-C2-3A-EP-S1",
+            "cpe": "cpe:2.3:h:festo:servo_cmmt-as-c2-3a-ep-s1:-:*:*:*:*:*:*:*",
+            "swid": "ECDBCE5C-52BD-4340-A798-0196FEEC0704",
+            "languages": [
+                "en"
+            ],
+            "vendor": "festo",
+            "version": "-",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--925ae9bc-ae9d-5915-abfd-40ef3e232208",
+            "name": "Microchip Technology BM71 Firmware 1.43",
+            "cpe": "cpe:2.3:o:microchip:bm71_firmware:1.43:*:*:*:*:*:*:*",
+            "swid": "9FB92C19-F0F5-4E5F-A69B-6CD759906994",
+            "languages": [
+                "en"
+            ],
+            "vendor": "microchip",
+            "version": "1.43",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--e5f45bf2-cadc-59c6-ace6-c83441f1a09e",
+            "name": "[DEPRECATED] Dolibarr ERP CRM 10.0.7",
+            "cpe": "cpe:2.3:a:dolibarr:dolibarr:10.0.7:*:*:*:*:*:*:*",
+            "swid": "16395095-C4F6-4D3F-86A0-9D24A194D161",
+            "languages": [
+                "en"
+            ],
+            "vendor": "dolibarr",
+            "version": "10.0.7",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--1d0028e1-1196-52e4-8784-d8f9a5366c73",
+            "name": "SlickRemix Feed Them Social 2.7.8 for WordPress",
+            "cpe": "cpe:2.3:a:slickremix:feed_them_social:2.7.8:*:*:*:*:wordpress:*:*",
+            "swid": "C163DD09-6A90-49DD-9FDA-551C3B869B5C",
+            "languages": [
+                "en"
+            ],
+            "vendor": "slickremix",
+            "version": "2.7.8",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--bae0a768-fc1d-5b24-942c-01c233d86d30",
+            "name": "Flyte Flyte Console 0.14.0",
+            "cpe": "cpe:2.3:a:flyte:flyte_console:0.14.0:*:*:*:*:*:*:*",
+            "swid": "1BCA5828-177D-4953-AD23-F9E69D734F31",
+            "languages": [
+                "en"
+            ],
+            "vendor": "flyte",
+            "version": "0.14.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--187564ca-fa84-57e3-9abf-58ab4015b416",
+            "name": "Intel Amt Wi-fi 6 Ax200 Firmware 12.0.85",
+            "cpe": "cpe:2.3:o:intel:amt_wi-fi_6_ax200_firmware:12.0.85:*:*:*:*:*:*:*",
+            "swid": "74BDC8C8-9F47-49B1-A689-D4C46DF3497C",
+            "languages": [
+                "en"
+            ],
+            "vendor": "intel",
+            "version": "12.0.85",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--6519c7bf-e139-53b7-b717-e20ac945da37",
+            "name": "Schneider-Electric 140NOE771X1 FIRMWARE ",
+            "cpe": "cpe:2.3:o:schneider-electric:140noe771x1_firmware:-:*:*:*:*:*:*:*",
+            "swid": "20D37BAD-33AA-4B63-9953-D406B3773091",
+            "languages": [
+                "en"
+            ],
+            "vendor": "schneider-electric",
+            "version": "-",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--b550a895-17e0-5f7e-8f2b-c687e93fbee1",
+            "name": "PingCAP TiDB 5.1.0 Alpha",
+            "cpe": "cpe:2.3:a:pingcap:tidb:5.1.0:alpha:*:*:*:*:*:*",
+            "swid": "3489BA74-F672-4199-B51F-8DEEE86D0A35",
+            "languages": [
+                "en"
+            ],
+            "vendor": "pingcap",
+            "version": "5.1.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--2fc6171f-f8a4-5816-b5ea-8931b562054b",
+            "name": "[DEPRECATED] Varnish Cache 6.0.4",
+            "cpe": "cpe:2.3:a:varnish-cache:varnish_cache:6.0.4:*:*:*:-:*:*:*",
+            "swid": "AC9876EE-5C89-489C-B2D5-16332346EBCE",
+            "languages": [
+                "en"
+            ],
+            "vendor": "varnish-cache",
+            "version": "6.0.4",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--a9818a2d-c07f-59d1-815c-a1c69f70dc1f",
+            "name": "SQLPad 3.0.0",
+            "cpe": "cpe:2.3:a:sqlpad:sqlpad:3.0.0:*:*:*:*:*:*:*",
+            "swid": "738E7DE0-5E20-4BDA-B92A-2F232D600D08",
+            "languages": [
+                "en"
+            ],
+            "vendor": "sqlpad",
+            "version": "3.0.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--69559e04-8522-58a7-a2a2-6e2fe974be9f",
+            "name": "ABB Automation Builder 1.2.0",
+            "cpe": "cpe:2.3:a:abb:automation_builder:1.2.0:*:*:*:*:*:*:*",
+            "swid": "9FCCB272-1970-4757-A008-C780678CB87B",
+            "languages": [
+                "en"
+            ],
+            "vendor": "abb",
+            "version": "1.2.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--a0e010d5-62a7-5c65-ab9b-1e7418f97d97",
+            "name": "Vela Worker 0.10.0 Release Candidate 2",
+            "cpe": "cpe:2.3:a:go-vela:worker:0.10.0:rc2:*:*:*:*:*:*",
+            "swid": "577B7012-088A-4B5F-82CE-95F8A7BB8E54",
+            "languages": [
+                "en"
+            ],
+            "vendor": "go-vela",
+            "version": "0.10.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--e6c3ca45-5584-55e7-8139-10a1dd2e0fa1",
+            "name": "Google Chrome 99.0.4844.65",
+            "cpe": "cpe:2.3:a:google:chrome:99.0.4844.65:*:*:*:*:*:*:*",
+            "swid": "C0BA45DA-B801-4517-997A-88A9760DA932",
+            "languages": [
+                "en"
+            ],
+            "vendor": "google",
+            "version": "99.0.4844.65",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--f1e2ae10-44c4-5dd1-b93e-b7edd1ede38f",
+            "name": "ToolJet 1.21.5",
+            "cpe": "cpe:2.3:a:tooljet:tooljet:1.21.5:*:*:*:*:*:*:*",
+            "swid": "80AA4285-3CB6-45CE-BA18-C41D4A919D8B",
+            "languages": [
+                "en"
+            ],
+            "vendor": "tooljet",
+            "version": "1.21.5",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--c1eebc4c-281f-5c66-a677-86b121e7cf40",
+            "name": "Microsoft Windows 10 1507 10.0.10240.18818 on X64",
+            "cpe": "cpe:2.3:o:microsoft:windows_10_1507:10.0.10240.18818:*:*:*:*:*:x64:*",
+            "swid": "081C6ED7-0B84-4395-A085-B1955B92F78A",
+            "languages": [
+                "en"
+            ],
+            "vendor": "microsoft",
+            "version": "10.0.10240.18818",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--a96bf219-ab14-54d2-b777-090075c2c0f9",
+            "name": "OWASP Zed Attack Proxy (ZAP) W2017-11-06",
+            "cpe": "cpe:2.3:a:owasp:zed_attack_proxy:w2017-11-06:*:*:*:*:*:*:*",
+            "swid": "9FF8DE21-F149-48FD-9D8A-FC2AC749095A",
+            "languages": [
+                "en"
+            ],
+            "vendor": "owasp",
+            "version": "w2017-11-06",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--765f7a44-82df-5ccd-b91d-b7cf6f719e7d",
+            "name": "RST Instruments DT2040",
+            "cpe": "cpe:2.3:h:rstinstruments:dt2040:-:*:*:*:*:*:*:*",
+            "swid": "4984C47A-ACD9-483B-B4AF-5F4E99DED1FE",
+            "languages": [
+                "en"
+            ],
+            "vendor": "rstinstruments",
+            "version": "-",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--35ad7097-a776-5596-950f-90f31b363f56",
+            "name": "Saleor 3.7.6",
+            "cpe": "cpe:2.3:a:saleor:saleor:3.7.6:*:*:*:*:*:*:*",
+            "swid": "3DAFCF5B-F4EF-4CC1-B9EB-F477212B3B06",
+            "languages": [
+                "en"
+            ],
+            "vendor": "saleor",
+            "version": "3.7.6",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--36ea7ea6-0dc3-52ec-be6f-17df64fba933",
+            "name": "Amazon aws-sdk-java (AWS SDK for Java) 1.12.135",
+            "cpe": "cpe:2.3:a:amazon:aws-sdk-java:1.12.135:*:*:*:*:*:*:*",
+            "swid": "DA107F35-28DE-4B60-B121-7D80D054DCA4",
+            "languages": [
+                "en"
+            ],
+            "vendor": "amazon",
+            "version": "1.12.135",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--cd5c1273-0ec4-5bff-b108-a502164075e0",
+            "name": "Clash Project Clash 0.15.10 for Windows",
+            "cpe": "cpe:2.3:a:clash_project:clash:0.15.10:*:*:*:*:windows:*:*",
+            "swid": "089F2E9B-3643-48DB-8AAE-F2DB7420A435",
+            "languages": [
+                "en"
+            ],
+            "vendor": "clash_project",
+            "version": "0.15.10",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--f61c98a2-2f24-5b16-895b-ba25fbff51bc",
+            "name": "Google Chrome 96.0.4642.1",
+            "cpe": "cpe:2.3:a:google:chrome:96.0.4642.1:*:*:*:*:*:*:*",
+            "swid": "6D6A0F6F-EA78-44B0-B586-4DFFA01B1088",
+            "languages": [
+                "en"
+            ],
+            "vendor": "google",
+            "version": "96.0.4642.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--2f067bab-5125-5b08-9300-d34199cc0f6c",
+            "name": "Gutenslider Gutenslider 3.0.3 for WordPress",
+            "cpe": "cpe:2.3:a:gutenslider:gutenslider:3.0.3:*:*:*:*:wordpress:*:*",
+            "swid": "BB07CFAE-7DCD-4A82-AD66-AFEFCA1F368B",
+            "languages": [
+                "en"
+            ],
+            "vendor": "gutenslider",
+            "version": "3.0.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--284af843-34a3-57cb-90ab-61291add8b5e",
+            "name": "Jupyter nbconvert 5.4 for Python",
+            "cpe": "cpe:2.3:a:jupyter:nbconvert:5.4:*:*:*:*:python:*:*",
+            "swid": "F46EA8D8-B8D8-4C05-BCD2-5FF7106C089B",
+            "languages": [
+                "en"
+            ],
+            "vendor": "jupyter",
+            "version": "5.4",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--b7a32218-d1e0-592a-91ce-5e7b41c04f08",
+            "name": "IBM Business Automation Workflow 21.0.0.0",
+            "cpe": "cpe:2.3:a:ibm:business_automation_workflow:21.0.0.0:*:*:*:*:*:*:*",
+            "swid": "EE2CAFD3-C110-4869-9216-2E0FB47980EF",
+            "languages": [
+                "en"
+            ],
+            "vendor": "ibm",
+            "version": "21.0.0.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--0afa2b09-d04e-58ea-b090-f90a38a17290",
+            "name": "Think Up Themes Responsive Vector Maps 5.7.1 for WordPress",
+            "cpe": "cpe:2.3:a:thinkupthemes:responsive_vector_maps:5.7.1:*:*:*:*:wordpress:*:*",
+            "swid": "6C854E95-9A73-487A-B7C9-D74D38877B7A",
+            "languages": [
+                "en"
+            ],
+            "vendor": "thinkupthemes",
+            "version": "5.7.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--c2900658-7a84-56b5-924d-74377ee35684",
+            "name": "Tailscale 1.16.0",
+            "cpe": "cpe:2.3:a:tailscale:tailscale:1.16.0:*:*:*:*:*:*:*",
+            "swid": "A119A16E-7A11-49E9-A100-882DC57B6E88",
+            "languages": [
+                "en"
+            ],
+            "vendor": "tailscale",
+            "version": "1.16.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--c833a3c0-8aed-5433-9c04-c8c0c8ff56e2",
+            "name": "weDevs WP Project Manager 2.3.1 for WordPress",
+            "cpe": "cpe:2.3:a:wedevs:wp_project_manager:2.3.1:*:*:*:*:wordpress:*:*",
+            "swid": "8EF793C9-0C40-4A14-B2CE-866A6E4F31CF",
+            "languages": [
+                "en"
+            ],
+            "vendor": "wedevs",
+            "version": "2.3.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--8661b541-c7ca-5102-82ce-1ab38d22f626",
+            "name": "YIKES Inc Custom Product Tabs for WooCommerce 1.6.11 for WordPress",
+            "cpe": "cpe:2.3:a:yikesinc:custom_product_tabs_for_woocommerce:1.6.11:*:*:*:*:wordpress:*:*",
+            "swid": "95E96482-2264-41CE-8BCD-11A56C807F88",
+            "languages": [
+                "en"
+            ],
+            "vendor": "yikesinc",
+            "version": "1.6.11",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--ecbe7181-b8ac-5265-8f47-fcf7578a672e",
+            "name": "Moxa MGate MB3170-S-SC",
+            "cpe": "cpe:2.3:h:moxa:mgate_mb3170-s-sc:-:*:*:*:*:*:*:*",
+            "swid": "391F9D35-2C32-4AF5-A3C2-CC6CD5452E17",
+            "languages": [
+                "en"
+            ],
+            "vendor": "moxa",
+            "version": "-",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--d814fab8-f4a4-5205-853d-6ab01ee718ba",
+            "name": "Ferdium 6.0.0 Nightly94",
+            "cpe": "cpe:2.3:a:ferdium:ferdium:6.0.0:nightly94:*:*:*:*:*:*",
+            "swid": "C514D996-1839-4EC1-9EE6-CCEFB8079DBB",
+            "languages": [
+                "en"
+            ],
+            "vendor": "ferdium",
+            "version": "6.0.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--a191161b-6a1f-5347-888c-379ef13724b0",
+            "name": "Heroic Labs Nakama 2.0.3",
+            "cpe": "cpe:2.3:a:heroiclabs:nakama:2.0.3:*:*:*:*:*:*:*",
+            "swid": "F5E230D4-7B0D-4912-A2E2-36F65748DF73",
+            "languages": [
+                "en"
+            ],
+            "vendor": "heroiclabs",
+            "version": "2.0.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--997786e7-efca-5011-805d-cb0c23dfe295",
+            "name": "HTTP::Daemon Project HTTP::Daemon 6.13",
+            "cpe": "cpe:2.3:a:http\\:\\:daemon_project:http\\:\\:daemon:6.13:*:*:*:*:*:*:*",
+            "swid": "4125033C-ADD1-430C-8DEE-D5ACD12034E6",
+            "languages": [
+                "en"
+            ],
+            "vendor": "http\\",
+            "version": "daemon_project",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--59bc6098-c522-5076-923c-df11368fd35b",
+            "name": "FastLine Media Beaver Builder Lite Edition for WordPress",
+            "cpe": "cpe:2.3:a:fastlinemedia:beaver_builder:-:*:*:*:lite:wordpress:*:*",
+            "swid": "69E45ABB-CD5F-4EC4-8A5D-B398D39E7929",
+            "languages": [
+                "en"
+            ],
+            "vendor": "fastlinemedia",
+            "version": "-",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--bc8d700e-004a-5973-88c4-ffe94b2c0d65",
+            "name": "Google Chrome 93.0.4563.1",
+            "cpe": "cpe:2.3:a:google:chrome:93.0.4563.1:*:*:*:*:*:*:*",
+            "swid": "A2D7D161-B706-46B7-A96F-89347DE6D62D",
+            "languages": [
+                "en"
+            ],
+            "vendor": "google",
+            "version": "93.0.4563.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--34638123-5db5-5e73-88ce-f85498675b43",
+            "name": "Jenkins Pipeline: Build Step 2.11 for Jenkins",
+            "cpe": "cpe:2.3:a:jenkins:pipeline\\:_build_step:2.11:*:*:*:*:jenkins:*:*",
+            "swid": "FE02BBF3-8CC5-4EF5-B808-280E184C884C",
+            "languages": [
+                "en"
+            ],
+            "vendor": "jenkins",
+            "version": "_build_step",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--cda83a66-c645-5265-baa3-e32fbb9b1c0f",
+            "name": "file-type Project file-type 13.0.3 for Node.js",
+            "cpe": "cpe:2.3:a:file-type_project:file-type:13.0.3:*:*:*:*:node.js:*:*",
+            "swid": "A04FA6F8-0B57-41C3-8AB7-6E1A7F4C4A3B",
+            "languages": [
+                "en"
+            ],
+            "vendor": "file-type_project",
+            "version": "13.0.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--05b7bc38-8c31-5b24-b3a7-7868bd578c31",
+            "name": "ASUS RT-AC1750 B1  FIRMWARE 3.0.0.4.386.46061",
+            "cpe": "cpe:2.3:o:asus:rt-ac1750_b1__firmware:3.0.0.4.386.46061:*:*:*:*:*:*:*",
+            "swid": "BF28FB98-7635-4ED3-9B65-F5A86FE54DD7",
+            "languages": [
+                "en"
+            ],
+            "vendor": "asus",
+            "version": "3.0.0.4.386.46061",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--8e554848-0a28-5190-b1aa-c790379f3e7d",
+            "name": "WAGO 750-8212/000-100 Firmware",
+            "cpe": "cpe:2.3:o:wago:750-8212\\/000-100_firmware:-:*:*:*:*:*:*:*",
+            "swid": "52AD075B-F52A-41FD-8093-4896CE12D1B5",
+            "languages": [
+                "en"
+            ],
+            "vendor": "wago",
+            "version": "-",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--bc8850a7-44b1-5044-a7df-d8bcbb02fdec",
+            "name": "Cap\u2019n Proto capnp 0.0.2 for Rust",
+            "cpe": "cpe:2.3:a:capnproto:capnp:0.0.2:*:*:*:*:rust:*:*",
+            "swid": "311BB958-856D-46B6-910F-2D14FD16CAC9",
+            "languages": [
+                "en"
+            ],
+            "vendor": "capnproto",
+            "version": "0.0.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--f629dda4-256a-55f6-b9ae-1f8064c0a367",
+            "name": "Fortinet FortiToken Mobile (FTM) 4.0.3 for Windows",
+            "cpe": "cpe:2.3:a:fortinet:fortitoken_mobile:4.0.3:*:*:*:*:windows:*:*",
+            "swid": "2C8D3FFB-6898-4091-AF8D-A7226D29CC24",
+            "languages": [
+                "en"
+            ],
+            "vendor": "fortinet",
+            "version": "4.0.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--7ee147d1-7d24-5039-bfff-93e49a3085cf",
+            "name": "Five Star Plugins Five Star Restaurant Reservations 2.4.13 for WordPress",
+            "cpe": "cpe:2.3:a:fivestarplugins:five_star_restaurant_reservations:2.4.13:*:*:*:*:wordpress:*:*",
+            "swid": "DFBAF6AB-C020-4410-A10D-E9B90EDE3720",
+            "languages": [
+                "en"
+            ],
+            "vendor": "fivestarplugins",
+            "version": "2.4.13",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--509b73bb-45ae-59a3-805d-bbe0a8752a99",
+            "name": "Amazon SSM Agent 2.0.755.0",
+            "cpe": "cpe:2.3:a:amazon:amazon_ssm_agent:2.0.755.0:*:*:*:*:*:*:*",
+            "swid": "9EEA33A7-2A2E-49A1-96B4-20BB60039B71",
+            "languages": [
+                "en"
+            ],
+            "vendor": "amazon",
+            "version": "2.0.755.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--925dceab-2883-56ea-9d59-f231df8a8f8c",
+            "name": "[DEPRECATED] follow-redirects Project follow-redirects 1.5.7 Node.js Edition",
+            "cpe": "cpe:2.3:a:follow-redirects_project:follow-redirects:1.5.7:*:*:*:node.js:*:*:*",
+            "swid": "798543BA-DFAA-45DD-A2EE-587C1310A517",
+            "languages": [
+                "en"
+            ],
+            "vendor": "follow-redirects_project",
+            "version": "1.5.7",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--17cf977e-24f9-59ee-8bc5-7dfb5fb7c732",
+            "name": "Acer VERITON N4620G FIRMWARE P11.A2L",
+            "cpe": "cpe:2.3:o:acer:veriton_n4620g_firmware:p11.a2l:*:*:*:*:*:*:*",
+            "swid": "67EB762C-FF29-4229-B8E9-5DBE00982AD6",
+            "languages": [
+                "en"
+            ],
+            "vendor": "acer",
+            "version": "p11.a2l",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--99c2002b-50f9-5074-a74a-8c0c1f32a250",
+            "name": "Vuetify 2.0.0 Alpha 3",
+            "cpe": "cpe:2.3:a:vuetifyjs:vuetify:2.0.0:alpha3:*:*:*:*:*:*",
+            "swid": "154D980A-D59A-4A3B-8836-859F2B1C1C09",
+            "languages": [
+                "en"
+            ],
+            "vendor": "vuetifyjs",
+            "version": "2.0.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--f8a0265b-e1ee-59e9-8350-655a406fb757",
+            "name": "Amazon aws-sdk-java (AWS SDK for Java) 1.11.367",
+            "cpe": "cpe:2.3:a:amazon:aws-sdk-java:1.11.367:*:*:*:*:*:*:*",
+            "swid": "73616D54-BD52-40ED-B748-A4DAE669EC7E",
+            "languages": [
+                "en"
+            ],
+            "vendor": "amazon",
+            "version": "1.11.367",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--d9061b11-33a1-55ba-8a25-6609919d8303",
+            "name": "Signal Private Messenger 4.44.1 for Android",
+            "cpe": "cpe:2.3:a:signal:private_messenger:4.44.1:*:*:*:*:android:*:*",
+            "swid": "28CDC6F0-8493-4B8B-BB88-F5114D6AA13A",
+            "languages": [
+                "en"
+            ],
+            "vendor": "signal",
+            "version": "4.44.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--a4f7fe46-f663-550b-a734-a96cec6724b6",
+            "name": "QNAP Photo Station 5.4.12",
+            "cpe": "cpe:2.3:a:qnap:photo_station:5.4.12:*:*:*:*:*:*:*",
+            "swid": "7AE9E71E-D0DC-4FB9-B480-D40313916527",
+            "languages": [
+                "en"
+            ],
+            "vendor": "qnap",
+            "version": "5.4.12",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--4b21ebf8-3cca-5902-b5d9-d69d6c2561e6",
+            "name": "innovaphone AG Innovaphone Firmware 12r2 Service Release 10",
+            "cpe": "cpe:2.3:o:innovaphone:innovaphone_firmware:12r2:service_release_10:*:*:*:*:*:*",
+            "swid": "E351231F-6146-476C-BD93-31466D57B5C9",
+            "languages": [
+                "en"
+            ],
+            "vendor": "innovaphone",
+            "version": "12r2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--6063e51c-8dc9-5603-b7e4-d1dd79ef532f",
+            "name": "Kexec-tools Project Kexec-tools 2.0.14 Release Candidate 1",
+            "cpe": "cpe:2.3:a:kexec-tools_project:kexec-tools:2.0.14:rc1:*:*:*:*:*:*",
+            "swid": "FD4A6543-8CCD-4AAB-8C9D-1D0837882D7B",
+            "languages": [
+                "en"
+            ],
+            "vendor": "kexec-tools_project",
+            "version": "2.0.14",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--2c06c7c9-66f0-569e-8eb9-ad016089996d",
+            "name": "Nextcloud Talk 3.1.0 for Android",
+            "cpe": "cpe:2.3:a:nextcloud:talk:3.1.0:-:*:*:*:android:*:*",
+            "swid": "C3C8C42A-E92A-4B4A-8104-CB438635741F",
+            "languages": [
+                "en"
+            ],
+            "vendor": "nextcloud",
+            "version": "3.1.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--3e7fda1f-64d9-579b-9b96-c7112419ae92",
+            "name": "Google Chrome 105.0.5195.1",
+            "cpe": "cpe:2.3:a:google:chrome:105.0.5195.1:*:*:*:*:*:*:*",
+            "swid": "E100A443-192F-4D7F-AB32-5FBBDCA83BA6",
+            "languages": [
+                "en"
+            ],
+            "vendor": "google",
+            "version": "105.0.5195.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--290989fe-38a3-5b36-92e9-bcb1ed18a4ed",
+            "name": "Jenkins Parameterized Remote Trigger 3.1.6.2 for Jenkins",
+            "cpe": "cpe:2.3:a:jenkins:parameterized_remote_trigger:3.1.6.2:*:*:*:*:jenkins:*:*",
+            "swid": "7CB32610-45A7-4A01-8393-F6EC62674359",
+            "languages": [
+                "en"
+            ],
+            "vendor": "jenkins",
+            "version": "3.1.6.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--9bd3b706-e43d-58b8-b216-a9ddcd680a0f",
+            "name": "Advanced Micro Devices (AMD) AMD 3020E",
+            "cpe": "cpe:2.3:h:amd:amd_3020e:-:*:*:*:*:*:*:*",
+            "swid": "BA05CEB7-ED2C-4C4C-AB82-4002E09823D2",
+            "languages": [
+                "en"
+            ],
+            "vendor": "amd",
+            "version": "-",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--0c687cea-aded-5f50-8276-ea5e49ef3922",
+            "name": "[DEPRECATED] Varnish-software Varnich Cache 6.0.5 - Edition",
+            "cpe": "cpe:2.3:a:varnish-software:varnich_cache:6.0.5:*:*:*:-:*:*:*",
+            "swid": "C048F75E-B2F1-4099-A483-803CE774C6CC",
+            "languages": [
+                "en"
+            ],
+            "vendor": "varnish-software",
+            "version": "6.0.5",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--9bb777d9-3017-5d4d-8717-74c4417499c2",
+            "name": "Oracle Terracotta Quartz Scheduler Mapviewer 18c",
+            "cpe": "cpe:2.3:a:oracle:terracotta_quartz_scheduler_mapviewer:18c:*:*:*:*:*:*:*",
+            "swid": "D1DB0F27-D70C-4E92-8B71-6604DB757E97",
+            "languages": [
+                "en"
+            ],
+            "vendor": "oracle",
+            "version": "18c",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--2ab200c4-4b78-5f75-9252-1d2dbbe194e8",
+            "name": "A WP Life Event Monster 1.1.15 for WordPress",
+            "cpe": "cpe:2.3:a:awplife:event_monster:1.1.15:*:*:*:*:wordpress:*:*",
+            "swid": "126C6EA9-F02F-42DF-BC15-A1F517CC72DE",
+            "languages": [
+                "en"
+            ],
+            "vendor": "awplife",
+            "version": "1.1.15",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--37779b72-dd53-5bc5-a9f4-fe5b3ef8e363",
+            "name": "LS Electric XBM-DP32HP",
+            "cpe": "cpe:2.3:h:ls-electric:xbm-dp32hp:-:*:*:*:*:*:*:*",
+            "swid": "6066EB64-CE4A-40BA-B814-1B23F457C500",
+            "languages": [
+                "en"
+            ],
+            "vendor": "ls-electric",
+            "version": "-",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--2fcd4bf3-aa90-5a9e-9d3b-bdf4c0ca68d2",
+            "name": "Microsoft Windows 10 1607 10.0.14393.4532 on X86",
+            "cpe": "cpe:2.3:o:microsoft:windows_10_1607:10.0.14393.4532:*:*:*:*:*:x86:*",
+            "swid": "F727FE36-2ABF-4CCB-A882-1EE2CEC72300",
+            "languages": [
+                "en"
+            ],
+            "vendor": "microsoft",
+            "version": "10.0.14393.4532",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--19f48690-ff8e-54df-80a5-660af02ae59e",
+            "name": "Google Chrome 94.0.4606.57",
+            "cpe": "cpe:2.3:a:google:chrome:94.0.4606.57:*:*:*:*:*:*:*",
+            "swid": "01068BAB-A4AB-497E-86E9-487CB0BC4EA1",
+            "languages": [
+                "en"
+            ],
+            "vendor": "google",
+            "version": "94.0.4606.57",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--d2f4fcf3-0cd8-5362-821b-4ba8fd415322",
+            "name": "Snyk Gradle CLI 3.0.0 for Snyk",
+            "cpe": "cpe:2.3:a:snyk:snyk_gradle_cli:3.0.0:*:*:*:*:snyk:*:*",
+            "swid": "9B17B676-90F2-4161-8BAF-AA8CB0F609A7",
+            "languages": [
+                "en"
+            ],
+            "vendor": "snyk",
+            "version": "3.0.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--c767b3e8-7673-5bb9-adf0-577e4d134ee4",
+            "name": "Contest-Gallery Contest Gallery 11.1.3 for WordPress",
+            "cpe": "cpe:2.3:a:contest-gallery:contest_gallery:11.1.3:*:*:*:*:wordpress:*:*",
+            "swid": "C78A1085-91DA-45D7-9910-C4F2CC125798",
+            "languages": [
+                "en"
+            ],
+            "vendor": "contest-gallery",
+            "version": "11.1.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--d0359c7f-5dfa-5600-a07f-5f318aebfc9e",
+            "name": "Apache Software Foundation Bookkeeper 4.7.2",
+            "cpe": "cpe:2.3:a:apache:bookkeeper:4.7.2:*:*:*:*:*:*:*",
+            "swid": "4DBE204B-CFBE-452F-918F-AC01A132222E",
+            "languages": [
+                "en"
+            ],
+            "vendor": "apache",
+            "version": "4.7.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--0acae831-fe05-547d-a4c7-0c9be08e0726",
+            "name": "Linux Kernel 5.10.141",
+            "cpe": "cpe:2.3:o:linux:linux_kernel:5.10.141:*:*:*:*:*:*:*",
+            "swid": "3E72C4BF-107C-4C73-AD2D-13564B590074",
+            "languages": [
+                "en"
+            ],
+            "vendor": "linux",
+            "version": "5.10.141",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--f9b699d2-bd53-5b73-96d1-5ee50557ca06",
+            "name": "Suse Rancher 2.6.3 Release Candidate 2",
+            "cpe": "cpe:2.3:a:suse:rancher:2.6.3:rc2:*:*:*:*:*:*",
+            "swid": "66B56132-67B1-44F0-9808-2F4E249F50BD",
+            "languages": [
+                "en"
+            ],
+            "vendor": "suse",
+            "version": "2.6.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--2b8421b0-b931-5a19-b887-fceda236c60f",
+            "name": "BytesForAll Atahualpa 3.1.6 for WordPress",
+            "cpe": "cpe:2.3:a:bytesforall:atahualpa:3.1.6:*:*:*:*:wordpress:*:*",
+            "swid": "AE396E06-8352-4E7A-8B96-68EFC1716527",
+            "languages": [
+                "en"
+            ],
+            "vendor": "bytesforall",
+            "version": "3.1.6",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--cbca1fee-de83-533c-a5d8-8bd2a0017fc9",
+            "name": "Softmotions IOWOW 1.0.6",
+            "cpe": "cpe:2.3:a:softmotions:iowow:1.0.6:*:*:*:*:*:*:*",
+            "swid": "2D001703-E697-4D55-AB32-04604A373423",
+            "languages": [
+                "en"
+            ],
+            "vendor": "softmotions",
+            "version": "1.0.6",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--31e3c8cd-b23d-5af7-80d9-0b120ab6be47",
+            "name": "TeslaMate Project TeslaMate 1.23.0",
+            "cpe": "cpe:2.3:a:teslamate_project:teslamate:1.23.0:*:*:*:*:*:*:*",
+            "swid": "C89DAF0D-4141-461D-B5C2-29A0C88302DC",
+            "languages": [
+                "en"
+            ],
+            "vendor": "teslamate_project",
+            "version": "1.23.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--01134bb3-a90e-5e0d-ad19-79eea4f7a0cd",
+            "name": "Count Countly Server 20.04.1.3",
+            "cpe": "cpe:2.3:a:count:countly_server:20.04.1.3:*:*:*:*:*:*:*",
+            "swid": "EF82D1E6-0F89-4B63-9636-32E24FC0804F",
+            "languages": [
+                "en"
+            ],
+            "vendor": "count",
+            "version": "20.04.1.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--bd6c5846-9761-5505-89dd-9827e2ea85df",
+            "name": "Joinmastodon Mastodon 4.0.1",
+            "cpe": "cpe:2.3:a:joinmastodon:mastodon:4.0.1:*:*:*:*:*:*:*",
+            "swid": "3BFE8A02-C528-4DDC-84C5-D7E9FE5F0D62",
+            "languages": [
+                "en"
+            ],
+            "vendor": "joinmastodon",
+            "version": "4.0.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--d5d49968-5950-5ccd-bf9e-b955361e4a90",
+            "name": "WpDevArt Booking Calendar 2.5.0 for WordPress",
+            "cpe": "cpe:2.3:a:wpdevart:booking_calendar:2.5.0:*:*:*:*:wordpress:*:*",
+            "swid": "87F65026-0217-475D-9D12-E54CCC7FFF6D",
+            "languages": [
+                "en"
+            ],
+            "vendor": "wpdevart",
+            "version": "2.5.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--3adcb542-59b5-58e9-839f-5d4c057bf030",
+            "name": "Svelte 1.50.1 for Node.js",
+            "cpe": "cpe:2.3:a:svelte:svelte:1.50.1:*:*:*:*:node.js:*:*",
+            "swid": "5291DD25-C481-45D7-87AA-BCAEA9FAB8E8",
+            "languages": [
+                "en"
+            ],
+            "vendor": "svelte",
+            "version": "1.50.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--7fb52054-bc11-5943-80f1-dbcdbeaabcda",
+            "name": "Media Browser Emby Server 3.0.5724.3",
+            "cpe": "cpe:2.3:a:emby:emby:3.0.5724.3:*:*:*:*:*:*:*",
+            "swid": "1CDDD282-7187-4F43-9D60-BB8C9BC5EC8C",
+            "languages": [
+                "en"
+            ],
+            "vendor": "emby",
+            "version": "3.0.5724.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--7c684fde-403d-5d0f-bdfd-af0deaaf0a71",
+            "name": "Modern Tribe The Events Calendar 5.6.0 for WordPress",
+            "cpe": "cpe:2.3:a:tri:the_events_calendar:5.6.0:*:*:*:*:wordpress:*:*",
+            "swid": "92244FCD-20CE-473D-9BC3-71FE63E0CDFF",
+            "languages": [
+                "en"
+            ],
+            "vendor": "tri",
+            "version": "5.6.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--01712476-31fd-5aac-88df-f987d25aff6e",
+            "name": "Noptin 1.2.0 for WordPress",
+            "cpe": "cpe:2.3:a:noptin:noptin:1.2.0:*:*:*:*:wordpress:*:*",
+            "swid": "33FEF286-800C-44A9-91C1-16A860260B23",
+            "languages": [
+                "en"
+            ],
+            "vendor": "noptin",
+            "version": "1.2.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--8c2e128d-77d1-5287-a590-b329cb7d166d",
+            "name": "[DEPRECATED] Atlassian Jira Software Data Center 8.2.2",
+            "cpe": "cpe:2.3:a:atlassian:jira_software_data_center:8.2.2:*:*:*:*:*:*:*",
+            "swid": "3003D717-FA55-47C9-8974-183DB55A5518",
+            "languages": [
+                "en"
+            ],
+            "vendor": "atlassian",
+            "version": "8.2.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--c992deb4-114b-5178-b8b4-8e10296ebb95",
+            "name": "Lightspeed HQ Ecwid Ecommerce Shopping Cart 6.3 for WordPress",
+            "cpe": "cpe:2.3:a:lightspeedhq:ecwid_ecommerce_shopping_cart:6.3:*:*:*:*:wordpress:*:*",
+            "swid": "701919EB-E995-4D73-98CD-F3ABC33EC410",
+            "languages": [
+                "en"
+            ],
+            "vendor": "lightspeedhq",
+            "version": "6.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--c8c13708-d52b-5ca2-b5db-c197536b114c",
+            "name": "Opera Browser 61.0",
+            "cpe": "cpe:2.3:a:opera:opera_browser:61.0:*:*:*:*:*:*:*",
+            "swid": "E0DED1BC-B9C7-45F7-93B3-09F5056A8D48",
+            "languages": [
+                "en"
+            ],
+            "vendor": "opera",
+            "version": "61.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--035534c5-c80a-59a1-83cb-e945802e6a71",
+            "name": "Pilz PASvisu 1.12.0",
+            "cpe": "cpe:2.3:a:pilz:pasvisu:1.12.0:*:*:*:*:*:*:*",
+            "swid": "6E861744-CAC6-4078-AC0E-1C8057EFF5A8",
+            "languages": [
+                "en"
+            ],
+            "vendor": "pilz",
+            "version": "1.12.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--7e5dee8c-7d28-58cd-8b10-8131cd837a2e",
+            "name": "Churchdb Churchinfo 1.2.1",
+            "cpe": "cpe:2.3:a:churchdb:churchinfo:1.2.1:*:*:*:*:*:*:*",
+            "swid": "0CCCDFD9-0F10-4856-B79D-4228A7127AC7",
+            "languages": [
+                "en"
+            ],
+            "vendor": "churchdb",
+            "version": "1.2.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--4d875f76-aa46-5c38-9780-796cc992ac61",
+            "name": "PwnDoc Project PwnDoc 0.5.2",
+            "cpe": "cpe:2.3:a:pwndoc_project:pwndoc:0.5.2:*:*:*:*:*:*:*",
+            "swid": "F56C730A-FAB3-4364-BD38-2F3B27530017",
+            "languages": [
+                "en"
+            ],
+            "vendor": "pwndoc_project",
+            "version": "0.5.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--bf0e5e40-850d-556c-97f6-552a5d4ffbed",
+            "name": "gRPC 1.10.0",
+            "cpe": "cpe:2.3:a:grpc:grpc:1.10.0:*:*:*:*:-:*:*",
+            "swid": "AA1E5DF2-49CB-465D-8ABF-C116AA038518",
+            "languages": [
+                "en"
+            ],
+            "vendor": "grpc",
+            "version": "1.10.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--c9738e08-991d-568e-a4a5-745b46cfe412",
+            "name": "Chamilo 1.11.10",
+            "cpe": "cpe:2.3:a:chamilo:chamilo:1.11.10:*:*:*:*:*:*:*",
+            "swid": "8646996E-BF61-406A-84B9-202DCDAA6D10",
+            "languages": [
+                "en"
+            ],
+            "vendor": "chamilo",
+            "version": "1.11.10",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--275ebdd5-3c03-5154-b060-f480bb9a8e77",
+            "name": "Arvados 0.1.20140503212217 for Ruby",
+            "cpe": "cpe:2.3:a:arvados:arvados:0.1.20140503212217:*:*:*:*:ruby:*:*",
+            "swid": "421D8059-BFA9-4D89-9B17-8FEA40CE4C08",
+            "languages": [
+                "en"
+            ],
+            "vendor": "arvados",
+            "version": "0.1.20140503212217",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--5947b07e-8862-5b97-a630-464be23ed6ad",
+            "name": "SAP NetWeaver Application Server ABAP KRNL64NUC 7.22EXT",
+            "cpe": "cpe:2.3:a:sap:netweaver_application_server_abap:krnl64nuc_7.22ext:*:*:*:*:*:*:*",
+            "swid": "95080B7C-7606-4D63-87C4-52660D461B91",
+            "languages": [
+                "en"
+            ],
+            "vendor": "sap",
+            "version": "krnl64nuc_7.22ext",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--8ef8df5c-6b62-518d-b445-53995d10654a",
+            "name": "EC-CUBE E-mail Newsletter Management (mail-magazine-plugin) 0.0.1 EC-CUBE",
+            "cpe": "cpe:2.3:a:ec-cube:e-mail_newsletter_management:0.0.1:*:*:*:*:ec-cube:*:*",
+            "swid": "8468A1C8-433E-4549-B8DA-472EC4F83AE1",
+            "languages": [
+                "en"
+            ],
+            "vendor": "ec-cube",
+            "version": "0.0.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--a1654b35-595d-5092-9f6d-93112ad91c4d",
+            "name": "Cleantalk Antispam 5.169 for WordPress",
+            "cpe": "cpe:2.3:a:cleantalk:antispam:5.169:*:*:*:*:wordpress:*:*",
+            "swid": "18FBF721-A2AC-46BF-87D7-E23DA495ADEA",
+            "languages": [
+                "en"
+            ],
+            "vendor": "cleantalk",
+            "version": "5.169",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--3d637558-3141-519e-87fa-269f8d9ad8fa",
+            "name": "Jenkins Xunit 0.1.2 for Jenkins",
+            "cpe": "cpe:2.3:a:jenkins:xunit:0.1.2:*:*:*:*:jenkins:*:*",
+            "swid": "BBD4CCEB-A0E1-4DF4-BBAB-39A7670893B2",
+            "languages": [
+                "en"
+            ],
+            "vendor": "jenkins",
+            "version": "0.1.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--f71e7345-6430-55f0-951d-c0c16832082c",
+            "name": "Google Chrome 100.0.4862.1",
+            "cpe": "cpe:2.3:a:google:chrome:100.0.4862.1:*:*:*:*:*:*:*",
+            "swid": "9513F580-C080-4FF4-A360-786F56AC41C3",
+            "languages": [
+                "en"
+            ],
+            "vendor": "google",
+            "version": "100.0.4862.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--359e915c-6ce3-5a86-a483-c84c8caf1301",
+            "name": "Ethereum eth-account 0.2.0 for Python",
+            "cpe": "cpe:2.3:a:ethereum:eth-account:0.2.0:-:*:*:*:python:*:*",
+            "swid": "DABF4256-676E-48D8-BFE1-1FB1ED385BA4",
+            "languages": [
+                "en"
+            ],
+            "vendor": "ethereum",
+            "version": "0.2.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--599c2068-4c39-5381-96c8-d0e0e914687c",
+            "name": "Sails Skipper 0.6.3 for Node.js",
+            "cpe": "cpe:2.3:a:sailsjs:skipper:0.6.3:*:*:*:*:node.js:*:*",
+            "swid": "AE23D60C-FE5F-4386-9E21-53D79952C781",
+            "languages": [
+                "en"
+            ],
+            "vendor": "sailsjs",
+            "version": "0.6.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--f9a104f6-3037-5804-95f1-91e679fbc132",
+            "name": "HCL Technologies OneTest Server 10.0",
+            "cpe": "cpe:2.3:a:hcltech:onetest_server:10.0:*:*:*:*:*:*:*",
+            "swid": "0C5DDE5C-8294-4F94-8824-5E0467F8A2F1",
+            "languages": [
+                "en"
+            ],
+            "vendor": "hcltech",
+            "version": "10.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--6727b4fc-5356-5a16-9490-d4827f179af9",
+            "name": "Tailscale 0.99.1",
+            "cpe": "cpe:2.3:a:tailscale:tailscale:0.99.1:*:*:*:*:*:*:*",
+            "swid": "670BD227-4D33-4BE3-A36E-04CCC02EDDB9",
+            "languages": [
+                "en"
+            ],
+            "vendor": "tailscale",
+            "version": "0.99.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--3b7383a8-2707-5f1f-abc2-e245f5aa32ce",
+            "name": "Geoserver Geowebcache 1.5.1",
+            "cpe": "cpe:2.3:a:geoserver:geowebcache:1.5.1:*:*:*:*:*:*:*",
+            "swid": "447276E1-2ECC-4929-BF73-1DB3F6BF19F9",
+            "languages": [
+                "en"
+            ],
+            "vendor": "geoserver",
+            "version": "1.5.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--fbaec3ac-a43b-5f69-ae2d-ddaf69a22c87",
+            "name": "Jenkins Batch Task 1.9 for Jenkins",
+            "cpe": "cpe:2.3:a:jenkins:batch_task:1.9:*:*:*:*:jenkins:*:*",
+            "swid": "92618ABB-0E55-433F-AF64-5AC49DFC685A",
+            "languages": [
+                "en"
+            ],
+            "vendor": "jenkins",
+            "version": "1.9",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--0955a9ed-ad26-509c-a10a-0be740b4d1f0",
+            "name": "Occlum Project Occlum 0.23.3 for Software Guard Extensions",
+            "cpe": "cpe:2.3:a:occlum_project:occlum:0.23.3:*:*:*:*:software_guard_extensions:*:*",
+            "swid": "CBB5B914-74F4-47E8-BE62-39FB5497A8AA",
+            "languages": [
+                "en"
+            ],
+            "vendor": "occlum_project",
+            "version": "0.23.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--56aa88c2-2c7b-58a1-a72e-0c1bcb7ee137",
+            "name": "HelpSystems GoAnywhere Managed File Transfer (GoAnywhere MFT) 5.4.1",
+            "cpe": "cpe:2.3:a:helpsystems:goanywhere_managed_file_transfer:5.4.1:*:*:*:*:*:*:*",
+            "swid": "9B566A5C-ADEC-4594-AC76-63BBFC5A8F82",
+            "languages": [
+                "en"
+            ],
+            "vendor": "helpsystems",
+            "version": "5.4.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--91c6f5d4-62ef-57d2-8285-86ee6ec5ec59",
+            "name": "Podman Project Podman 4.0.0 -",
+            "cpe": "cpe:2.3:a:podman_project:podman:4.0.0:-:*:*:*:*:*:*",
+            "swid": "963FBD78-0F36-45D2-BE06-195BAFF1CAC3",
+            "languages": [
+                "en"
+            ],
+            "vendor": "podman_project",
+            "version": "4.0.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--099da3dd-2de4-5e62-b2b5-f7519f037c5a",
+            "name": "Linux Kernel 5.19 Release Candidate 4",
+            "cpe": "cpe:2.3:o:linux:linux_kernel:5.19:rc4:*:*:*:*:*:*",
+            "swid": "5EC4698A-FD3A-4387-B636-810BCCBE2F15",
+            "languages": [
+                "en"
+            ],
+            "vendor": "linux",
+            "version": "5.19",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--3194cd77-f9f9-5ba9-ba69-803175436e6d",
+            "name": "IBM Cognos Analytics 11.2.1",
+            "cpe": "cpe:2.3:a:ibm:cognos_analytics:11.2.1:*:*:*:*:*:*:*",
+            "swid": "DD4506FE-DF98-4283-AE4D-599D030D52CF",
+            "languages": [
+                "en"
+            ],
+            "vendor": "ibm",
+            "version": "11.2.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--23d34ee5-bc00-5ba4-b753-72b2f3ef2fef",
+            "name": "Rocket.Chat 4.6.2",
+            "cpe": "cpe:2.3:a:rocket.chat:rocket.chat:4.6.2:*:*:*:*:*:*:*",
+            "swid": "5F344B97-1907-4C91-8A4D-A476BE772F47",
+            "languages": [
+                "en"
+            ],
+            "vendor": "rocket.chat",
+            "version": "4.6.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--6c936752-5592-5846-bac3-30943b4f9ed5",
+            "name": "University of Central Florida Materia 3.4.3",
+            "cpe": "cpe:2.3:a:ucf:materia:3.4.3:*:*:*:*:*:*:*",
+            "swid": "6E4EEADE-BFD3-4786-988C-7A6426123748",
+            "languages": [
+                "en"
+            ],
+            "vendor": "ucf",
+            "version": "3.4.3",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--b02debc7-cd99-5232-a6e6-656e61118865",
+            "name": "XpressEngine XpressEngine 1.7.7.1",
+            "cpe": "cpe:2.3:a:xpressengine:xpressengine:1.7.7.1:*:*:*:*:*:*:*",
+            "swid": "B1CB3CCB-FFCA-4B26-ACB2-BAD861FE5EFB",
+            "languages": [
+                "en"
+            ],
+            "vendor": "xpressengine",
+            "version": "1.7.7.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--934deea2-788e-5ad9-a53a-8178d81e883e",
+            "name": "Google Chrome 95.0.4611.2",
+            "cpe": "cpe:2.3:a:google:chrome:95.0.4611.2:*:*:*:*:*:*:*",
+            "swid": "40A7FF29-D0CD-46F3-9D67-F466878C01A2",
+            "languages": [
+                "en"
+            ],
+            "vendor": "google",
+            "version": "95.0.4611.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--d4547dcf-ea2c-5d09-a6ba-3911e1c676ac",
+            "name": "CLTPHP 6.0",
+            "cpe": "cpe:2.3:a:cltphp:cltphp:6.0:*:*:*:*:*:*:*",
+            "swid": "52208AB9-2862-4DE3-BA8F-B29BF9E1311E",
+            "languages": [
+                "en"
+            ],
+            "vendor": "cltphp",
+            "version": "6.0",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--2b94038c-7ecc-594f-8135-c5db485228f2",
+            "name": "OpenPOWER Skiboot 5.9.1",
+            "cpe": "cpe:2.3:o:openpowerfoundation:skiboot:5.9.1:*:*:*:*:*:*:*",
+            "swid": "A997EAE6-1C4E-4E10-889C-3CEC94A57AEE",
+            "languages": [
+                "en"
+            ],
+            "vendor": "openpowerfoundation",
+            "version": "5.9.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--216cf7da-9004-52f5-8e0a-60bc46383a07",
+            "name": "Atlassian Jira Data Center 7.2.2",
+            "cpe": "cpe:2.3:a:atlassian:jira_data_center:7.2.2:*:*:*:*:*:*:*",
+            "swid": "F9B3047E-411C-4FDB-9754-10CB36B6706F",
+            "languages": [
+                "en"
+            ],
+            "vendor": "atlassian",
+            "version": "7.2.2",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        }
+    ]
+}

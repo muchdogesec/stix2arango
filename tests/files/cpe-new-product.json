@@ -1,0 +1,40 @@
+{
+    "type": "bundle",
+    "id": "bundle--87ae1c04-6c69-4fed-987b-4e6f72829b37",
+    "objects": [
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--75a12f40-ebf2-4bfb-99e1-eb41ddbc81dc",
+            "name": "Google NEW",
+            "cpe": "cpe:2.3:a:google:new:*:*:*:*:*:*:*:*",
+            "swid": "*",
+            "languages": [
+                "en"
+            ],
+            "vendor": "google",
+            "version": "*",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--a11b7906-7775-47ea-a97d-55c3968d2c9f",
+            "name": "Google Chrome NEW",
+            "cpe": "cpe:2.3:a:google:chrome:9999.999:*:*:*:*:*:*:*",
+            "swid": "9999.999",
+            "languages": [
+                "en"
+            ],
+            "vendor": "google",
+            "version": "9999.999",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        }
+    ]
+}
