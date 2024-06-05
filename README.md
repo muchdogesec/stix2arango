@@ -98,6 +98,20 @@ The logic to identify these properties is hardcoded in `src/config.py` under the
 
 If you have your own STIX data with custom `_ref` or `_refs` properties you will need to add them to this list if you want stix2arango to generate embedded relationships from these, else they will be skipped.
 
+## Quickstart
+
+We store a lot of STIX data from popular knowledgebases in our repository [cti_knowledge_base_store](https://github.com/muchdogesec/cti_knowledge_base_store), along with scripts that can be used with stix2arango to import it.
+
+This is useful to quickly populate STIX data using stix2arango if you want to see what it can do. It is also what is used to populate the data required by [arango_cti_processor](https://github.com/muchdogesec/arango_cti_processor/)
+
+Here's how you can import that data...
+
+```shell
+git clone https://github.com/muchdogesec/cti_knowledge_base_store
+cp cti_knowledge_base_store/utilities/stix2arango/insert_latest_data.sh insert_latest_data.sh
+sh insert_latest_data.sh
+```
+
 ## Useful supporting tools
 
 * To generate STIX 2.1 Objects: [stix2 Python Lib](https://stix2.readthedocs.io/en/latest/)

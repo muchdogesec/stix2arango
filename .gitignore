@@ -175,4 +175,6 @@ stix2arango-venv/
 
 .python-version
 
-backfill_data/
+# quick start info
+insert_latest_data.sh
+cti_knowledge_base_store/
