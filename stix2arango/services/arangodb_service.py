@@ -95,62 +95,73 @@ class ArangoDBService:
             module_logger.error(f"AQL exception in the query: {query}")
             raise
 
-    def upsert_several_objects(self, objects: list[dict], collection_name: str) -> None:
+
+    def insert_several_objects(self, objects: list[dict], collection_name: str) -> None:
         if not collection_name:
             module_logger.info(f"Object has unknown type: {objects}")
             return
 
         for _, obj in enumerate(objects):
-            if not obj.get("_key"):
-                obj["_key"] = obj["id"]
-            if not obj.get("_is_latest"):
-                obj["_is_latest"] = False
+            obj["_is_latest"] = False
             obj["_record_created"] = datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")
             obj["_record_modified"] = obj["_record_created"]
-            obj["_id"] = "{}+{}".format(
-                obj["id"], datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")
-            )
+            obj["_key"] = obj["id"] + (obj.get('modified') or obj.get('_record_modified'))
+
         query = """
-            LET objects = ( FOR new_doc in @objects
-            LET old_doc = DOCUMENT(CONCAT(@collection_name, "/", new_doc.id))
-            RETURN {new_doc, old_doc}
+            LET obj_map = ZIP(@objects[*].id, @objects[*]._record_md5_hash) //make a map so we don't have to do `CONTAINS(ARRAY[60000000], id)`
+            LET existing_objects = MERGE(
+                FOR doc in @@collection
+                FILTER obj_map[doc.id] == doc._record_md5_hash
+                RETURN {[doc.id]: TRUE}
             )
-
-            LET old_reinserts = (FOR obj in objects
-            FILTER obj.old_doc != NULL AND obj.old_doc._record_md5_hash != obj.new_doc._record_md5_hash //Only update if the old_record_md5_hash does not match _record_md5_hash
-            LET __reinsert_key = CONCAT(obj.old_doc._key, "+", DATE_ISO8601(DATE_NOW()))
-            RETURN MERGE(obj.old_doc, {_key: __reinsert_key, __reinsert_key})
-            )
-
-            LET new_inserts = (FOR obj in objects
-            FILTER obj.old_doc == NULL
-            RETURN obj.new_doc
-            )
-
-            FOR item in APPEND(new_inserts, old_reinserts)
-            LET __reinsert_key = item.__reinsert_key
-            LET doc = UNSET(item, "__reinsert_key", "_id")
-            UPSERT {_key: doc._key}
-            INSERT doc
-            REPLACE doc INTO @@collection_name
-
-            FILTER __reinsert_key != NULL // ONLY RETUURN VALUES THAT WERE REINSERTED
-            RETURN [doc.id, doc._key]
+            
+            FOR object in @objects
+            FILTER existing_objects[object.id] != TRUE
+            INSERT object INTO @@collection
+            RETURN object.id
         """
         return self.execute_raw_query(query, bind_vars={
-            "@collection_name": collection_name,
-            "collection_name": collection_name,
+            "@collection": collection_name,
             "objects": objects
         })
 
-    def upsert_several_objects_chunked(self, objects, collection_name, chunk_size=1000):
-        def chunked(iterable, n):
-            for i in range(0, len(iterable), n):
-                yield iterable[i : i + n]
-
-        progress_bar = tqdm(chunked(objects, chunk_size), total=len(objects), ncols=50)
+    def insert_several_objects_chunked(self, objects, collection_name, chunk_size=1000):
+        progress_bar = tqdm(utils.chunked(objects, chunk_size), total=len(objects))
+        results = []
         for chunk in progress_bar:
-            self.upsert_several_objects(chunk, collection_name)
+            results.extend(self.insert_several_objects(chunk, collection_name))
+            progress_bar.update(len(chunk))
+        return results
+
+    def update_is_latest_several(self, object_ids, collection_name):
+        objects_in = {k: True for k  in object_ids}
+        query = """
+            LET matched_objects = ( // collect all the modified into a single list of {id: ?, modified: ?}
+                FOR object in @@collection
+                FILTER @objects_in[object.id] !=  NULL
+                RETURN {id: object.id, modified: (object.modified OR object._record_modified), _key: object._key}
+            )
+            
+            LET modified_map = MERGE( // get max modified by ID
+                FOR object in matched_objects
+                COLLECT id = object.id INTO objects_by_id
+                RETURN {[id]: MAX(objects_by_id[*].object.modified)}
+            )
+            
+            FOR doc IN matched_objects
+            LET _is_latest = doc.modified == modified_map[doc.id]
+            UPDATE {_key: doc._key, _is_latest} IN @@collection
+        """
+        return self.execute_raw_query(query, bind_vars={
+            "@collection": collection_name,
+            "objects_in": objects_in
+        })
+    
+    def update_is_latest_several_chunked(self, object_ids, collection_name, chunk_size=500):
+        logging.info(f"Updating _is_latest for {len(object_ids)} newly inserted items")
+        progress_bar = tqdm(utils.chunked(object_ids, chunk_size), total=len(object_ids))
+        for chunk in progress_bar:
+            self.update_is_latest_several(chunk, collection_name)
             progress_bar.update(len(chunk))
     
     def validate_collections(self):
