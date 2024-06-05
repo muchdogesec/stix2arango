@@ -104,12 +104,33 @@ We store a lot of STIX data from popular knowledgebases in our repository [cti_k
 
 This is useful to quickly populate STIX data using stix2arango if you want to see what it can do. It is also what is used to populate the data required by [arango_cti_processor](https://github.com/muchdogesec/arango_cti_processor/)
 
-Here's how you can import that data...
+Here's how you can use that data...
 
 ```shell
 git clone https://github.com/muchdogesec/cti_knowledge_base_store
+```
+
+To import the latest objects for each framework (recommended):
+
+```shell
 cp cti_knowledge_base_store/utilities/stix2arango/insert_latest_data.sh insert_latest_data.sh
 sh insert_latest_data.sh
+```
+
+And you're done.
+
+You'll also find a bunch of scripts named `insert_archive_*.sh`. Unlike `insert_latest_data.sh` which only imports the latest data of each knowledgebase, if you use the archive scripts you'll get the full history of STIX objects for the frameworks (which demos the versioning capabilities of stix2arango)
+
+To do this;
+
+```shell
+cp cti_knowledge_base_store/utilities/stix2arango/insert_archive* .
+```
+
+Then run the desired script, e.g.
+
+```shell
+sh insert_archive_attack_enterprise.sh
 ```
 
 ## Useful supporting tools

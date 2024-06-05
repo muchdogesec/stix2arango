@@ -177,4 +177,5 @@ stix2arango-venv/
 
 # quick start info
 insert_latest_data.sh
+insert_archive*
 cti_knowledge_base_store/
