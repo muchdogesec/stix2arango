@@ -105,7 +105,7 @@ class ArangoDBService:
             obj["_is_latest"] = False
             obj["_record_created"] = datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")
             obj["_record_modified"] = obj["_record_created"]
-            obj["_key"] = f'{obj["id"]}+{obj.get('_record_modified')}'
+            obj["_key"] = f'{obj["id"]}+{obj.get("_record_modified")}'
 
         query = """
             LET obj_map = ZIP(@objects[*].id, @objects[*]._record_md5_hash) //make a map so we don't have to do `CONTAINS(ARRAY[60000000], id)`
