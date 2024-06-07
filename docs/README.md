@@ -283,7 +283,9 @@ As noted earlier, some STIX objects are automatically inserted into a collection
 
 Generally if importing a STIX 2.1 bundle, all objects referenced in it are also contained inside of it.
 
-If this is not the case, or you choose to upload objects individually you need to ensure any relationships arango2stix will create (as described below) already exist, else you will run into an error.
+If this is not the case, or you choose to upload objects individually you need to ensure any relationships arango2stix will create (as described below) already exist, else you will get an error.
+
+The STIX SRO will still be imported, but it won't be properly traversable using graph queries. You can identify these objects where `_stix2arango_ref_err==true`.
 
 #### New Relationship SROs
 
@@ -300,11 +302,12 @@ LET relationships = [
         "_bundle_id": "<THE BUNDLE ID>",
         "_file_name": "<FILENAME OF IMPORT>",
         "_stix2arango_note": "<IF ENTERED BY USER ON IMPORT>",
+        "_stix2arango_ref_err": "<IF SOURCE OR TARGET NOT IN COLLECTION IS TRUE, ELSE FALSE>",
         "_record_created": "<DATETIME OBJECT WAS INSERTED IN DB>",
         "_record_modified": "<DATETIME OBJECT WAS LAST MODIFIED IN DB>",
         "_record_md5_hash": "<HASH OF OBJECT>",
         "_is_latest": true,
-        "_is_ref": false,
+        "_is_ref": false,        
         "<STIX Relationship OBJECT PROPERTIES>"
     }
 ]
@@ -315,6 +318,7 @@ INSERT relationship INTO <NAME>_edge_collection
 The custom properties used are identical to vertex objects with the addition of the property:
 
 * `_is_ref`: boolean, denotes if object was created by a ref or refs property insides a STIX object (see refs section). Will always be `false` if created from relationship type objects.
+* `_stix2arango_ref_err`: boolean, denotes if the `source_ref` or `target_ref` also exist in the collection. If one or both don't exist in the same collection this value will be set to `true`
 
 For example;
 
@@ -327,6 +331,7 @@ LET relationships = [
         "_bundle_id": "bundle--c4d4dc95-47ea-41cb-a24d-c9d872eb4368",
         "_file_name": "bundle--c4d4dc95-47ea-41cb-a24d-c9d872eb4368.json",
         "_stix2arango_note": "vulnerabilty_bundle_20220120",
+        "_stix2arango_ref_err": false,
         "_record_created": "2020-01-01T00:00:00.000Z",
         "_record_modified": "2020-01-01T00:00:00.000Z",
         "_record_md5_hash": "1cfa2a4e9ef359a410d9708c4fc15957",
@@ -420,6 +425,7 @@ LET ref_relationships = [
         "_from": "<COLLECTION NAME>/<OBJECTS SOURCE_REF>",
         "_to": "<COLLECTION NAME>/<OBJECTS TARGET_REF>",
         "_stix2arango_note": "<SAME AS SOURCE_REF VALUE>",
+        "_stix2arango_ref_err": "<IF TARGET NOT IN COLLECTION IS TRUE, ELSE FALSE>"
         "_record_created": "<DATETIME OBJECT WAS INSERTED IN DB>",
         "_record_modified": "<DATETIME OBJECT WAS LAST MODIFIED IN DB>",
         "_record_md5_hash": "<HASH OF OBJECT>",
@@ -434,7 +440,7 @@ INSERT relationship INTO <NAME>_edge_collection
 
 The `_is_ref` property is always `true` for new embedded relationships allowing them to be easily filtered in Arango search.
 
-IMPORTANT ASSUMPTION, all embedded relationships assume the `target_ref` object is in the same collection (hence why bundle should contain any embedded relationship STIX objects).
+Again all embedded relationships assume the `target_ref` object are in the same collection (hence why bundle should contain any embedded relationship STIX objects), else `_stix2arango_ref_err` will equal `true`.
 
 #### Updating Embedded relationships (optional user setting)
 
