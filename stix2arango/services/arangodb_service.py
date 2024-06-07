@@ -136,20 +136,26 @@ class ArangoDBService:
     def update_is_latest_several(self, object_ids, collection_name):
         objects_in = {k: True for k  in object_ids}
         query = """
-            LET matched_objects = ( // collect all the modified into a single list of {id: ?, modified: ?}
+            LET matched_objects = ( // collect all the modified into a single list of {id: ?, modified: ?, _record_modified: ?, _key: ?}
                 FOR object in @@collection
                 FILTER @objects_in[object.id] !=  NULL
-                RETURN {id: object.id, modified: (object.modified OR object._record_modified), _key: object._key}
+                RETURN KEEP(object, 'id', 'modified', '_record_modified', '_key')
             )
             
             LET modified_map = MERGE( // get max modified by ID
                 FOR object in matched_objects
                 COLLECT id = object.id INTO objects_by_id
-                RETURN {[id]: MAX(objects_by_id[*].object.modified)}
+                RETURN (
+                    FOR id_obj  in objects_by_id[*]
+                        SORT id_obj.object.modified, id_obj.object._record_modified DESC
+                        LIMIT 1
+                        RETURN {[id]: id_obj.object._key}
+                    )[0]
             )
             
+            
             FOR doc IN matched_objects
-            LET _is_latest = doc.modified == modified_map[doc.id]
+            LET _is_latest = modified_map[doc.id] == doc._key
             UPDATE {_key: doc._key, _is_latest} IN @@collection
         """
         return self.execute_raw_query(query, bind_vars={
