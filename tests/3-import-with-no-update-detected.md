@@ -1,4 +1,4 @@
-## TEST 2: Import same exactly the same bundle 3 times, to check update behaviour
+## TEST 3: Import same exactly the same bundle 3 times, to check update behaviour
 
 This tests the logic of where an update to an object represents no change at all.
 

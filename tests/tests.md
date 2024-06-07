@@ -1,132 +1,39 @@
+## Executing tests
 
-
-
-
-## TEST 1.5 Now the object change between updates
+Tests can be run via the ArangoDB query API
 
 ```shell
-python3 stix2arango.py \
-  --file tests/files/sigma-rule-bundle-condensed-original.json \
-  --database s2a_tests \
-  --collection test1_5 && \
-python3 stix2arango.py \
-  --file tests/files/sigma-rule-bundle-condensed-update-1.json \
-  --database s2a_tests \
-  --collection test1_5 && \
-python3 stix2arango.py \
-  --file tests/files/sigma-rule-bundle-condensed-update-2.json \
-  --database s2a_tests \
-  --collection test1_5
+curl -X POST --header 'Content-Type: application/json' --header 'Authorization: Basic base64encodedusername:password' --data '{
+  "query": "QUERY"
+}' http://ARANGODB_HOST:ARANGODB_PORT/_db/DATABASE/_api/cursor
 ```
 
-In this test 2 objects are updated (where modified time and other properties changes in each bundle)
+For basic Arango installs you can use the root user which has an empty password
 
-* relationship--3089bdec-3d25-5d1b-a6ac-9d152ab14e35 (has 3 embedded relationships)
-* indicator--7a5dedb9-30f9-51c0-a49d-91aeda1fd7fd (has 3 embedded relationships)
-
-```sql
-RETURN LENGTH(
-  FOR doc IN test1_5_vertex_collection
-    FILTER doc._is_latest == true
-    AND doc._stix2arango_note != "automatically imported on collection creation"
-    RETURN doc
-)
+```
+'Authorization: Basic cm9vdDo='
 ```
 
-Should return 4 results
+Sample request:
 
-```sql
-RETURN LENGTH(
-  FOR doc IN test1_5_vertex_collection
-    FILTER doc._is_latest == false
-    AND doc._stix2arango_note != "automatically imported on collection creation"
-    RETURN doc
-)
+```shell
+curl -X POST --header 'Content-Type: application/json' --header 'Authorization: Basic cm9vdDo=' --data '{
+  "query": "RETURN LENGTH( FOR doc IN test4_vertex_collection FILTER doc._is_latest == true AND doc._stix2arango_note != \"automatically imported on collection creation\" AND doc._stix2arango_note == \"test4C\" RETURN doc )"
+}' http://localhost:8529/_db/s2a_tests_database/_api/cursor
 ```
 
-Should return 2 results, one for each update of `indicator--7a5dedb9-30f9-51c0-a49d-91aeda1fd7fd`
+The expected response can be found in the `results` property.
 
-```sql
-FOR doc IN test1_5_vertex_collection
-  FILTER doc._is_latest == false
-  AND doc._stix2arango_note != "automatically imported on collection creation"
-  AND doc.id == "indicator--7a5dedb9-30f9-51c0-a49d-91aeda1fd7fd"
-  AND doc._file_name == "sigma-rule-bundle-condensed-original.json"
-  RETURN doc
+e.g. in this response
+
+```json
+{"result":[3107],"hasMore":false,"cached":false,"extra":{"warnings":[],"stats":{"writesExecuted":0,"writesIgnored":0,"scannedFull":9332,"scannedIndex":0,"cursorsCreated":0,"cursorsRearmed":0,"cacheHits":0,"cacheMisses":0,"filtered":6225,"httpRequests":0,"executionTime":0.059520750073716044,"peakMemoryUsage":131072}},"error":false,"code":201}%
 ```
 
-Should return the first old version
+The expected response for the query is `[3107]`
 
-```sql
-FOR doc IN test1_5_vertex_collection
-  FILTER doc._is_latest == false
-  AND doc._stix2arango_note != "automatically imported on collection creation"
-  AND doc.id == "indicator--7a5dedb9-30f9-51c0-a49d-91aeda1fd7fd"
-  AND doc._file_name == "sigma-rule-bundle-condensed-update-1.json"
-  RETURN doc
-```
 
-Should return the second old version
 
-```sql
-RETURN LENGTH(
-  FOR doc IN test1_5_edge_collection
-    FILTER doc._is_latest == true
-    AND doc._is_ref == false
-    RETURN doc
-)
-```
-
-Should return 1 result, the SRO in the bundle.
-
-```sql
-RETURN LENGTH(
-  FOR doc IN test1_5_edge_collection
-    FILTER doc._is_latest == false
-    AND doc._is_ref == false
-    RETURN doc
-)
-```
-
-Should return 2 results, as the SRO was updated twice.
-
-```sql
-FOR doc IN test1_5_edge_collection
-  FILTER doc._is_latest == false
-  AND doc._is_ref == false
-  AND doc.id == "relationship--3089bdec-3d25-5d1b-a6ac-9d152ab14e35"
-  RETURN doc
-```
-
-Shows both the old versions
-
-```sql
-RETURN LENGTH(
-  FOR doc IN test1_5_edge_collection
-    FILTER doc._is_latest == false
-    AND doc._is_ref == true
-    AND doc.created_by_ref == "identity--c54d8eea-d241-5a83-8bf1-619f215ce10b"
-    AND doc.source_ref == "indicator--7a5dedb9-30f9-51c0-a49d-91aeda1fd7fd"
-    AND ["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9", "marking-definition--efccc0ba-d237-5c9a-ad41-4f8bb6791be4"] ALL IN doc.object_marking_refs
-    RETURN doc
-)
-```
-
-Should return 6 results (the 3 regenerated embedded relationships that are found in `indicator--7a5dedb9-30f9-51c0-a49d-91aeda1fd7fd` times by two, as updated twice)
-
-```sql
-RETURN LENGTH(
-  FOR doc IN test1_5_edge_collection
-    FILTER doc._is_latest == false
-    AND doc._is_ref == true
-    AND doc.created_by_ref == "identity--c54d8eea-d241-5a83-8bf1-619f215ce10b"
-    AND doc.source_ref == "relationship--3089bdec-3d25-5d1b-a6ac-9d152ab14e35"
-    AND ["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9", "marking-definition--efccc0ba-d237-5c9a-ad41-4f8bb6791be4"] ALL IN doc.object_marking_refs
-    RETURN doc
-)
-```
-
-Should return 6 results (the 3 regenerated embedded relationships that are found in `relationship--3089bdec-3d25-5d1b-a6ac-9d152ab14e35` times by two, as updated twice)
 
 ## TEST 2: Testing SDO update of where modified time increases each time
 
