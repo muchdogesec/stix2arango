@@ -2,6 +2,7 @@ import os
 import json
 import logging
 import time
+from typing import Any
 import arango.database
 from arango import ArangoClient
 from arango.exceptions import ArangoServerError
@@ -108,30 +109,60 @@ class ArangoDBService:
             obj["_key"] = f'{obj["id"]}+{obj.get("_record_modified")}'
 
         query = """
-            LET obj_map = ZIP(@objects[*].id, @objects[*]._record_md5_hash) //make a map so we don't have to do `CONTAINS(ARRAY[60000000], id)`
+            //LET obj_map = ZIP(@objects[*].id, @objects[*]._record_md5_hash) //make a map so we don't have to do `CONTAINS(ARRAY[60000000], id)`
+            LET obj_map = MERGE_RECURSIVE(
+                FOR obj in @objects
+                RETURN {[obj.id]: {[obj._record_md5_hash]: TRUE}}
+            )
             LET existing_objects = MERGE(
                 FOR doc in @@collection
-                FILTER obj_map[doc.id] == doc._record_md5_hash
-                RETURN {[doc.id]: TRUE}
+                FILTER obj_map[doc.id] != NULL
+                FILTER CONTAINS(ATTRIBUTES(obj_map[doc.id]), doc._record_md5_hash)
+                LET obj_hashkey = CONCAT(doc.id, ";", doc._record_md5_hash)
+                RETURN {[obj_hashkey]: doc._id}
             )
             
-            FOR object in @objects
-            FILTER existing_objects[object.id] != TRUE
-            INSERT object INTO @@collection
-            RETURN object.id
+            LET inserted_objects = (
+                FOR object in @objects
+                LET obj_hashkey = CONCAT(object.id, ";", object._record_md5_hash)
+                FILTER NOT HAS(existing_objects, obj_hashkey)
+                INSERT object INTO @@collection
+                RETURN object.id
+            )
+            
+            RETURN {inserted_objects, existing_objects}
         """
-        return self.execute_raw_query(query, bind_vars={
+        result = self.execute_raw_query(query, bind_vars={
             "@collection": collection_name,
             "objects": objects
-        })
+        })[0]
+        return result['inserted_objects'], result['existing_objects']
 
     def insert_several_objects_chunked(self, objects, collection_name, chunk_size=1000):
         progress_bar = tqdm(utils.chunked(objects, chunk_size), total=len(objects))
-        results = []
+        inserted_objects = []
+        existing_objects = {}
         for chunk in progress_bar:
-            results.extend(self.insert_several_objects(chunk, collection_name))
+            inserted, existing = self.insert_several_objects(chunk, collection_name)
+            inserted_objects.extend(inserted)
+            existing_objects.update(existing)
             progress_bar.update(len(chunk))
-        return results
+        return inserted_objects, existing_objects
+    
+    def insert_relationships_chunked(self, relationships: list[dict[str, Any]], id_to_key_map: dict[str, str], collection_name: str, chunk_size=1200):
+        for relationship in relationships:
+            relationship_fails = ""
+            source_key = id_to_key_map.get(relationship['source_ref'])
+            if not source_key:
+                relationship_fails += "source;"
+            target_key = id_to_key_map.get(relationship['target_ref'])
+            if not target_key:
+                relationship_fails += "target"
+            if relationship_fails:
+                relationship['_stix2arango_ref_err'] = relationship_fails
+            relationship['_from'] = source_key or relationship['_from']
+            relationship['_to'] = target_key or relationship['_to']
+        return self.insert_several_objects_chunked(relationships, collection_name, chunk_size=chunk_size)
 
     def update_is_latest_several(self, object_ids, collection_name):
         objects_in = {k: True for k  in object_ids}

@@ -25,11 +25,13 @@ json_schema = {
     "required": ["type", "id", "objects"]
 }
 STIX2ARANGO_IDENTITY = "https://github.com/muchdogesec/stix4doge/raw/main/objects/identity/stix2arango.json" # this is stix2arango identity
+DOGESEC_IDENTITY = "https://github.com/muchdogesec/stix4doge/raw/main/objects/identity/dogesec.json" # this is stix2arango identity
 
 STIX2ARANGO_MARKING_DEFINITION = "https://raw.githubusercontent.com/muchdogesec/stix4doge/main/objects/marking-definition/stix2arango.json" # this is stix2arango marking-definition
 
 IDENTITY_REFS = [
     STIX2ARANGO_IDENTITY,
+    DOGESEC_IDENTITY
 ]
 MARKING_DEFINITION_REFS = [
    STIX2ARANGO_MARKING_DEFINITION
