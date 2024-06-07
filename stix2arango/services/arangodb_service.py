@@ -151,15 +151,10 @@ class ArangoDBService:
     
     def insert_relationships_chunked(self, relationships: list[dict[str, Any]], id_to_key_map: dict[str, str], collection_name: str, chunk_size=1200):
         for relationship in relationships:
-            relationship_fails = ""
             source_key = id_to_key_map.get(relationship['source_ref'])
-            if not source_key:
-                relationship_fails += "source;"
             target_key = id_to_key_map.get(relationship['target_ref'])
-            if not target_key:
-                relationship_fails += "target"
-            if relationship_fails:
-                relationship['_stix2arango_ref_err'] = relationship_fails
+            
+            relationship['_stix2arango_ref_err'] = not (target_key and source_key)
             relationship['_from'] = source_key or relationship['_from']
             relationship['_to'] = target_key or relationship['_to']
         return self.insert_several_objects_chunked(relationships, collection_name, chunk_size=chunk_size)
