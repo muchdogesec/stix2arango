@@ -45,7 +45,6 @@ Should return
 
 (number of objects in one bundle and b/c 4c considered latest)
 
-
 ```sql
 RETURN LENGTH(
   FOR doc IN test4_vertex_collection
@@ -108,6 +107,61 @@ Should return
 
 ```sql
 RETURN LENGTH(
+  FOR doc IN test4_vertex_collection
+    FILTER doc._stix2arango_note != "automatically imported on collection creation"
+    AND doc.id == "indicator--d38c3e67-c14b-5d67-84c7-5400fb66d368"
+      RETURN doc
+)
+```
+
+Should return 
+
+```json
+[
+  3
+]
+```
+
+(b/c object is present in each update)
+
+```sql
+FOR doc IN test4_vertex_collection
+    FILTER doc._stix2arango_note != "automatically imported on collection creation"
+    AND doc.id == "indicator--d38c3e67-c14b-5d67-84c7-5400fb66d368"
+    SORT doc._record_modified DESC
+      RETURN {
+        _stix2arango_note: doc._stix2arango_note,
+        _is_latest: doc._is_latest,
+        id: doc.id
+      }
+```
+
+Should return
+
+```json
+[
+  {
+    "_stix2arango_note": "test4C",
+    "_is_latest": true,
+    "id": "indicator--d38c3e67-c14b-5d67-84c7-5400fb66d368"
+  },
+  {
+    "_stix2arango_note": "test4B",
+    "_is_latest": false,
+    "id": "indicator--d38c3e67-c14b-5d67-84c7-5400fb66d368"
+  },
+  {
+    "_stix2arango_note": "test4A",
+    "_is_latest": false,
+    "id": "indicator--d38c3e67-c14b-5d67-84c7-5400fb66d368"
+  }
+]
+```
+
+(the order of updates)
+
+```sql
+RETURN LENGTH(
   FOR doc IN test4_edge_collection
     FILTER doc._is_latest == true
     AND doc._is_ref == false
@@ -150,6 +204,61 @@ Should return:
 ```sql
 RETURN LENGTH(
   FOR doc IN test4_edge_collection
+      FILTER doc._is_ref == false
+      AND doc.id == "relationship--3089bdec-3d25-5d1b-a6ac-9d152ab14e35"
+        RETURN doc
+)
+```
+
+Should return:
+
+```json
+[
+  3
+]
+```
+
+(As have been 3 updates)
+
+```sql
+FOR doc IN test4_edge_collection
+  FILTER doc._is_ref == false
+  AND doc.id == "relationship--3089bdec-3d25-5d1b-a6ac-9d152ab14e35"
+  SORT doc._record_modified DESC
+  RETURN {
+    _stix2arango_note: doc._stix2arango_note,
+    _is_latest: doc._is_latest,
+    id: doc.id
+  }
+```
+
+Should return 
+
+```json
+[
+  {
+    "_stix2arango_note": "test4C",
+    "_is_latest": true,
+    "id": "relationship--3089bdec-3d25-5d1b-a6ac-9d152ab14e35"
+  },
+  {
+    "_stix2arango_note": "test4B",
+    "_is_latest": false,
+    "id": "relationship--3089bdec-3d25-5d1b-a6ac-9d152ab14e35"
+  },
+  {
+    "_stix2arango_note": "test4A",
+    "_is_latest": false,
+    "id": "relationship--3089bdec-3d25-5d1b-a6ac-9d152ab14e35"
+  }
+]
+```
+
+(the order of updates)
+
+```sql
+RETURN LENGTH(
+  FOR doc IN test4_edge_collection
     FILTER doc._is_latest == true
     AND doc._is_ref == true
     AND doc.created_by_ref == "identity--72e906ce-ca1b-5d73-adcd-9ea9eb66a1b4"
@@ -170,7 +279,7 @@ Should return
 
 ```sql
 RETURN LENGTH(
-  FOR doc IN test0_edge_collection
+  FOR doc IN test4_edge_collection
     FILTER doc._is_latest == false
     AND doc._is_ref == true
     AND doc.created_by_ref == "identity--72e906ce-ca1b-5d73-adcd-9ea9eb66a1b4"
@@ -189,3 +298,56 @@ Should return
 ```
 
 (15302 x 2 for both old embedded relationships)
+
+```sql
+RETURN LENGTH(
+  FOR doc IN test4_edge_collection
+  FILTER doc._is_ref == true
+  AND doc.id == "relationship--cffa89d7-4194-57b0-8ca2-0ff7473cd66a"
+    RETURN doc
+)
+```
+
+Should return 
+
+```json
+[
+  3
+]
+```
+
+(3 updates have happened)
+
+```sql
+FOR doc IN test4_edge_collection
+  FILTER doc._is_ref == true
+  AND doc.id == "relationship--cffa89d7-4194-57b0-8ca2-0ff7473cd66a"
+  SORT doc._record_modified DESC
+  RETURN {
+    _stix2arango_note: doc._stix2arango_note,
+    _is_latest: doc._is_latest,
+    id: doc.id
+  }
+```
+
+Should return
+
+```json
+[
+  {
+    "_stix2arango_note": "test4C",
+    "_is_latest": true,
+    "id": "relationship--cffa89d7-4194-57b0-8ca2-0ff7473cd66a"
+  },
+  {
+    "_stix2arango_note": "test4B",
+    "_is_latest": false,
+    "id": "relationship--cffa89d7-4194-57b0-8ca2-0ff7473cd66a"
+  },
+  {
+    "_stix2arango_note": "test4A",
+    "_is_latest": false,
+    "id": "relationship--cffa89d7-4194-57b0-8ca2-0ff7473cd66a"
+  }
+]
+```
