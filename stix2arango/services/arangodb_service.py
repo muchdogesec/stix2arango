@@ -173,7 +173,7 @@ class ArangoDBService:
                 COLLECT id = object.id INTO objects_by_id
                 RETURN (
                     FOR id_obj  in objects_by_id[*]
-                        SORT id_obj.object.modified, id_obj.object._record_modified DESC
+                        SORT id_obj.object.modified DESC, id_obj.object._record_modified DESC
                         LIMIT 1
                         RETURN {[id]: id_obj.object._key}
                     )[0]
