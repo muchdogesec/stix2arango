@@ -35,6 +35,7 @@ class Stix2Arango:
         self.marking_definition_refs = [json.loads(utils.load_file_from_url(link)) for link in config.MARKING_DEFINITION_REFS]
         self.bundle_id = utils.read_file_data(self.file).get("id")
         self.ignore_embedded_relationships = eval(kwargs.get("ignore_embedded_relationships").capitalize()) if kwargs.get("ignore_embedded_relationships", None) else False
+        self.object_key_mapping = {}
 
 
     def default_objects(self):
@@ -68,19 +69,31 @@ class Stix2Arango:
 
         objects = []; insert_data = []  # That would be the overall statement
         for obj in tqdm(data["objects"]):
-            if obj.get("type") not in ["relationship"]:
-                obj['_bundle_id'] = self.bundle_id if filename!= "" else ""
-                obj['_file_name'] = os.path.basename(filename) if len(filename.split("/"))>1 else ""
-                obj['_stix2arango_note'] = notes if notes else self.note
-                obj['_record_md5_hash'] = utils.generate_md5(obj)
-                objects.append(obj)
-                insert_data.append([
-                        obj.get("type"), obj.get("id"),
-                        True if "modified" in obj else False])
+            if obj.get("type") == "relationship":
+                continue
+            obj['_bundle_id'] = self.bundle_id if filename!= "" else ""
+            obj['_file_name'] = os.path.basename(filename) if len(filename.split("/"))>1 else ""
+            obj['_stix2arango_note'] = notes or self.note
+            obj['_record_md5_hash'] = utils.generate_md5(obj)
+            objects.append(obj)
+            insert_data.append([
+                    obj.get("type"), obj.get("id"),
+                    True if "modified" in obj else False])
+
 
         module_logger.info(f"Inserting objects into database. Total objects: {len(objects)}")
-        inserted_object_ids = self.arango.insert_several_objects_chunked(objects, self.core_collection_vertex)
+        inserted_object_ids, existing_objects = self.arango.insert_several_objects_chunked(objects, self.core_collection_vertex)
         self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_vertex)
+        self.update_object_key_mapping(objects, existing_objects)
+
+    def update_object_key_mapping(self, objects, existing_objects={}):
+        for obj in objects:
+            if db_key := existing_objects.get(f"{obj['id']};{obj['_record_md5_hash']}"):
+                self.object_key_mapping[obj['id']] = db_key
+            else:
+                self.object_key_mapping[obj['id']] = "{collection}/{_key}".format(collection=self.core_collection_vertex, _key=obj['_key'])
+
+                
 
     def map_relationships(self, filename):
         with open(filename, "r") as input_file:
@@ -114,8 +127,9 @@ class Stix2Arango:
                 inserted_data.append([obj.get("type"), obj.get("id"), True if "modified" in obj else False])
 
         module_logger.info(f"Inserting relationship into database. Total objects: {len(objects)}")
-        inserted_object_ids = self.arango.insert_several_objects_chunked(objects, self.core_collection_edge)
+        inserted_object_ids, existing_objects = self.arango.insert_relationships_chunked(objects, self.object_key_mapping, self.core_collection_edge)
         self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_edge)
+        self.update_object_key_mapping(objects, existing_objects)
 
 
         if not self.ignore_embedded_relationships:
@@ -138,7 +152,7 @@ class Stix2Arango:
                             insert_statement = objects
                         )
             module_logger.info(f"Inserting embedded relationship into database. Total objects: {len(objects)}")
-            inserted_object_ids = self.arango.insert_several_objects_chunked(objects, self.core_collection_edge)
+            inserted_object_ids, _ = self.arango.insert_relationships_chunked(objects, self.object_key_mapping, self.core_collection_edge)
             self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_edge)
 
 
