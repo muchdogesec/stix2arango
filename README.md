@@ -145,4 +145,4 @@ sh insert_archive_attack_enterprise.sh
 
 ## License
 
-[Apache 2.0](/LICENSE).
+[AGPLv3](/LICENSE).
