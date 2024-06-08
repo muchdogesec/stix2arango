@@ -1,6 +1,6 @@
-# python3 -m unittest tests/2-basic-import-no-stix2arango_note.py
+# python3 -m unittest tests/test_2-basic-import-no-stix2arango_note.py
 
-from .base_test import BaseTestArangoDBQueries
+from tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):
 

@@ -1,6 +1,6 @@
-# python3 -m unittest tests/1-basic-import-no-embedded.py
+# python3 -m unittest tests/test_1-basic-import-no-embedded.py
 
-from .base_test import BaseTestArangoDBQueries
+from tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):
 

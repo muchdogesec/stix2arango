@@ -14,9 +14,13 @@
 
 ## Running tests
 
+Run 
+
 ```shell
-python3 -m unittest TEST_FILE.py
+pytest
 ```
+
+from the root directory of this code.
 
 e.g. running all tests:
 

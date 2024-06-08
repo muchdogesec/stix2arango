@@ -1,6 +1,6 @@
-# python3 -m unittest tests/5-update-detected-because-of-modified-time-change.py
+# python3 -m unittest tests/test_5-update-detected-because-of-modified-time-change.py
 
-from .base_test import BaseTestArangoDBQueries
+from tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):
 
@@ -16,8 +16,8 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         cls.TEST_FILE_2 = "sigma-rule-bundle-condensed-update-1.json"
         cls.TEST_FILE_3 = "sigma-rule-bundle-condensed-update-2.json"
         cls.IGNORE_EMBEDDED_RELATIONSHIPS_1 = "false"
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_2 = ""
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_3 = ""
+        cls.IGNORE_EMBEDDED_RELATIONSHIPS_2 = "false"
+        cls.IGNORE_EMBEDDED_RELATIONSHIPS_3 = "false"
 
     def test_query_1(self):
         query = """
