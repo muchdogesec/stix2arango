@@ -1,45 +1,38 @@
-## Executing tests
+## Existing tests
 
-Tests can be run via the ArangoDB query API
+* test 0: single import to test that when embedded relationship setting is set to true, they are created
+* test 1: single import to test that when embedded relationship setting is set to ignore, that no embedded relationships are actually generated
+* test 2: single import to check `_stix2arango_note` property can be left blank, but still appears in created records (as empty)
+* test 3: This tests the logic of where an update to an object represents no change at all
+* test 4: This tests the logic of where an update to only the `_stix2arango_note` property changes
+* test 5: This tests the logic of where an update to only the `modified` property changes. The bundles are imported with the lowest `modifed` time first and highest `modified` time last (in time order)
+* test 6: almost identical to 5, however, the bundles are imported in reverse order with the highest `modifed` time first and lowest `modified` time last (in reverse time order)
+* test 7: makes sure default imported objects are imported correctly, and that they are not updated between updates
 
-```shell
-curl -X POST --header 'Content-Type: application/json' --header 'Authorization: Basic base64encodedusername:password' --data '{
-  "query": "QUERY"
-}' http://ARANGODB_HOST:ARANGODB_PORT/_db/DATABASE/_api/cursor
-```
 
-For basic Arango installs you can use the root user which has an empty password
 
-```
-'Authorization: Basic cm9vdDo='
-```
 
-Sample request:
+## Running tests
 
 ```shell
-curl -X POST --header 'Content-Type: application/json' --header 'Authorization: Basic cm9vdDo=' --data '{
-  "query": "RETURN LENGTH( FOR doc IN test4_vertex_collection FILTER doc._is_latest == true AND doc._stix2arango_note != \"automatically imported on collection creation\" AND doc._stix2arango_note == \"test4C\" RETURN doc )"
-}' http://localhost:8529/_db/s2a_tests_database/_api/cursor
+python3 -m unittest TEST_FILE.py
 ```
 
-The expected response can be found in the `results` property.
+e.g. running all tests:
 
-e.g. in this response
+```shell
+python3 -m unittest tests/0-basic-import-logic-with-embedded.py && \
+python3 -m unittest tests/1-basic-import-no-embedded.py && \
+python3 -m unittest tests/ && \
+python3 -m unittest tests/ && \
+python3 -m unittest tests/ && \
+python3 -m unittest tests/ && \
+python3 -m unittest tests/ && \
+python3 -m unittest tests/ && \
+python3 -m unittest tests/ && \
+python3 -m unittest tests/ && \
 
-```json
-{"result":[3107],"hasMore":false,"cached":false,"extra":{"warnings":[],"stats":{"writesExecuted":0,"writesIgnored":0,"scannedFull":9332,"scannedIndex":0,"cursorsCreated":0,"cursorsRearmed":0,"cacheHits":0,"cacheMisses":0,"filtered":6225,"httpRequests":0,"executionTime":0.059520750073716044,"peakMemoryUsage":131072}},"error":false,"code":201}%
 ```
-
-The expected response for the query is `[3107]`
-
-
-
-
-
-
-
-
-
 
 ## TEST 3: Testing SDO update of all objects using `stix2arango_note`
 

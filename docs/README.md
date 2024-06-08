@@ -357,6 +357,21 @@ INSERT relationship INTO demo_edge_collection
 
 Because `relationship` objects must contain `created` and `modified` properties, updates to `relationship` SROs are done in the same way as those in vertex collections.
 
+#### Dealing with duplicate objects in a bundle
+
+The above behaviour assumes objects are inserted in seperate bundles.
+
+Although rare, it may be the case the the same object exists in the same bundle.
+
+IT IS STRONGLY RECOMMENDED you split objects with the same `id` to different bundles before importing because stix2arango does not contain complete logic for handling these.
+
+The current logic is as follow;
+
+If:
+
+* the bundle contains exactly the same object `id` and the `modified` times are the same OR object has no `modified` time then only one copy of the object is imported to the database (first object with duplicate `modified` time in bundle with `id` is imported)
+* the bundle contain the same object (identical properties) by `id`  but the `modified` property is different in one or more instances, all versions of the objects with different `id`s are imported. Where two objects have same `modified` time in such cases, the first object with duplicate `modified` time in bundle with `id` is imported
+
 #### New Embedded relationships (optional user setting)
 
 All STIX 2.1 Objects (SDOs, SCOs, SMOs, SROs and SROs themselves) can also have embedded relationships found in properties ending in `_ref` (single reference to object) or `_refs` (list of references to one or more object).
