@@ -8,9 +8,7 @@
 * test 5: This tests the logic of where an update to only the `modified` property changes. The bundles are imported with the lowest `modifed` time first and highest `modified` time last (in time order)
 * test 6: almost identical to 5, however, the bundles are imported in reverse order with the highest `modifed` time first and lowest `modified` time last (in reverse time order)
 * test 7: makes sure default imported objects are imported correctly, and that they are not updated between updates
-
-
-
+* test 8: contains a bundle with 2 sets of duplicate objects (both exact copies)
 
 ## Running tests
 
@@ -22,21 +20,40 @@ pytest
 
 from the root directory of this code.
 
-e.g. running all tests:
+## Description of test files
 
-```shell
-python3 -m unittest tests/0-basic-import-logic-with-embedded.py && \
-python3 -m unittest tests/1-basic-import-no-embedded.py && \
-python3 -m unittest tests/ && \
-python3 -m unittest tests/ && \
-python3 -m unittest tests/ && \
-python3 -m unittest tests/ && \
-python3 -m unittest tests/ && \
-python3 -m unittest tests/ && \
-python3 -m unittest tests/ && \
-python3 -m unittest tests/ && \
+### `sigma-rule-bundle-condensed-*`
 
-```
+* sigma-rule-bundle-condensed-original.json
+* sigma-rule-bundle-condensed-update-1.json
+* sigma-rule-bundle-condensed-update-2.json
+
+In these files 2 objects are modified each time.
+
+The `modified` times for the objects increases in order with each bundle (e.g original has lowest time, -2 has highest time)
+
+Objects modified are
+
+* `relationship--3089bdec-3d25-5d1b-a6ac-9d152ab14e35` 
+  * modified time changes
+* `indicator--7a5dedb9-30f9-51c0-a49d-91aeda1fd7fd` 
+  * modified time changes
+  * name changes to: `Deny Service Access Using Security Descriptor Tampering Via Sc.EXE` -> `FIRST UPDATE` -> `SECOND UPDATE` 
+
+### `duplicate-objects-all-properties-same.json`
+
+Has 2 objects:
+
+* `indicator--7a5dedb9-30f9-51c0-a49d-91aeda1fd7fd`
+* `software--50fa0834-9c63-5b0f-bf0e-dce02183253a`
+
+Printed in the bundle twice
+
+
+
+
+
+TO CLEAN UP....
 
 ## TEST 3: Testing SDO update of all objects using `stix2arango_note`
 

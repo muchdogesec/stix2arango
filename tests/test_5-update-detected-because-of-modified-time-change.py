@@ -124,11 +124,11 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
             AND doc._is_ref == false
             AND doc.id == "relationship--3089bdec-3d25-5d1b-a6ac-9d152ab14e35"
             SORT doc._record_modified DESC
-            RETURN {
-                id: doc.id,
-                _is_latest: doc._is_latest,
-                modified: doc.modified
-            }
+                RETURN {
+                    id: doc.id,
+                    _is_latest: doc._is_latest,
+                    modified: doc.modified
+                }
         """
         expected_result = [
             {

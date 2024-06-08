@@ -50,3 +50,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         self.assertEqual(result['result'], expected_result)
 
         # because these objects should never be updated
+
+if __name__ == '__main__':
+    unittest.main()
+    
