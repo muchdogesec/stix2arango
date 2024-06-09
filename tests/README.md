@@ -15,6 +15,8 @@
 * test 12: testing custom SCOs (where no `modified` property exists)
 * test 13: testing updates of SMOs (where only `created` time exists)
 * test 14: tesing the generation of emedded relationships that are non-standard (in STIX spec)
+* test 15: testing what happens when object in target ref of SRO does not exist in the collection
+* test 16: testing what happens when object in source ref of SRO does not exist in the collection
 
 ## Running tests
 
@@ -27,6 +29,10 @@ pytest
 from the root directory of this code.
 
 ## Description of test files
+
+### `sigma-rule-bundle.json`
+
+Just a standard STIX bundle with a range of standard object types
 
 ### `sigma-rule-bundle-condensed-*`
 
@@ -83,38 +89,16 @@ Has 3 objects:
 * `custom-sco--0306ac42-a167-4eb6-a67a-969c255a85ae`
   * `title` changes between updates
 
+### `smo-original.json`, `smo-updated.json`
 
+* `marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41aa`
+  * `name` changes between updates
 
+### `non-standard-embedded-relationship`
 
+* `weakness--f3496f30-5625-5b6d-8297-ddc074fb26c2`
+  * contains a non standard refs property `non_standard_refs`
 
+### `source-object-does-not-exist.json` / `target-object-does-not-exist.json`
 
-
-## TEST 15: Test custom embedded relationships
-
-```shell
-python3 stix2arango.py \
-  --file tests/files/arango-cti-capec-update.json \
-  --database s2a_tests \
-  --collection test15
-```
-
-```sql
-FOR doc IN test15_edge_collection
-  FILTER doc._is_latest == true
-  AND doc._is_ref == true
-  AND doc.created_by_ref == "identity--c54d8eea-d241-5a83-8bf1-619f215ce10b"
-  COLLECT relationshipType = doc.relationship_type
-  RETURN relationshipType
-```
-
-Will show all embedded relationship types, which should be...
-
-```json
-[
-  "created_by_ref",
-  "object_marking_refs",
-  "x_capec_can_precede_refs",
-  "x_capec_child_of_refs",
-  "x_capec_parent_of_refs"
-]
-```
+In each respective bundle an SRO exists along with only the target or source object included (so one object is missing each time)
