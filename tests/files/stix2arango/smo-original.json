@@ -1,15 +1,16 @@
 {
     "type": "bundle",
-    "id": "bundle--59044cb6-5130-43f0-8d2a-4233ac8516ce",
+    "id": "bundle--8ad298c0-8f6c-436f-9c7b-38a1dc4ee5ab",
     "objects": [
         {
             "type": "marking-definition",
             "spec_version": "2.1",
-            "id": "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
+            "id": "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41aa",
             "created": "2016-08-01T00:00:00.000Z",
             "definition_type": "statement",
+            "name": "original",
             "definition": {
-                "statement": "UPDATED"
+                "statement": "Copyright 2019, Example Corp"
             }
         }
     ]
