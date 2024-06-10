@@ -151,7 +151,60 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
         # because no embedded relationships should ever be generated from the `source_ref` and `target_ref` properties
 
-    def test_query_13(self):
+    def test_query_9(self):
+        query = """
+        RETURN LENGTH(
+          FOR doc IN test0_edge_collection
+            FILTER doc._stix2arango_ref_err == true
+              RETURN {
+                stix2arango_ref_err: doc._stix2arango_ref_err,
+                id: doc.id
+              }
+            )
+        """
+        expected_result = [167]
+        result = self.query_arango(query)
+        self.assertEqual(result['result'], expected_result)
+
+        # note all relationships in bundle and all embedded ref ids exist in bundle.
+        # this query will show you those erronous objects
+        #
+        #LET vertex_ids = (
+        #  FOR v IN test0_vertex_collection
+        #  RETURN v.id
+        #)
+        #
+        #FOR doc IN test0_edge_collection
+        #    FILTER doc._stix2arango_ref_err == true
+        #    LET source_missing = POSITION(vertex_ids, doc.source_ref) == false
+        #    LET target_missing = POSITION(vertex_ids, doc.target_ref) == false
+        #    RETURN {
+        #        stix2arango_ref_err: doc._stix2arango_ref_err,
+        #        id: doc.id,
+        #        source_ref: doc.source_ref,
+        #        target_ref: doc.target_ref,
+        #        missing_object_ids: APPEND(
+        #            source_missing ? [doc.source_ref] : [],
+        #            target_missing ? [doc.target_ref] : []
+        #       )
+        #    }
+
+    def test_query_10(self):
+        query = """
+        RETURN LENGTH(
+          FOR doc IN test0_edge_collection
+            FILTER doc._stix2arango_ref_err == false
+              RETURN {
+                stix2arango_ref_err: doc._stix2arango_ref_err,
+                id: doc.id
+              }
+            )
+        """
+        expected_result = [15779]
+        result = self.query_arango(query)
+        self.assertEqual(result['result'], expected_result)
+
+    def test_query_11(self):
         query = """
         FOR doc IN test0_edge_collection
           FILTER doc._is_latest == true
