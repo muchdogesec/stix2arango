@@ -187,7 +187,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         query = """
         FOR doc IN test6_edge_collection
             FILTER doc._is_ref == true
-            AND doc.id == "relationship--da230f89-3019-5016-8b40-695f343988ea"
+            AND doc.id == "relationship--6b91fcdc-997d-5317-ae08-c001fb6d6d08"
             SORT doc.modified DESC
             RETURN {
                 id: doc.id,
@@ -196,22 +196,46 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
             }
         """
         expected_result = [
-            {
-                "id": "relationship--da230f89-3019-5016-8b40-695f343988ea",
+              {
+                "id": "relationship--6b91fcdc-997d-5317-ae08-c001fb6d6d08",
+                "_is_latest": True,
+                "modified": "2023-02-28T00:00:00.000Z"
+              }
+            ]
+        result = self.query_arango(query)
+        self.assertEqual(result['result'], expected_result)
+
+        # this object is not updated so only one is_ref object ever created
+
+    def test_query_10(self):
+        query = """
+        FOR doc IN test6_edge_collection
+            FILTER doc._is_ref == true
+            AND doc.id == "relationship--5f8d9c38-5c00-53e2-b520-01694d0f8085"
+            SORT doc.modified DESC
+            RETURN {
+                id: doc.id,
+                _is_latest: doc._is_latest,
+                modified: doc.modified
+            }
+        """
+        expected_result = [
+              {
+                "id": "relationship--5f8d9c38-5c00-53e2-b520-01694d0f8085",
                 "_is_latest": True,
                 "modified": "2024-01-01T00:00:00.000Z"
-            },
-            {
-                "id": "relationship--da230f89-3019-5016-8b40-695f343988ea",
+              },
+              {
+                "id": "relationship--5f8d9c38-5c00-53e2-b520-01694d0f8085",
                 "_is_latest": False,
                 "modified": "2023-12-12T00:00:00.000Z"
-            },
-            {
-                "id": "relationship--da230f89-3019-5016-8b40-695f343988ea",
+              },
+              {
+                "id": "relationship--5f8d9c38-5c00-53e2-b520-01694d0f8085",
                 "_is_latest": False,
                 "modified": "2023-02-28T00:00:00.000Z"
-            }
-        ]
+              }
+            ]
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 

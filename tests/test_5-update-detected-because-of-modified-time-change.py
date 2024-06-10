@@ -187,7 +187,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         query = """
         FOR doc IN test5_edge_collection
             FILTER doc._is_ref == true
-            AND doc.id == "relationship--da230f89-3019-5016-8b40-695f343988ea"
+            AND doc.id == "relationship--6b91fcdc-997d-5317-ae08-c001fb6d6d08"
             SORT doc.modified DESC
             RETURN {
                 id: doc.id,
@@ -196,26 +196,50 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
             }
         """
         expected_result = [
-            {
-                "id": "relationship--da230f89-3019-5016-8b40-695f343988ea",
+              {
+                "id": "relationship--6b91fcdc-997d-5317-ae08-c001fb6d6d08",
                 "_is_latest": True,
-                "modified": "2024-01-01T00:00:00.000Z"
-            },
-            {
-                "id": "relationship--da230f89-3019-5016-8b40-695f343988ea",
-                "_is_latest": False,
-                "modified": "2023-12-12T00:00:00.000Z"
-            },
-            {
-                "id": "relationship--da230f89-3019-5016-8b40-695f343988ea",
-                "_is_latest": False,
                 "modified": "2023-02-28T00:00:00.000Z"
-            }
-        ]
+              }
+            ]
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
-        # 3 updates, highest modified time is always is latest
+        # because this embedded ref was generated from an objects that is not updated
+
+    def test_query_10(self):
+        query = """
+        FOR doc IN test5_edge_collection
+            FILTER doc._is_ref == true
+            AND doc.id == "relationship--fb8916a5-d2b8-5f7e-b381-0c796c354dc3"
+            SORT doc.modified DESC
+            RETURN {
+                id: doc.id,
+                _is_latest: doc._is_latest,
+                modified: doc.modified
+            }
+        """
+        expected_result = [
+              {
+                "id": "relationship--fb8916a5-d2b8-5f7e-b381-0c796c354dc3",
+                "_is_latest": True,
+                "modified": "2024-01-01T00:00:00.000Z"
+              },
+              {
+                "id": "relationship--fb8916a5-d2b8-5f7e-b381-0c796c354dc3",
+                "_is_latest": False,
+                "modified": "2023-12-12T00:00:00.000Z"
+              },
+              {
+                "id": "relationship--fb8916a5-d2b8-5f7e-b381-0c796c354dc3",
+                "_is_latest": False,
+                "modified": "2023-02-28T00:00:00.000Z"
+              }
+            ]
+        result = self.query_arango(query)
+        self.assertEqual(result['result'], expected_result)
+
+        # because this embedded ref was generated from an objects that is not updated
 
 if __name__ == '__main__':
     unittest.main()

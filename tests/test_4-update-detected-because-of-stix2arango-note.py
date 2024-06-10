@@ -252,7 +252,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         RETURN LENGTH(
             FOR doc IN test4_edge_collection
                 FILTER doc._is_ref == true
-                AND doc.id == "relationship--cffa89d7-4194-57b0-8ca2-0ff7473cd66a"
+                AND doc.id == "relationship--5b32a703-4317-5f58-b1ce-03735c756035"
                 RETURN doc
         )
         """
@@ -264,9 +264,25 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
     def test_query_14(self):
         query = """
+        RETURN LENGTH(
+            FOR doc IN test4_edge_collection
+                FILTER doc._is_ref == true
+                AND doc._is_latest == true
+                AND doc.id == "relationship--5b32a703-4317-5f58-b1ce-03735c756035"
+                RETURN doc
+        )
+        """
+        expected_result = [1]
+        result = self.query_arango(query)
+        self.assertEqual(result['result'], expected_result)
+
+        # but only one should be is latest
+
+    def test_query_15(self):
+        query = """
         FOR doc IN test4_edge_collection
             FILTER doc._is_ref == true
-            AND doc.id == "relationship--cffa89d7-4194-57b0-8ca2-0ff7473cd66a"
+            AND doc.id == "relationship--5b32a703-4317-5f58-b1ce-03735c756035"
             SORT doc._record_modified DESC
             RETURN {
                 _stix2arango_note: doc._stix2arango_note,
@@ -275,22 +291,22 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
             }
         """
         expected_result = [
-            {
+              {
                 "_stix2arango_note": "test4C",
                 "_is_latest": True,
-                "id": "relationship--cffa89d7-4194-57b0-8ca2-0ff7473cd66a"
-            },
-            {
+                "id": "relationship--5b32a703-4317-5f58-b1ce-03735c756035"
+              },
+              {
                 "_stix2arango_note": "test4B",
                 "_is_latest": False,
-                "id": "relationship--cffa89d7-4194-57b0-8ca2-0ff7473cd66a"
-            },
-            {
+                "id": "relationship--5b32a703-4317-5f58-b1ce-03735c756035"
+              },
+              {
                 "_stix2arango_note": "test4A",
                 "_is_latest": False,
-                "id": "relationship--cffa89d7-4194-57b0-8ca2-0ff7473cd66a"
-            }
-        ]
+                "id": "relationship--5b32a703-4317-5f58-b1ce-03735c756035"
+              }
+            ]
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
