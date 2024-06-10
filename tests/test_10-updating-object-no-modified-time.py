@@ -32,7 +32,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
-        # b/c two objects in bundle
+        # b/c two software objects in bundle
 
     def test_query_2(self):
         query = """
@@ -47,7 +47,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
-        # only 1 of the two objects is actually updated (only one object has properties changed between bundles)
+        # only 1 of the two software objects is actually updated (only one object has properties changed between bundles)
 
     def test_query_3(self):
         query = """
@@ -87,13 +87,13 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         expected_result = [
               {
                 "id": "software--6d38c3e0-ea8b-5b83-b370-5407523589a9",
-                "_is_latest": False
+                "_is_latest": True
               }
             ]
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
-        # this is the object that was updated
+        # this object was not updated, so only one version exists
 
 if __name__ == '__main__':
     unittest.main()
