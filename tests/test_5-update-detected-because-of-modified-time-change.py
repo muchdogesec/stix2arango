@@ -54,7 +54,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         FOR doc IN test5_vertex_collection
             FILTER doc._stix2arango_note != "automatically imported on collection creation"
             AND doc.id == "indicator--7a5dedb9-30f9-51c0-a49d-91aeda1fd7fd"
-            SORT doc._record_modified DESC
+            SORT doc.modified DESC
             RETURN {
                 id: doc.id,
                 _is_latest: doc._is_latest,
@@ -123,7 +123,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
             FILTER doc._stix2arango_note != "automatically imported on collection creation"
             AND doc._is_ref == false
             AND doc.id == "relationship--3089bdec-3d25-5d1b-a6ac-9d152ab14e35"
-            SORT doc._record_modified DESC
+            SORT doc.modified DESC
                 RETURN {
                     id: doc.id,
                     _is_latest: doc._is_latest,
@@ -188,7 +188,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         FOR doc IN test5_edge_collection
             FILTER doc._is_ref == true
             AND doc.id == "relationship--da230f89-3019-5016-8b40-695f343988ea"
-            SORT doc._record_modified DESC
+            SORT doc.modified DESC
             RETURN {
                 id: doc.id,
                 _is_latest: doc._is_latest,

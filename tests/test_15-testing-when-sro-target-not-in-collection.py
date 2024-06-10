@@ -34,6 +34,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
     def test_query_2(self):
         query = """
+        FOR doc IN test15_edge_collection
             FILTER doc.id == "relationship--00038d0e-7fc7-41c3-9055-edb4d87ea912"
                 AND doc._stix2arango_ref_err == true
                 RETURN {

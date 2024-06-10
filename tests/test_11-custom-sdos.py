@@ -53,7 +53,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         query = """
         FOR doc IN test11_vertex_collection
             FILTER doc.id == "custom-sdo--cbc0b79a-ecbd-59f1-b45b-ea4730df1c2e"
-            SORT doc._record_modified DESC
+            SORT doc.modified DESC
             RETURN {
                 id: doc.id,
                 _is_latest: doc._is_latest,
