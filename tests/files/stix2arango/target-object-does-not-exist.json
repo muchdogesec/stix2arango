@@ -1,0 +1,77 @@
+{
+    "type": "bundle",
+    "id": "bundle--68a7ab2e-0ff9-4a88-ba4a-77dd75e40de7",
+    "objects": [
+      {
+        "object_marking_refs": [
+          "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+        ],
+        "id": "relationship--00038d0e-7fc7-41c3-9055-edb4d87ea912",
+        "type": "relationship",
+        "created": "2021-04-27T01:56:35.810Z",
+        "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "external_references": [
+          {
+            "source_name": "CheckPoint Volatile Cedar March 2015",
+            "url": "https://media.kasperskycontenthub.com/wp-content/uploads/sites/43/2015/03/20082004/volatile-cedar-technical-report.pdf",
+            "description": "Threat Intelligence and Research. (2015, March 30). VOLATILE CEDAR. Retrieved February 8, 2021."
+          }
+        ],
+        "modified": "2021-04-27T01:56:35.810Z",
+        "description": "[Explosive](https://attack.mitre.org/software/S0569) has collected the MAC address from the victim's machine.(Citation: CheckPoint Volatile Cedar March 2015)",
+        "relationship_type": "uses",
+        "source_ref": "malware--6a21e3a4-5ffe-4581-af9a-6a54c7536f44",
+        "target_ref": "attack-pattern--707399d6-ab3e-4963-9315-d9d3818cd6a0",
+        "x_mitre_version": "1.0",
+        "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
+      },
+      {
+        "labels": [
+          "malware"
+        ],
+        "x_mitre_platforms": [
+          "Windows"
+        ],
+        "x_mitre_domains": [
+          "enterprise-attack"
+        ],
+        "x_mitre_aliases": [
+          "Explosive"
+        ],
+        "object_marking_refs": [
+          "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+        ],
+        "id": "malware--6a21e3a4-5ffe-4581-af9a-6a54c7536f44",
+        "type": "malware",
+        "created": "2021-02-08T21:41:25.501Z",
+        "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "external_references": [
+          {
+            "external_id": "S0569",
+            "source_name": "mitre-attack",
+            "url": "https://attack.mitre.org/software/S0569"
+          },
+          {
+            "source_name": "Explosive",
+            "description": "(Citation: CheckPoint Volatile Cedar March 2015)(Citation: ClearSky Lebanese Cedar Jan 2021) "
+          },
+          {
+            "source_name": "CheckPoint Volatile Cedar March 2015",
+            "url": "https://media.kasperskycontenthub.com/wp-content/uploads/sites/43/2015/03/20082004/volatile-cedar-technical-report.pdf",
+            "description": "Threat Intelligence and Research. (2015, March 30). VOLATILE CEDAR. Retrieved February 8, 2021."
+          },
+          {
+            "source_name": "ClearSky Lebanese Cedar Jan 2021",
+            "url": "https://www.clearskysec.com/wp-content/uploads/2021/01/Lebanese-Cedar-APT.pdf",
+            "description": "ClearSky Cyber Security. (2021, January). “Lebanese Cedar” APT Global Lebanese Espionage Campaign Leveraging Web Servers. Retrieved February 10, 2021."
+          }
+        ],
+        "modified": "2021-04-27T01:56:35.649Z",
+        "name": "Explosive",
+        "description": "[Explosive](https://attack.mitre.org/software/S0569) is a custom-made remote access tool used by the group [Volatile Cedar](https://attack.mitre.org/groups/G0123). It was first identified in the wild in 2015.(Citation: CheckPoint Volatile Cedar March 2015)(Citation: ClearSky Lebanese Cedar Jan 2021)  ",
+        "x_mitre_version": "1.0",
+        "x_mitre_attack_spec_version": "2.1.0",
+        "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
+      }
+    ]
+}

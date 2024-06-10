@@ -8,7 +8,7 @@ version = "0.0.1"
 authors = [
   { name="DOGESEC", email="support@dogesec.com" },
 ]
-description = "A package containing the stix definitions for custom objects used at dogesec"
+description = "stix2arango is a command line tool that takes a group of STIX 2.1 objects in a bundle and inserts them into ArangoDB. It can also handle updates to existing objects in ArangoDB imported in a bundle."
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
