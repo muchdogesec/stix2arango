@@ -63,12 +63,12 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         expected_result = [
               {
                 "id": "custom-sco--0306ac42-a167-4eb6-a67a-969c255a85ae",
-                "_is_latest": true,
+                "_is_latest": True,
                 "name": "new"
               },
               {
                 "id": "custom-sco--0306ac42-a167-4eb6-a67a-969c255a85ae",
-                "_is_latest": false,
+                "_is_latest": False,
                 "name": "old"
               }
             ]
