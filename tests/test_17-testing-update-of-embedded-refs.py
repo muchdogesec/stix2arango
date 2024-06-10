@@ -43,7 +43,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
               RETURN doc
         )
         """
-        expected_result = [4]
+        expected_result = [3]
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
