@@ -415,7 +415,7 @@ This is done using the STIX2 Python library, and such relationships are generate
 	"spec_version": "2.1",
     "id": "relationship--<UUID v5>",
 	"created_by_ref": "<IMPORTED STIX2ARANGO IDENTITY ID>",
-	"relationship_type": "<EMBEDDED RELATIONSHIP TYPE>",
+	"relationship_type": "<EMBEDDED RELATIONSHIP TYPE WITHOUT REF OR REFS AND _ REPLACED WITH ->",
 	"created": "<OBJECT CREATED TIME>",
 	"modified": "<OBJECT MODIFIED TIME>",
     "source_ref": "<OBJECT WITH REF PROPERTY>",

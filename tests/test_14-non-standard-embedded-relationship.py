@@ -42,8 +42,8 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
             RETURN DISTINCT doc.relationship_type
         """
         expected_result = [
-              "created_by_ref",
-              "non_standard_refs"
+              "created-by",
+              "non-standard"
             ]
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
