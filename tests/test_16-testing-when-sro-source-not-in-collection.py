@@ -22,7 +22,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_1(self):
         query = """
         RETURN LENGTH(
-          FOR doc IN test15_edge_collection
+          FOR doc IN test16_edge_collection
               RETURN doc
         )
         """
@@ -34,14 +34,20 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
     def test_query_2(self):
         query = """
-        RETURN LENGTH(
-            FOR doc IN test15_edge_collection
+        FOR doc IN test16_edge_collection
             FILTER doc.id == "relationship--00038d0e-7fc7-41c3-9055-edb4d87ea912"
-                AND doc._stix2arango_ref_err == true
-            RETURN doc
-        )
+            AND doc._stix2arango_ref_err == true
+                RETURN {
+                _stix2arango_ref_err: doc._stix2arango_ref_err,
+                id: doc.id
+            }
         """
-        expected_result = [1]
+        expected_result = [
+              {
+                "_stix2arango_ref_err": True,
+                "id": "relationship--00038d0e-7fc7-41c3-9055-edb4d87ea912"
+              }
+            ]
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 

@@ -1,5 +1,4 @@
-# python3 -m unittest tests/test_9-duplicate-objects-but-diff-times-in-bundle.py
-
+import unittest
 from tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):
@@ -21,51 +20,59 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
     def test_query_1(self):
         query = """
-        RETURN {
-            vertices: LENGTH(
-                FOR doc IN test9_vertex_collection
-                    FILTER doc._is_latest == true
-                    AND doc._stix2arango_note != "automatically imported on collection creation"
-                        RETURN doc
-                ),
-            edges: LENGTH(
-                FOR doc IN test9_edge_collection
-                    FILTER doc._is_latest == true AND doc._is_ref == false
-                    AND doc._stix2arango_note != "automatically imported on collection creation"
-                        RETURN doc
-                )
-        }
+        RETURN LENGTH(
+            FOR doc IN test9_vertex_collection
+                FILTER doc._is_latest == true
+                AND doc._stix2arango_note != "automatically imported on collection creation"
+                    RETURN doc
+        )
         """
-        expected_result = [{"vertices": 2, "edges": 1}]
+        expected_result = [2]
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
-
-        # expect only one version of each object to be created software, indicator, and relationship
 
     def test_query_2(self):
         query = """
-        RETURN {
-            vertices: LENGTH(
-                FOR doc IN test9_vertex_collection
-                    FILTER doc._is_latest == false
-                    AND doc._stix2arango_note != "automatically imported on collection creation"
-                        RETURN doc
-                ),
-            edges: LENGTH(
-                FOR doc IN test9_edge_collection
-                    FILTER doc._is_latest == false AND doc._is_ref == false
-                    AND doc._stix2arango_note != "automatically imported on collection creation"
-                        RETURN doc
-            )
-        }
+        RETURN LENGTH(
+            FOR doc IN test9_vertex_collection
+                FILTER doc._is_latest == false
+                AND doc._stix2arango_note != "automatically imported on collection creation"
+                    RETURN doc
+        )
         """
-        expected_result = [{"vertices": 1, "edges": 1}]
+        expected_result = [1]
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
-        # indicator and relationship should have old versions
-
     def test_query_3(self):
+        query = """
+        RETURN LENGTH(
+            FOR doc IN test9_edge_collection
+                FILTER doc._is_latest == true
+                AND doc._is_ref == false
+                AND doc._stix2arango_note != "automatically imported on collection creation"
+                    RETURN doc
+        )
+        """
+        expected_result = [1]
+        result = self.query_arango(query)
+        self.assertEqual(result['result'], expected_result)
+
+    def test_query_4(self):
+        query = """
+        RETURN LENGTH(
+            FOR doc IN test9_edge_collection
+                FILTER doc._is_latest == false
+                AND doc._is_ref == false
+                AND doc._stix2arango_note != "automatically imported on collection creation"
+                    RETURN doc
+        )
+        """
+        expected_result = [1]
+        result = self.query_arango(query)
+        self.assertEqual(result['result'], expected_result)
+
+    def test_query_5(self):
         query = """
         FOR doc IN test9_vertex_collection
             FILTER doc.id == "indicator--7a5dedb9-30f9-51c0-a49d-91aeda1fd7fd"
@@ -91,9 +98,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
-        # the versions of the indicator
-
-    def test_query_4(self):
+    def test_query_6(self):
         query = """
         FOR doc IN test9_vertex_collection
             FILTER doc.id == "software--50fa0834-9c63-5b0f-bf0e-dce02183253a"
@@ -110,8 +115,6 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
             ]
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
-
-        # only one version should be imported
 
 if __name__ == '__main__':
     unittest.main()
