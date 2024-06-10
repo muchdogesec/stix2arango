@@ -160,13 +160,13 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
           AND doc.created_by_ref == "identity--72e906ce-ca1b-5d73-adcd-9ea9eb66a1b4"
             RETURN DISTINCT doc.relationship_type
         """
-        expected_result = [
+        expected_result = {
             "object_marking_refs",
             "created_by_ref",
             "object_refs"
-        ]
+        }
         result = self.query_arango(query)
-        self.assertEqual(result['result'], expected_result)
+        self.assertEqual(set(result['result']), expected_result)
 
         # the unique embedded relationship keys that exist for this bundle
 
