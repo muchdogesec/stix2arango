@@ -60,8 +60,10 @@ def create_relationship_obj(
                 ),
             )
         )
-        relationship_object["source_ref"] = f"{source}"
-        relationship_object["target_ref"] = f"{target}"
+        if not isinstance(target, str):
+            continue
+        relationship_object["source_ref"] = source
+        relationship_object["target_ref"] = target
         relationship_object["_from"] = f"{arango_obj.core_collection_vertex}/{source}"
         relationship_object["_to"] = f"{arango_obj.core_collection_vertex}/{target}"
         relationship_object['_bundle_id'] = bundle_id

@@ -2,6 +2,7 @@ import os
 import json
 
 import logging
+import re
 
 from .. import config
 from tqdm import tqdm
@@ -14,6 +15,7 @@ module_logger = logging.getLogger("data_ingestion_service")
 
 
 class Stix2Arango:
+    EMBEDDED_RELATIONSHIP_RE = re.compile(r"([a-z\-_]+)[_\-]refs{0,1}")
 
     def __init__(self, **kwargs):
         self.core_collection_vertex, self.core_collection_edge = (
@@ -137,17 +139,21 @@ class Stix2Arango:
             objects = [];inserted_data = []
             for obj in tqdm(data["objects"]):
                 for key, targets in obj.items():
-                    if not (key.endswith('_ref') or key.endswith('_refs')):
-                        continue
+                    relationship_type = ""
                     if key in ["source_ref", "target_ref"]:
+                        continue
+                    if match := self.EMBEDDED_RELATIONSHIP_RE.fullmatch(key):
+                        relationship_type = match.group(1).replace('_', '-')
+                    else:
                         continue
                     if isinstance(targets, str):
                         targets = [targets]
+                    print(relationship_type, targets)
                     utils.create_relationship_obj(
                         obj=obj,
                         source=obj.get("id"),
                         targets=targets,
-                        relationship=key,
+                        relationship=relationship_type,
                         arango_obj=self,
                         bundle_id=data["id"],
                         insert_statement = objects
