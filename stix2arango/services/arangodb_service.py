@@ -138,7 +138,12 @@ class ArangoDBService:
         })[0]
         return result['inserted_objects'], result['existing_objects']
 
-    def insert_several_objects_chunked(self, objects, collection_name, chunk_size=1000):
+    def insert_several_objects_chunked(self, objects, collection_name, chunk_size=1000, remove_duplicates=True):
+        if remove_duplicates:
+            original_length = len(objects)
+            objects = utils.remove_duplicates(objects)
+            logging.info("removed {count} duplicates from imported objects.".format(count=original_length-len(objects)))
+        
         progress_bar = tqdm(utils.chunked(objects, chunk_size), total=len(objects))
         inserted_objects = []
         existing_objects = {}

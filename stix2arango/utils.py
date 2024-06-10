@@ -42,44 +42,43 @@ def create_relationship_obj(
         obj:dict, source:str, targets:list, relationship:str, insert_statement,
         bundle_id:str, arango_obj =None):
     insert_data = []
-    if isinstance(targets, list) and targets:
-        for target in targets:
-            if target:
-                relationship_object= {
-                    "created_by_ref": arango_obj.identity_ref.get("id"),
-                    "relationship_type": relationship,
-                    "created": obj.get("created"),
-                    "modified": obj.get("modified"),
-                    "object_marking_refs": obj.get("object_marking_refs")
-                }
-                relationship_object["id"] = "relationship--" + str(
-                    uuid.uuid5(
-                        config.namespace,
-                        "{}+{}+{}".format(
-                            relationship, source, target
-                        ),
-                    )
-                )
-                relationship_object["source_ref"] = f"{source}"
-                relationship_object["target_ref"] = f"{target}"
-                relationship_object["_from"] = f"{arango_obj.core_collection_vertex}/{source}"
-                relationship_object["_to"] = f"{arango_obj.core_collection_vertex}/{target}"
-                relationship_object['_bundle_id'] = bundle_id
-                relationship_object['_file_name'] = os.path.basename(arango_obj.file)  if len(arango_obj.file.split("/")) > 1 else ""
-                relationship_object['_stix2arango_note'] = arango_obj.note
-                relationship_object['_record_created'] = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')
-                relationship_object['_record_modified'] = relationship_object['_record_created']
-                relationship_object['_is_ref'] = True
-                relationship_object['type'] = "relationship"
-                relationship_object['spec_version'] = "2.1"
-                relationship_object['_record_md5_hash'] = generate_md5(relationship_object)
+    if not isinstance(targets, list):
+        return []
+    for target in targets:
+        relationship_object= {
+            "created_by_ref": arango_obj.identity_ref.get("id"),
+            "relationship_type": relationship,
+            "created": obj.get("created"),
+            "modified": obj.get("modified"),
+            "object_marking_refs": obj.get("object_marking_refs")
+        }
+        relationship_object["id"] = "relationship--" + str(
+            uuid.uuid5(
+                config.namespace,
+                "{}+{}+{}".format(
+                    relationship, source, target
+                ),
+            )
+        )
+        relationship_object["source_ref"] = f"{source}"
+        relationship_object["target_ref"] = f"{target}"
+        relationship_object["_from"] = f"{arango_obj.core_collection_vertex}/{source}"
+        relationship_object["_to"] = f"{arango_obj.core_collection_vertex}/{target}"
+        relationship_object['_bundle_id'] = bundle_id
+        relationship_object['_file_name'] = os.path.basename(arango_obj.file)  if len(arango_obj.file.split("/")) > 1 else ""
+        relationship_object['_stix2arango_note'] = arango_obj.note
+        relationship_object['_record_created'] = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')
+        relationship_object['_record_modified'] = relationship_object['_record_created']
+        relationship_object['_is_ref'] = True
+        relationship_object['type'] = "relationship"
+        relationship_object['spec_version'] = "2.1"
+        relationship_object['_record_md5_hash'] = generate_md5(relationship_object)
 
-                insert_statement.append(relationship_object)
-                insert_data.append(
-                    ["relationship", relationship_object["id"], True if "modified" in obj else False]
-                )
-
-        return insert_data
+        insert_statement.append(relationship_object)
+        insert_data.append(
+            ["relationship", relationship_object["id"], True if "modified" in obj else False]
+        )
+    return insert_data
 
 
 def generate_md5(obj:dict):
@@ -111,3 +110,14 @@ def chunked(iterable, n):
         return []
     for i in range(0, len(iterable), n):
         yield iterable[i : i + n]
+
+
+def remove_duplicates(objects):
+    objects_hashmap = {}
+    for object in objects:
+        md5hash = object.get('_record_md5_hash')
+        if not md5hash:
+            md5hash = generate_md5(object)
+        key = "{id}/{hash}".format(id=object['id'], hash=md5hash)
+        objects_hashmap[key] = object
+    return list(objects_hashmap.values())

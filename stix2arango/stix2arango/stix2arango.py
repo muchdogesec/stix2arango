@@ -91,7 +91,7 @@ class Stix2Arango:
             if db_key := existing_objects.get(f"{obj['id']};{obj['_record_md5_hash']}"):
                 self.object_key_mapping[obj['id']] = db_key
             else:
-                self.object_key_mapping[obj['id']] = "{collection}/{_key}".format(collection=self.core_collection_vertex, _key=obj['_key'])
+                self.object_key_mapping[obj['id']] = "{collection}/{_key}".format(collection=self.core_collection_vertex, _key=obj.get('_key', "not_imported"))
 
                 
 
@@ -136,21 +136,23 @@ class Stix2Arango:
             module_logger.info("Creating new embedded relationships using _refs and _ref")
             objects = [];inserted_data = []
             for obj in tqdm(data["objects"]):
-                filtered_keys = config.refs_list
-                for key in filtered_keys:
-                    if key in list(obj.keys()):
-                        target = obj.get(key)
-                        if isinstance(obj.get(key), str):
-                            target = [obj.get(key)]
-                        inserted_data+=utils.create_relationship_obj(
-                            obj=obj,
-                            source=obj.get("id"),
-                            targets=target,
-                            relationship=key,
-                            arango_obj=self,
-                            bundle_id=data["id"],
-                            insert_statement = objects
-                        )
+                for key, targets in obj.items():
+                    if not (key.endswith('_ref') or key.endswith('_refs')):
+                        continue
+                    if key in ["source_ref", "target_ref"]:
+                        continue
+                    if isinstance(targets, str):
+                        targets = [targets]
+                    utils.create_relationship_obj(
+                        obj=obj,
+                        source=obj.get("id"),
+                        targets=targets,
+                        relationship=key,
+                        arango_obj=self,
+                        bundle_id=data["id"],
+                        insert_statement = objects
+                    )
+
             module_logger.info(f"Inserting embedded relationship into database. Total objects: {len(objects)}")
             inserted_object_ids, _ = self.arango.insert_relationships_chunked(objects, self.object_key_mapping, self.core_collection_edge)
             self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_edge)
