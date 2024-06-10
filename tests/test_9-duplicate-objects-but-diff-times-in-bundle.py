@@ -21,14 +21,22 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
     def test_query_1(self):
         query = """
-        RETURN LENGTH(
-            FOR doc IN test9_vertex_collection
-                FILTER doc._is_latest == true
-                AND doc._stix2arango_note != "automatically imported on collection creation"
-                	RETURN doc
-        )
+        RETURN {
+            vertices: LENGTH(
+                FOR doc IN test9_vertex_collection
+                    FILTER doc._is_latest == true
+                    AND doc._stix2arango_note != "automatically imported on collection creation"
+                        RETURN doc
+                ),
+            edges: LENGTH(
+                FOR doc IN test9_edge_collection
+                    FILTER doc._is_latest == true AND doc._is_ref == false
+                    AND doc._stix2arango_note != "automatically imported on collection creation"
+                        RETURN doc
+                )
+        }
         """
-        expected_result = [3]
+        expected_result = [{"vertices": 2, "edges": 1}]
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
@@ -36,14 +44,22 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
     def test_query_2(self):
         query = """
-        RETURN LENGTH(
-            FOR doc IN test9_vertex_collection
-                FILTER doc._is_latest == false
-                AND doc._stix2arango_note != "automatically imported on collection creation"
-                	RETURN doc
-        )
+        RETURN {
+            vertices: LENGTH(
+                FOR doc IN test9_vertex_collection
+                    FILTER doc._is_latest == false
+                    AND doc._stix2arango_note != "automatically imported on collection creation"
+                        RETURN doc
+                ),
+            edges: LENGTH(
+                FOR doc IN test9_edge_collection
+                    FILTER doc._is_latest == false AND doc._is_ref == false
+                    AND doc._stix2arango_note != "automatically imported on collection creation"
+                        RETURN doc
+            )
+        }
         """
-        expected_result = [2]
+        expected_result = [{"vertices": 1, "edges": 1}]
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
@@ -53,7 +69,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         query = """
         FOR doc IN test9_vertex_collection
             FILTER doc.id == "indicator--7a5dedb9-30f9-51c0-a49d-91aeda1fd7fd"
-            SORT doc._record_modified DESC
+            SORT doc.modified DESC
             RETURN {
                 id: doc.id,
                 _is_latest: doc._is_latest,
