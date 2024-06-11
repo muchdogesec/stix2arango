@@ -115,10 +115,14 @@ This is a useful resource to quickly populate STIX data using stix2arango if you
 To get the latest data, you can run this script;
 
 ```shell
-python3 utilities/insert_latest_data.py
+python3 utilities/insert_latest_data.py --collection [COLLECTION]
 ```
 
-You'll also find a bunch of scripts named `insert_archive_*.py` in the utilities directory. Unlike `insert_latest_data.py` which only imports the latest data of each knowledgebase, if you use the archive scripts you'll get the full history of STIX objects for the frameworks (which demos the versioning capabilities of stix2arango). You can run each script in the same way as I've shown above for `insert_latest_data.py`.
+Where:
+
+* `--collection` (optional): is the specific collection you want to download. If not passed, all files will be downloaded.
+
+You'll also find a bunch of scripts named `insert_archive_*.py` in the utilities directory. Unlike `insert_latest_data.py` which only imports the latest data of each knowledgebase, if you use the archive scripts you'll get the full history of STIX objects for the frameworks (which demos the versioning capabilities of stix2arango).
 
 ## Useful supporting tools
 
