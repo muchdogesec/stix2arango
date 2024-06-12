@@ -1,0 +1,42 @@
+{
+    "type": "bundle",
+    "id": "bundle--7985964e-a029-410a-98d8-a1bcd67ef32d",
+    "objects": [
+        {
+            "type": "cryptocurrency-transaction",
+            "spec_version": "2.1",
+            "id": "cryptocurrency-transaction--f437c493-b651-5cbb-845a-3dd231a39ec6",
+            "symbol": "BTC",
+            "hash": "cfb39d98f66da8bfe42ad86894f116a3c1d8c6d1189456fcffae615a80623c49",
+            "execution_time": "2020-04-25T18:24:13Z",
+            "output": [
+                {
+                    "address_ref": "cryptocurrency-wallet--d3efcf4e-d9fa-578d-a83f-f11af4c2504c",
+                    "amount": 43577930
+                },
+                {
+                    "address_ref": "cryptocurrency-wallet--f17481a9-a6ad-5ebc-af2a-9b637dab774b",
+                    "amount": 2723995
+                },
+                {
+                    "address_ref": "cryptocurrency-wallet--9edba811-a14c-5795-8dd6-e39b4bde1c40",
+                    "amount": 2723995
+                },
+                {
+                    "address_ref": "cryptocurrency-wallet--7052df7c-e9f4-5fc9-bc57-304278647176",
+                    "amount": 5448090
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--904ac99b-7539-5de7-9ffa-23186f0e07b6",
+                "marking-definition--27557362-b745-4161-96e8-ccd62ce4cb26",
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
+            ],
+            "extensions": {
+                "extension-definition--151d042d-4dcf-5e44-843f-1024440318e5": {
+                    "extension_type": "new-sco"
+                }
+            }
+        }
+    ]
+}

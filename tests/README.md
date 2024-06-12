@@ -17,6 +17,8 @@
 * test 14: tesing the generation of emedded relationships that are non-standard (in STIX spec)
 * test 15: testing what happens when object in target ref of SRO does not exist in the collection
 * test 16: testing what happens when object in source ref of SRO does not exist in the collection
+* test 17: tests the update of objects and thus the embedded relationships created from them
+* test 18: tests when the nested ref or refs property is below the top level of the object
 
 ## Running tests
 
