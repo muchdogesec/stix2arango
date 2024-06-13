@@ -54,7 +54,7 @@ def run_command(command, root_path):
             "--database", command["database"],
             "--collection", command["collection"],
             "--stix2arango_note", command.get("stix2arango_note", ""),
-            "--ignore_embedded_relationships", "true"
+            "--ignore_embedded_relationships", "false"
         ], check=True)
         print(f"Successfully processed {file_path}")
     except subprocess.CalledProcessError as e:
