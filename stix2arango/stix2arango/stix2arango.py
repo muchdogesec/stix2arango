@@ -138,22 +138,12 @@ class Stix2Arango:
             module_logger.info("Creating new embedded relationships using _refs and _ref")
             objects = [];inserted_data = []
             for obj in tqdm(data["objects"]):
-                for key, targets in obj.items():
-                    relationship_type = ""
-                    if key in ["source_ref", "target_ref"]:
-                        continue
-                    if match := self.EMBEDDED_RELATIONSHIP_RE.fullmatch(key):
-                        relationship_type = match.group(1).replace('_', '-')
-                    else:
-                        continue
-                    if isinstance(targets, str):
-                        targets = [targets]
-                    print(relationship_type, targets)
+                for ref_type, targets in utils.get_embedded_refs(obj):
                     utils.create_relationship_obj(
                         obj=obj,
                         source=obj.get("id"),
                         targets=targets,
-                        relationship=relationship_type,
+                        relationship=ref_type,
                         arango_obj=self,
                         bundle_id=data["id"],
                         insert_statement = objects
