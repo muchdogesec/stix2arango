@@ -20,6 +20,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description="Process NVD CPE versions.")
     parser.add_argument('--versions', type=str, help='Comma-separated list of versions to process. Default is all versions.')
     parser.add_argument('--ignore_embedded_relationships', type=bool, default=False, help='Flag to ignore embedded relationships. Default is false.')
+    parser.add_argument('--database', type=str, default="cti", help='Name of the database to use. Default is "cti".')
     return parser.parse_args()
 
 def create_directory(path):
@@ -37,6 +38,7 @@ def download_file(url, destination, error_list, max_retries=5, wait_time=60):
             return
         response = requests.get(url)
         if response.status_code == 200:
+            create_directory(os.path.dirname(destination))  # Ensure the directory exists before writing the file
             with open(destination, 'wb') as file:
                 file.write(response.content)
             print(f"Downloaded file to {destination}")
@@ -54,17 +56,23 @@ def download_file(url, destination, error_list, max_retries=5, wait_time=60):
 
 def run_command(command, root_path, ignore_embedded_relationships):
     file_path = os.path.join(root_path, "cti_knowledge_base_store", command["file"])
+    stix2arango_path = os.path.join(root_path, "stix2arango.py")
+    stix2arango_dir = os.path.dirname(stix2arango_path)  # Directory containing stix2arango.py
     if not os.path.exists(file_path):
         print(f"File not found: {file_path}")
         return
+    if not os.path.exists(stix2arango_path):
+        print(f"stix2arango.py not found: {stix2arango_path}")
+        return
     try:
+        # Change the working directory to the directory containing stix2arango.py
         subprocess.run([
-            "python3", os.path.join(root_path, "stix2arango.py"),
+            "python3", stix2arango_path,
             "--file", file_path,
             "--database", command["database"],
             "--collection", command["collection"],
             "--ignore_embedded_relationships", str(ignore_embedded_relationships).lower()
-        ], check=True)
+        ], check=True, cwd=stix2arango_dir)
         print(f"Successfully processed {file_path}")
     except subprocess.CalledProcessError as e:
         print(f"Failed to process {file_path}: {e}")
@@ -78,6 +86,7 @@ def main():
         versions = all_versions
 
     ignore_embedded_relationships = args.ignore_embedded_relationships
+    database = args.database
 
     # Get the absolute path to the current directory (where this script is located)
     script_path = os.path.dirname(os.path.abspath(__file__))
@@ -87,7 +96,7 @@ def main():
     commands = [
         {
             "file": f"nvd-cpe/cpe-bundle-{version}.json",
-            "database": "cti",
+            "database": database,
             "collection": "nvd_cpe"
         } for version in versions
     ]

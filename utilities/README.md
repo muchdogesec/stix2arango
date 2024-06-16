@@ -12,7 +12,7 @@ python3 utilities/arango_cti_processor/SCRIPT.py --versions XX,YY,ZZ
 
 Where:
 
-* `SCRIPT` (required) is either
+* `SCRIPT` (required): is either
 	* `mitre_attack_enterprise`
 	* `mitre_attack_ics`
 	* `mitre_attack_mobile`
@@ -23,6 +23,7 @@ Where:
 	* `sigma-rules`
 	* `yara-rules`
 	* `locations`
+* `--database` (required): is the name of the Arango database the objects should be stored in. If database does not exist, stix2arango will create it
 * `--versions` (optional): are one or more of the versions listed in each Python file. e.g. for `insert_archive_disarm.py` are currently `1_2`, `1_3`, `1_4`. If no version flag is passed, all listed versions will be downloaded. 
 * `--ignore_embedded_relationships` (optional): boolean, if `true` passed, this will stop any embedded relationships from being generated. Default is `false`
 
@@ -37,23 +38,23 @@ python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py
 Download and insert only 15.0 and 15.1 versions of MITRE ATT&CK Enterprise and ignore embedded relationships
 
 ```shell
-python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py --versions 15_0,15_1 --ignore_embedded_relationships true
+python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py --database cti --versions 15_0,15_1 --ignore_embedded_relationships true
 ```
 
 For arango_cti_processor we run the following;
 
 ```shell
-python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_attack_ics.py --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_attack_mobile.py --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_capec.py --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_cwe.py --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_disarm.py --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_locations.py --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_sigma_rules.py --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_yara_rules.py --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_cve.py --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_cpe.py --ignore_embedded_relationships false
+python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py --database cti --ignore_embedded_relationships false && \
+python3 utilities/arango_cti_processor/insert_archive_attack_ics.py --database cti --ignore_embedded_relationships false && \
+python3 utilities/arango_cti_processor/insert_archive_attack_mobile.py --database cti --ignore_embedded_relationships false && \
+python3 utilities/arango_cti_processor/insert_archive_capec.py --database cti --ignore_embedded_relationships false && \
+python3 utilities/arango_cti_processor/insert_archive_cwe.py --database cti --ignore_embedded_relationships false && \
+python3 utilities/arango_cti_processor/insert_archive_disarm.py --database cti --ignore_embedded_relationships false && \
+python3 utilities/arango_cti_processor/insert_archive_locations.py --database cti --ignore_embedded_relationships false && \
+python3 utilities/arango_cti_processor/insert_archive_sigma_rules.py --database cti --ignore_embedded_relationships false && \
+python3 utilities/arango_cti_processor/insert_archive_yara_rules.py --database cti --ignore_embedded_relationships false && \
+python3 utilities/arango_cti_processor/insert_archive_cve.py --database cti --ignore_embedded_relationships false && \
+python3 utilities/arango_cti_processor/insert_archive_cpe.py --database cti --ignore_embedded_relationships false
 ```
 
 IMPORTANT NOTE on CPE / CVE scripts: due to the way dates are generated dynamically you will see alot of errors like

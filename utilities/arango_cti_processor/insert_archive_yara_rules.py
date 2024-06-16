@@ -20,6 +20,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description="Process YARA rules versions.")
     parser.add_argument('--versions', type=str, help='Comma-separated list of versions to process (e.g., 0f93570). Default is all versions.')
     parser.add_argument('--ignore_embedded_relationships', type=bool, default=False, help='Flag to ignore embedded relationships. Default is false.')
+    parser.add_argument('--database', type=str, default="cti", help='Name of the database to use. Default is "cti".')
     return parser.parse_args()
 
 def create_directory(path):
@@ -68,6 +69,7 @@ def main():
         versions = all_versions
 
     ignore_embedded_relationships = args.ignore_embedded_relationships
+    database = args.database
 
     # Get the absolute path to the current directory (where this script is located)
     script_path = os.path.dirname(os.path.abspath(__file__))
@@ -77,7 +79,7 @@ def main():
     commands = [
         {
             "file": os.path.join("cti_knowledge_base_store", "yara-rules", f"yara-rule-bundle-{version}.json"),
-            "database": "cti",
+            "database": database,
             "collection": "yara_rules",
             "stix2arango_note": f"v{version.replace('_', '.')}"
         } for version in versions
@@ -97,7 +99,7 @@ def main():
     base_url = "https://pub-ce0133952c6947428e077da707513ff5.r2.dev/"
     files_to_download = [
         {
-            "url": f"{base_url}yara-rules%2Fyara-rule-bundle-r{version}.json",
+            "url": f"{base_url}yara-rules%2Fyara-rule-bundle-{version}.json",
             "destination": os.path.join(root_path, "cti_knowledge_base_store", "yara-rules", f"yara-rule-bundle-{version}.json")
         } for version in versions
     ]

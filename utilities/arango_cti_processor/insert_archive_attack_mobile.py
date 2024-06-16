@@ -23,6 +23,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description="Process MITRE ATT&CK Mobile versions.")
     parser.add_argument('--versions', type=str, help='Comma-separated list of versions to process (e.g., 1_0,2_0). Default is all versions.')
     parser.add_argument('--ignore_embedded_relationships', type=bool, default=False, help='Flag to ignore embedded relationships. Default is false.')
+    parser.add_argument('--database', type=str, default="cti", help='Name of the database to use. Default is "cti".')
     return parser.parse_args()
 
 def create_directory(path):
@@ -71,6 +72,7 @@ def main():
         versions = all_versions
 
     ignore_embedded_relationships = args.ignore_embedded_relationships
+    database = args.database
 
     # Get the absolute path to the current directory (where this script is located)
     script_path = os.path.dirname(os.path.abspath(__file__))
@@ -80,7 +82,7 @@ def main():
     commands = [
         {
             "file": os.path.join("cti_knowledge_base_store", "mitre-attack-mobile", f"mobile-attack-{version}.json"),
-            "database": "cti",
+            "database": database,
             "collection": "mitre_attack_mobile",
             "stix2arango_note": f"v{version.replace('_', '.')}"
         } for version in versions
