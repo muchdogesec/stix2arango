@@ -112,17 +112,7 @@ We store a lot of STIX data from popular knowledgebases on Cloudflare R2.
 
 This is a useful resource to quickly populate STIX data using stix2arango if you want to see what it can do. It is also what is used to populate the data required by [arango_cti_processor](https://github.com/muchdogesec/arango_cti_processor/)
 
-To get the latest data, you can run this script;
-
-```shell
-python3 utilities/insert_latest_data.py --collection [COLLECTION]
-```
-
-Where:
-
-* `--collection` (optional): is the specific collection you want to download. If not passed, all files will be downloaded.
-
-You'll also find a bunch of scripts named `insert_archive_*.py` in the utilities directory. Unlike `insert_latest_data.py` which only imports the latest data of each knowledgebase, if you use the archive scripts you'll get the full history of STIX objects for the frameworks (which demos the versioning capabilities of stix2arango).
+To use this for yourself, check out `utilities/README.md`
 
 ## Useful supporting tools
 

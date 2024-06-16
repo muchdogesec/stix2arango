@@ -1,14 +1,12 @@
+import argparse
 import subprocess
 import os
 import requests
 import re
 
 # Define the version strings
-versions = [
-    "1_0", "2_0", "3_0", "4_0", "5_0", "5_1", "5_2", "6_0", "6_1", "6_2", "6_3",
-    "7_0", "7_1", "7_2", "8_0", "8_1", "8_2", "9_0", "10_0", "10_1", "11_0-beta", 
-    "11_1-beta", "11_2-beta", "11_3", "12_0", "12_1", "13_0", "13_1", "14_0", "14_1", 
-    "15_0", "15_1"
+all_versions = [
+    ""
 ]
 
 def version_key(version):
@@ -16,17 +14,13 @@ def version_key(version):
     return [int(part) if part.isdigit() else part for part in parts]
 
 # Sort the versions using the custom key
-versions.sort(key=version_key)
+all_versions.sort(key=version_key)
 
-# Define the commands and their arguments for the files
-commands = [
-    {
-        "file": f"cti_knowledge_base_store/mitre-attack-mobile/mobile-attack-{version}.json",
-        "database": "cti",
-        "collection": "mitre_attack_mobile",
-        "stix2arango_note": f"v{version.replace('_', '.')}"
-    } for version in versions
-]
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Process location versions.")
+    parser.add_argument('--versions', type=str, help='Comma-separated list of versions to process')
+    parser.add_argument('--ignore_embedded_relationships', type=bool, default=False, help='Flag to ignore embedded relationships. Default is false.')
+    return parser.parse_args()
 
 def create_directory(path):
     if not os.path.exists(path):
@@ -47,7 +41,7 @@ def download_file(url, destination):
     else:
         print(f"Failed to download file from {url}")
 
-def run_command(command, root_path):
+def run_command(command, root_path, ignore_embedded_relationships):
     file_path = os.path.join(root_path, command["file"])
     if not os.path.exists(file_path):
         print(f"File not found: {file_path}")
@@ -58,17 +52,34 @@ def run_command(command, root_path):
             "--file", file_path,
             "--database", command["database"],
             "--collection", command["collection"],
-            "--stix2arango_note", command.get("stix2arango_note", ""),
-            "--ignore_embedded_relationships", "false"
+            "--ignore_embedded_relationships", str(ignore_embedded_relationships).lower()
         ], check=True)
         print(f"Successfully processed {file_path}")
     except subprocess.CalledProcessError as e:
         print(f"Failed to process {file_path}: {e}")
 
 def main():
-    # Get the absolute path to the ROOT directory (assumed to be the parent directory of the script)
-    root_path = os.path.dirname(os.path.abspath(__file__))
-    root_path = os.path.dirname(root_path)  # Move up one level from 'utilities' to 'ROOT'
+    args = parse_arguments()
+
+    if args.versions:
+        versions = args.versions.split(',')
+    else:
+        versions = all_versions
+
+    ignore_embedded_relationships = args.ignore_embedded_relationships
+
+    # Get the absolute path to the current directory (where this script is located)
+    script_path = os.path.dirname(os.path.abspath(__file__))
+    root_path = os.path.abspath(os.path.join(script_path, "../.."))  # Move up two levels to the directory containing stix2arango.py and cti_knowledge_base_store
+    
+    # Define the commands and their arguments for the files
+    commands = [
+        {
+            "file": os.path.join("cti_knowledge_base_store", "locations", f"locations-bundle{version}.json"),
+            "database": "cti",
+            "collection": "locations",
+        } for version in versions
+    ]
     
     # Collect unique directories to create
     directories_to_create = set()
@@ -84,8 +95,8 @@ def main():
     base_url = "https://pub-ce0133952c6947428e077da707513ff5.r2.dev/"
     files_to_download = [
         {
-            "url": f"{base_url}mitre-attack-mobile%2Fmobile-attack-{version}.json",
-            "destination": os.path.join(root_path, "cti_knowledge_base_store", "mitre-attack-mobile", f"mobile-attack-{version}.json")
+            "url": f"{base_url}locations%2Flocations-bundle{version}.json",
+            "destination": os.path.join(root_path, "cti_knowledge_base_store", "locations", f"locations-bundle{version}.json")
         } for version in versions
     ]
 
@@ -94,7 +105,7 @@ def main():
 
     # Run the commands
     for command in commands:
-        run_command(command, root_path)
+        run_command(command, root_path, ignore_embedded_relationships)
 
 if __name__ == "__main__":
     main()
