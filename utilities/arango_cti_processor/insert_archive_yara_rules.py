@@ -1,11 +1,12 @@
+import argparse
 import subprocess
 import os
 import requests
 import re
 
 # Define the version strings
-versions = [
-    "1_2", "1_3", "1_4"
+all_versions = [
+    "0f93570"
 ]
 
 def version_key(version):
@@ -13,17 +14,14 @@ def version_key(version):
     return [int(part) if part.isdigit() else part for part in parts]
 
 # Sort the versions using the custom key
-versions.sort(key=version_key)
+all_versions.sort(key=version_key)
 
-# Define the commands and their arguments for the files
-commands = [
-    {
-        "file": f"cti_knowledge_base_store/disarm/disarm-bundle-v{version}.json",
-        "database": "cti",
-        "collection": "disarm",
-        "stix2arango_note": f"v{version.replace('_', '.')}"
-    } for version in versions
-]
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Process YARA rules versions.")
+    parser.add_argument('--versions', type=str, help='Comma-separated list of versions to process (e.g., 0f93570). Default is all versions.')
+    parser.add_argument('--ignore_embedded_relationships', type=bool, default=False, help='Flag to ignore embedded relationships. Default is false.')
+    parser.add_argument('--database', type=str, default="cti", help='Name of the database to use. Default is "cti".')
+    return parser.parse_args()
 
 def create_directory(path):
     if not os.path.exists(path):
@@ -44,7 +42,7 @@ def download_file(url, destination):
     else:
         print(f"Failed to download file from {url}")
 
-def run_command(command, root_path):
+def run_command(command, root_path, ignore_embedded_relationships):
     file_path = os.path.join(root_path, command["file"])
     if not os.path.exists(file_path):
         print(f"File not found: {file_path}")
@@ -56,16 +54,36 @@ def run_command(command, root_path):
             "--database", command["database"],
             "--collection", command["collection"],
             "--stix2arango_note", command.get("stix2arango_note", ""),
-            "--ignore_embedded_relationships", "true"
+            "--ignore_embedded_relationships", str(ignore_embedded_relationships).lower()
         ], check=True)
         print(f"Successfully processed {file_path}")
     except subprocess.CalledProcessError as e:
         print(f"Failed to process {file_path}: {e}")
 
 def main():
-    # Get the absolute path to the ROOT directory (assumed to be the parent directory of the script)
-    root_path = os.path.dirname(os.path.abspath(__file__))
-    root_path = os.path.dirname(root_path)  # Move up one level from 'utilities' to 'ROOT'
+    args = parse_arguments()
+
+    if args.versions:
+        versions = args.versions.split(',')
+    else:
+        versions = all_versions
+
+    ignore_embedded_relationships = args.ignore_embedded_relationships
+    database = args.database
+
+    # Get the absolute path to the current directory (where this script is located)
+    script_path = os.path.dirname(os.path.abspath(__file__))
+    root_path = os.path.abspath(os.path.join(script_path, "../.."))  # Move up two levels to the directory containing stix2arango.py and cti_knowledge_base_store
+    
+    # Define the commands and their arguments for the files
+    commands = [
+        {
+            "file": os.path.join("cti_knowledge_base_store", "yara-rules", f"yara-rule-bundle-{version}.json"),
+            "database": database,
+            "collection": "yara_rules",
+            "stix2arango_note": f"v{version.replace('_', '.')}"
+        } for version in versions
+    ]
     
     # Collect unique directories to create
     directories_to_create = set()
@@ -81,8 +99,8 @@ def main():
     base_url = "https://pub-ce0133952c6947428e077da707513ff5.r2.dev/"
     files_to_download = [
         {
-            "url": f"{base_url}disarm%2Fdisarm-bundle-v{version}.json",
-            "destination": os.path.join(root_path, "cti_knowledge_base_store", "disarm", f"disarm-bundle-v{version}.json")
+            "url": f"{base_url}yara-rules%2Fyara-rule-bundle-{version}.json",
+            "destination": os.path.join(root_path, "cti_knowledge_base_store", "yara-rules", f"yara-rule-bundle-{version}.json")
         } for version in versions
     ]
 
@@ -91,7 +109,7 @@ def main():
 
     # Run the commands
     for command in commands:
-        run_command(command, root_path)
+        run_command(command, root_path, ignore_embedded_relationships)
 
 if __name__ == "__main__":
     main()

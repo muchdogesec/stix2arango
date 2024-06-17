@@ -1,3 +1,4 @@
+import re
 import requests
 import logging
 import uuid
@@ -8,6 +9,8 @@ from . import config
 from datetime import datetime
 module_logger = logging.getLogger("data_ingestion_service")
 
+
+EMBEDDED_RELATIONSHIP_RE = re.compile(r"([a-z\-_]+)[_\-]refs{0,1}")
 
 def load_file_from_url(url):
     try:
@@ -123,3 +126,22 @@ def remove_duplicates(objects):
         key = "{id}/{hash}".format(id=object['id'], hash=md5hash)
         objects_hashmap[key] = object
     return list(objects_hashmap.values())
+
+
+def get_embedded_refs(object: list|dict):
+    embedded_refs = []
+    if isinstance(object, dict):
+        for key, value in object.items():
+            if key in ["source_ref", "target_ref"]:
+                continue
+            if match := EMBEDDED_RELATIONSHIP_RE.fullmatch(key):
+                relationship_type = match.group(1).replace('_', '-')
+                targets = value if isinstance(value, list) else [value]
+                embedded_refs.append((relationship_type, targets))
+            elif isinstance(value, list):
+                embedded_refs.extend(get_embedded_refs(value))
+    elif isinstance(object, list):
+        for obj in object:
+            if isinstance(obj, dict):
+                embedded_refs.extend(get_embedded_refs(obj))
+    return embedded_refs
