@@ -66,5 +66,21 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
         # the distinct embedded ref objects in `indicator--49150a4c-d831-51fa-9f61-aede5570a969`
 
+    def test_query_4(self):
+        query = """
+        RETURN LENGTH(
+            FOR doc IN test17_edge_collection
+                FILTER doc._is_ref == true
+                AND doc.id == "relationship--5b32a703-4317-5f58-b1ce-03735c756035"
+                COLLECT modified = doc.modified, created = doc.created
+                RETURN { modified, created }
+            )
+        """
+        expected_result = [2]
+        result = self.query_arango(query)
+        self.assertEqual(result['result'], expected_result)
+
+        # makes sure that the created and modified times are updated properly
+
 if __name__ == '__main__':
     unittest.main()

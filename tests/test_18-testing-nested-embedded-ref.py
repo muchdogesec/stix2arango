@@ -34,6 +34,57 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
         # contains 4 address_ref and 3 object_marking refs
 
+    def test_query_2(self):
+        query = """
+        RETURN LENGTH(
+            FOR doc IN test18_edge_collection
+                FILTER doc._is_ref == true
+                AND doc._is_latest == true
+                AND doc.created != null
+                AND doc.modified != null
+                LET keys = ATTRIBUTES(doc)
+                LET filteredKeys = keys[* FILTER !STARTS_WITH(CURRENT, "_")]
+                RETURN KEEP(doc, filteredKeys)
+        )
+        """
+        expected_result = [7]
+        result = self.query_arango(query)
+        self.assertEqual(result['result'], expected_result)
+
+        # this checks created and modified times are generated. Currently need to manually check if the times are correct.
+
+    def test_query_3(self):
+        query = """
+        FOR doc IN test18_edge_collection
+            FILTER doc._is_ref == true
+            AND doc._is_latest == true
+                RETURN DISTINCT doc.relationship_type
+        """
+        expected_result = [
+              "address",
+              "object-marking"
+            ]
+        result = self.query_arango(query)
+        self.assertEqual(result['result'], expected_result)
+
+        # the distinct embedded ref object relationship types for this search
+
+    def test_query_4(self):
+        query = """
+        RETURN LENGTH(
+            FOR doc IN test18_edge_collection
+                FILTER doc.created != null
+                AND doc.modified != null
+                AND doc.id == "relationship--35f9c60e-5364-556e-a6f0-ccb0179eec02"
+                COLLECT modified = doc.modified, created = doc.created
+                RETURN { modified, created }
+            )
+        """
+        expected_result = [1]
+        result = self.query_arango(query)
+        self.assertEqual(result['result'], expected_result)
+
+        # checks only one version with created and modified times exist, b/c no update yet
 
 if __name__ == '__main__':
     unittest.main()

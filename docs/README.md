@@ -431,6 +431,8 @@ Note, to ensure the SRO `id` persists when the same relationship is described, S
 * namespace: `72e906ce-ca1b-5d73-adcd-9ea9eb66a1b4`
 * value: `<RELATIONSHIP_TYPE>+<SOURCE_REF>+<TARGET_REF>`
 
+On first creation, created and modified times are the same. If any updates to this embedded relationship happen (id) then the new object has the same created time, but an increased modified time.
+
 This object can then be inserted into the database as per the normal Relationship SRO import process.
 
 ```sql
