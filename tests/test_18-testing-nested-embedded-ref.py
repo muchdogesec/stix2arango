@@ -61,7 +61,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
                 RETURN DISTINCT doc.relationship_type
         """
         expected_result = [
-              "address",
+              "output-address",
               "object-marking"
             ]
         result = self.query_arango(query)
