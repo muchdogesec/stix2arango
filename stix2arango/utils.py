@@ -128,20 +128,20 @@ def remove_duplicates(objects):
     return list(objects_hashmap.values())
 
 
-def get_embedded_refs(object: list|dict):
+def get_embedded_refs(object: list|dict, xpath: list = []):
     embedded_refs = []
     if isinstance(object, dict):
         for key, value in object.items():
             if key in ["source_ref", "target_ref"]:
                 continue
             if match := EMBEDDED_RELATIONSHIP_RE.fullmatch(key):
-                relationship_type = match.group(1).replace('_', '-')
+                relationship_type = "-".join(xpath + match.group(1).split('_'))
                 targets = value if isinstance(value, list) else [value]
                 embedded_refs.append((relationship_type, targets))
             elif isinstance(value, list):
-                embedded_refs.extend(get_embedded_refs(value))
+                embedded_refs.extend(get_embedded_refs(value, xpath + [key]))
     elif isinstance(object, list):
         for obj in object:
             if isinstance(obj, dict):
-                embedded_refs.extend(get_embedded_refs(obj))
+                embedded_refs.extend(get_embedded_refs(obj, xpath))
     return embedded_refs
