@@ -19,7 +19,7 @@
 * test 16: testing what happens when object in source ref of SRO does not exist in the collection
 * test 17: tests the update of objects and thus the embedded relationships created from them
 * test 18: tests when the nested ref or refs property is below the top level of the object
-* test 19: here the objects have the same properties between updates except modified and created times. This goes against the STIX spec, but should be handled in stix2arango as the same object, with the highest modified time being is latest.
+* test 19: here the objects have the same properties between updates except modified and created time. This goes against the STIX spec (that is created time should always stay the same for objects with same ID, with only modified time changing), but should be handled in stix2arango as the same object, with the highest modified time being is latest.
 
 ## Running tests
 
