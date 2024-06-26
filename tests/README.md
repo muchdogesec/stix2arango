@@ -8,8 +8,8 @@
 * test 5: This tests the logic of where an update to only the `modified` property changes. The bundles are imported with the lowest `modifed` time first and highest `modified` time last (in time order)
 * test 6: almost identical to 5, however, the bundles are imported in reverse order with the highest `modifed` time first and lowest `modified` time last (in reverse time order)
 * test 7: makes sure default imported objects are imported correctly, and that they are not updated between updates
-* test 8: contains a bundle with 2 sets of duplicate objects (both exact copies)
-* test 9: similar to test 8, but now one of the duplicate object has a `modified` time change
+* test 8: contains a bundle with 2 sets of duplicate objects (both exact copies), so should create one object
+* test 9: similar to test 8, but now one of the duplicate object has a `modified` time change, so should create 2 objects
 * test 10: testing updates of SCOs (where no `modified` property exists)
 * test 11: testing custom SDOs (where `modified` time exists)
 * test 12: testing custom SCOs (where no `modified` property exists)
@@ -19,6 +19,7 @@
 * test 16: testing what happens when object in source ref of SRO does not exist in the collection
 * test 17: tests the update of objects and thus the embedded relationships created from them
 * test 18: tests when the nested ref or refs property is below the top level of the object
+* test 19: here the objects have the same properties between updates except modified and created times. This goes against the STIX spec, but should be handled in stix2arango as the same object, with the highest modified time being is latest.
 
 ## Running tests
 
