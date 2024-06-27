@@ -1,10 +1,14 @@
 # stix2arango
 
+## Overview
+
 stix2arango is a command line tool that takes a group of STIX 2.1 objects in a bundle and inserts them into ArangoDB. It can also handle updates to existing objects in ArangoDB imported in a bundle.
 
 1. STIX 2.1 bundle entered
 2. User chooses database/collection names (stix2arango creates as needed)
 3. stix2arango inserts objects (or updates them) and then generates any relationships between them
+
+## tl;dr
 
 [![stix2arango](https://img.youtube.com/vi/zn6KCj2O5CY/0.jpg)](https://www.youtube.com/watch?v=zn6KCj2O5CY)
 
