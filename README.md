@@ -6,6 +6,8 @@ stix2arango is a command line tool that takes a group of STIX 2.1 objects in a b
 2. User chooses database/collection names (stix2arango creates as needed)
 3. stix2arango inserts objects (or updates them) and then generates any relationships between them
 
+[![stix2arango](https://img.youtube.com/vi/zn6KCj2O5CY/0.jpg)](https://www.youtube.com/watch?v=zn6KCj2O5CY)
+
 ## Usage
 
 ### Install the script
@@ -58,7 +60,8 @@ python3 stix2arango.py \
 	--file PATH/TO/STIX.json \
 	--database NAME \
 	--collection NAME \
-	--stix2arango_note SOMETHING
+	--stix2arango_note SOMETHING \
+	--ignore_embedded_relationships BOOLEAN
 ```
 
 Where;
@@ -73,26 +76,27 @@ For example, [using the MITRE ATT&CK Enterprise bundle](https://raw.githubuserco
 
 ```shell
 python3 stix2arango.py \
-	--file design/mvp/tests/enterprise-attack.json \
-	--database cti \
-	--collection mitre_attack_enterprise \
-	--stix2arango_note v14.1
+	--file cti_knowledge_base_store/mitre-attack-enterprise/enterprise-attack-15_1.json \
+	--database stix2arango_demo \
+	--collection demo_1 \
+	--stix2arango_note v15.1 \
+	--ignore_embedded_relationships true
 ```
 
-However, if you didn't want to turn STIX embedded relationships as edges in the ArangoDB collection, you could use;
+If you want to include embedded relationships as edges in the ArangoDB collection, you would run;
 
 ```shell
 python3 stix2arango.py \
-	--file design/mvp/tests/enterprise-attack.json \
-	--database cti \
-	--collection mitre_attack_enterprise \
-	--stix2arango_note v14.1 \
-	--ignore_embedded_relationships true
+	--file cti_knowledge_base_store/mitre-attack-enterprise/enterprise-attack-15_1.json \
+	--database stix2arango_demo \
+	--collection demo_2 \
+	--stix2arango_note v15.1 \
+	--ignore_embedded_relationships false
 ```
 
 #### A note on embedded relationships
 
-stix2arango can handle all embedded references to other STIX objects under `_ref` and `_refs` properties when `--ignore_embedded_relationships` is set to false.
+stix2arango can handle all embedded references to other STIX objects under `_ref` and `_refs` properties in a STIX object when `--ignore_embedded_relationships` is set to false.
 
 e.g.
 
