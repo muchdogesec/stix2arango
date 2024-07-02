@@ -51,10 +51,11 @@ def create_relationship_obj(
         relationship_object= {
             "created_by_ref": arango_obj.identity_ref.get("id"),
             "relationship_type": relationship,
-            "created": obj.get("created"),
-            "modified": obj.get("modified"),
-            "object_marking_refs": obj.get("object_marking_refs")
         }
+        for key in ["created", "modified", "object_marking_refs"]:
+            if key in obj:
+                relationship_object[key] = obj[key]
+        
         relationship_object["id"] = "relationship--" + str(
             uuid.uuid5(
                 config.namespace,
