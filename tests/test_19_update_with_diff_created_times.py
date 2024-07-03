@@ -10,7 +10,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         cls.ARANGODB_DATABASE = "s2a_tests"
         cls.ARANGODB_COLLECTION = "test19"
         cls.STIX2ARANGO_NOTE_1 = "test19"
-        cls.STIX2ARANGO_NOTE_2 = ""
+        cls.STIX2ARANGO_NOTE_2 = "test19"
         cls.STIX2ARANGO_NOTE_3 = ""
         cls.TEST_FILE_1 = "update_with_diff_modified_times_1.json"
         cls.TEST_FILE_2 = "update_with_diff_modified_times_2.json"
