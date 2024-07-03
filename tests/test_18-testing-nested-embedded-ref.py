@@ -9,7 +9,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         super().load_configuration()
         cls.ARANGODB_DATABASE = "s2a_tests"
         cls.ARANGODB_COLLECTION = "test18"
-        cls.STIX2ARANGO_NOTE_1 = ""
+        cls.STIX2ARANGO_NOTE_1 = "test18"
         cls.STIX2ARANGO_NOTE_2 = ""
         cls.STIX2ARANGO_NOTE_3 = ""
         cls.TEST_FILE_1 = "nested-embedded-ref.json"
@@ -47,11 +47,11 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
                 RETURN KEEP(doc, filteredKeys)
         )
         """
-        expected_result = [7]
+        expected_result = [0]
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
-        # this checks created and modified times are generated. Currently need to manually check if the times are correct.
+        # this checks no created and modified times are generated in embedded SROS (because source transaction object does not have these times).
 
     def test_query_3(self):
         query = """
@@ -73,9 +73,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         query = """
         RETURN LENGTH(
             FOR doc IN test18_edge_collection
-                FILTER doc.created != null
-                AND doc.modified != null
-                AND doc.id == "relationship--35f9c60e-5364-556e-a6f0-ccb0179eec02"
+                FILTER doc.id == "relationship--35f9c60e-5364-556e-a6f0-ccb0179eec02"
                 COLLECT modified = doc.modified, created = doc.created
                 RETURN { modified, created }
             )
