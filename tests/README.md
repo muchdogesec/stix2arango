@@ -20,6 +20,9 @@
 * test 17: tests the update of objects and thus the embedded relationships created from them
 * test 18: tests when the nested ref or refs property is below the top level of the object
 * test 19: here the objects have the same properties between updates except modified and created time. This goes against the STIX spec (that is created time should always stay the same for objects with same ID, with only modified time changing), but should be handled in stix2arango as the same object, with the highest modified time being is latest.
+* test 20: tests the creation and update of embedded relationships from SDOs (where both `modified` and `created` time exist exists in source object) -- expect same source / modified times in source object and embedded SROs
+* test 21: tests the creation and update of embedded relationships from SCOs (where no `modified` or `created` time exist exists in source object) -- expect embedded SROs generated to have no `modified` or `created` time
+* test 22: tests the creation and update of embedded relationships from SMOs (where only `created` time exist exists in source object) -- expect embedded SROs generated to have only `created` time
 
 ## Running tests
 

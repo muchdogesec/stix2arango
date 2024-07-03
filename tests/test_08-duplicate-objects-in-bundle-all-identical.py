@@ -1,4 +1,4 @@
-# python3 -m unittest tests/test_8-duplicate-objects-in-bundle-all-identical.py
+# python3 -m unittest tests/test_08-duplicate-objects-in-bundle-all-identical.py
 
 from tests.base_test import BaseTestArangoDBQueries
 

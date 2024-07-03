@@ -1,4 +1,4 @@
-# python3 -m unittest tests/test_4-update-detected-because-of-stix2arango-note.py
+# python3 -m unittest tests/test_04-update-detected-because-of-stix2arango-note.py
 
 from tests.base_test import BaseTestArangoDBQueries
 

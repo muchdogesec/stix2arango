@@ -1,4 +1,4 @@
-# python3 -m unittest tests/test_7-test-default-imported-objects.py
+# python3 -m unittest tests/test_07-test-default-imported-objects.py
 
 from tests.base_test import BaseTestArangoDBQueries
 

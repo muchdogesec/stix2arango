@@ -1,4 +1,4 @@
-# python3 -m unittest tests/test_3-import-with-no-update-detected.py
+# python3 -m unittest tests/test_03-import-with-no-update-detected.py
 
 from tests.base_test import BaseTestArangoDBQueries
 

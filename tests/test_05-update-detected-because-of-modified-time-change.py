@@ -1,4 +1,4 @@
-# python3 -m unittest tests/test_5-update-detected-because-of-modified-time-change.py
+# python3 -m unittest tests/test_05-update-detected-because-of-modified-time-change.py
 
 from tests.base_test import BaseTestArangoDBQueries
 

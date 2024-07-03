@@ -1,3 +1,5 @@
+# python3 -m unittest tests/test_09-duplicate-objects-but-diff-times-in-bundle.py
+
 import unittest
 from tests.base_test import BaseTestArangoDBQueries
 
