@@ -8,10 +8,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def load_configuration(cls):
         super().load_configuration()
         cls.ARANGODB_DATABASE = "s2a_tests"
-        cls.ARANGODB_COLLECTION = "test3"
-        cls.STIX2ARANGO_NOTE_1 = "test3"
-        cls.STIX2ARANGO_NOTE_2 = "test3"
-        cls.STIX2ARANGO_NOTE_3 = "test3"
+        cls.ARANGODB_COLLECTION = "test03"
+        cls.STIX2ARANGO_NOTE_1 = "test03"
+        cls.STIX2ARANGO_NOTE_2 = "test03"
+        cls.STIX2ARANGO_NOTE_3 = "test03"
         cls.TEST_FILE_1 = "sigma-rule-bundle.json"
         cls.TEST_FILE_2 = "sigma-rule-bundle-another.json"
         cls.TEST_FILE_3 = "sigma-rule-bundle-yet-another.json"

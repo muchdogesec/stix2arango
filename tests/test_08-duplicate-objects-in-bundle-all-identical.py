@@ -8,8 +8,8 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def load_configuration(cls):
         super().load_configuration()
         cls.ARANGODB_DATABASE = "s2a_tests"
-        cls.ARANGODB_COLLECTION = "test8"
-        cls.STIX2ARANGO_NOTE_1 = "test8"
+        cls.ARANGODB_COLLECTION = "test08"
+        cls.STIX2ARANGO_NOTE_1 = "test08"
         cls.STIX2ARANGO_NOTE_2 = ""
         cls.STIX2ARANGO_NOTE_3 = ""
         cls.TEST_FILE_1 = "duplicate-objects-all-properties-same.json"

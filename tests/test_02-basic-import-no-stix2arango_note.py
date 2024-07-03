@@ -8,7 +8,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def load_configuration(cls):
         super().load_configuration()
         cls.ARANGODB_DATABASE = "s2a_tests"
-        cls.ARANGODB_COLLECTION = "test2"
+        cls.ARANGODB_COLLECTION = "test02"
         cls.STIX2ARANGO_NOTE_1 = ""
         cls.STIX2ARANGO_NOTE_2 = ""
         cls.STIX2ARANGO_NOTE_3 = ""
