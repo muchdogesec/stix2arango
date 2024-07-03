@@ -1,4 +1,4 @@
-# python3 -m unittest tests/test_3-import-with-no-update-detected.py
+# python3 -m unittest tests/test_03-import-with-no-update-detected.py
 
 from tests.base_test import BaseTestArangoDBQueries
 
@@ -8,10 +8,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def load_configuration(cls):
         super().load_configuration()
         cls.ARANGODB_DATABASE = "s2a_tests"
-        cls.ARANGODB_COLLECTION = "test3"
-        cls.STIX2ARANGO_NOTE_1 = "test3"
-        cls.STIX2ARANGO_NOTE_2 = "test3"
-        cls.STIX2ARANGO_NOTE_3 = "test3"
+        cls.ARANGODB_COLLECTION = "test03"
+        cls.STIX2ARANGO_NOTE_1 = "test03"
+        cls.STIX2ARANGO_NOTE_2 = "test03"
+        cls.STIX2ARANGO_NOTE_3 = "test03"
         cls.TEST_FILE_1 = "sigma-rule-bundle.json"
         cls.TEST_FILE_2 = "sigma-rule-bundle-another.json"
         cls.TEST_FILE_3 = "sigma-rule-bundle-yet-another.json"
@@ -22,10 +22,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_1(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test3_vertex_collection
+            FOR doc IN test03_vertex_collection
                 FILTER doc._is_latest == true
                 AND doc._stix2arango_note != "automatically imported on collection creation"
-                AND doc._stix2arango_note == "test3"
+                AND doc._stix2arango_note == "test03"
                 RETURN doc
         )
         """
@@ -38,10 +38,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_2(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test3_vertex_collection
+            FOR doc IN test03_vertex_collection
                 FILTER doc._is_latest == false
                 AND doc._stix2arango_note != "automatically imported on collection creation"
-                AND doc._stix2arango_note == "test3"
+                AND doc._stix2arango_note == "test03"
                 RETURN doc
         )
         """
@@ -54,10 +54,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_3(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test3_edge_collection
+            FOR doc IN test03_edge_collection
                 FILTER doc._is_latest == true
                 AND doc._is_ref == false
-                AND doc._stix2arango_note == "test3"
+                AND doc._stix2arango_note == "test03"
                 RETURN doc
         )
         """
@@ -70,10 +70,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_4(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test3_edge_collection
+            FOR doc IN test03_edge_collection
                 FILTER doc._is_latest == false
                 AND doc._is_ref == false
-                AND doc._stix2arango_note == "test3"
+                AND doc._stix2arango_note == "test03"
                 RETURN doc
         )
         """
@@ -86,10 +86,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_5(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test3_edge_collection
+            FOR doc IN test03_edge_collection
                 FILTER doc._is_latest == true
                 AND doc._is_ref == true
-                AND doc._stix2arango_note == "test3"
+                AND doc._stix2arango_note == "test03"
                 RETURN doc
         )
         """
@@ -102,10 +102,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_6(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test3_edge_collection
+            FOR doc IN test03_edge_collection
                 FILTER doc._is_latest == false
                 AND doc._is_ref == true
-                AND doc._stix2arango_note == "test3"
+                AND doc._stix2arango_note == "test03"
                 RETURN doc
         )
         """

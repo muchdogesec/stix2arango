@@ -1,4 +1,4 @@
-# python3 -m unittest tests/test_7-test-default-imported-objects.py
+# python3 -m unittest tests/test_07-test-default-imported-objects.py
 
 from tests.base_test import BaseTestArangoDBQueries
 
@@ -8,9 +8,9 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def load_configuration(cls):
         super().load_configuration()
         cls.ARANGODB_DATABASE = "s2a_tests"
-        cls.ARANGODB_COLLECTION = "test7"
-        cls.STIX2ARANGO_NOTE_1 = "test7"
-        cls.STIX2ARANGO_NOTE_2 = ""
+        cls.ARANGODB_COLLECTION = "test07"
+        cls.STIX2ARANGO_NOTE_1 = "test07"
+        cls.STIX2ARANGO_NOTE_2 = "test07"
         cls.STIX2ARANGO_NOTE_3 = ""
         cls.TEST_FILE_1 = "sigma-rule-bundle.json"
         cls.TEST_FILE_2 = "sigma-rule-bundle.json"
@@ -23,7 +23,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_1(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test3_vertex_collection
+            FOR doc IN test07_vertex_collection
                 FILTER doc._is_latest == true
                 AND doc._stix2arango_note == "automatically imported on collection creation"
                 RETURN doc
@@ -39,7 +39,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_2(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test3_vertex_collection
+            FOR doc IN test07_vertex_collection
                 FILTER doc._is_latest == false
                 AND doc._stix2arango_note == "automatically imported on collection creation"
                 RETURN doc

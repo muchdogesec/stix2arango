@@ -1,4 +1,4 @@
-# python3 -m unittest tests/test_8-duplicate-objects-in-bundle-all-identical.py
+# python3 -m unittest tests/test_08-duplicate-objects-in-bundle-all-identical.py
 
 from tests.base_test import BaseTestArangoDBQueries
 
@@ -8,8 +8,8 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def load_configuration(cls):
         super().load_configuration()
         cls.ARANGODB_DATABASE = "s2a_tests"
-        cls.ARANGODB_COLLECTION = "test8"
-        cls.STIX2ARANGO_NOTE_1 = "test8"
+        cls.ARANGODB_COLLECTION = "test08"
+        cls.STIX2ARANGO_NOTE_1 = "test08"
         cls.STIX2ARANGO_NOTE_2 = ""
         cls.STIX2ARANGO_NOTE_3 = ""
         cls.TEST_FILE_1 = "duplicate-objects-all-properties-same.json"
@@ -22,7 +22,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_1(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test8_vertex_collection
+            FOR doc IN test08_vertex_collection
                 FILTER doc._is_latest == true
                 AND doc._stix2arango_note != "automatically imported on collection creation"
                 	RETURN doc
@@ -37,7 +37,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_2(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test8_vertex_collection
+            FOR doc IN test08_vertex_collection
                 FILTER doc._is_latest == false
                 AND doc._stix2arango_note != "automatically imported on collection creation"
                 	RETURN doc
@@ -51,7 +51,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
     def test_query_3(self):
         query = """
-        FOR doc IN test8_vertex_collection
+        FOR doc IN test08_vertex_collection
             FILTER doc.id == "indicator--7a5dedb9-30f9-51c0-a49d-91aeda1fd7fd"
                 RETURN {
                 id: doc.id,

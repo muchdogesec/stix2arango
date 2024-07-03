@@ -1,4 +1,4 @@
-# python3 -m unittest tests/test_4-update-detected-because-of-stix2arango-note.py
+# python3 -m unittest tests/test_04-update-detected-because-of-stix2arango-note.py
 
 from tests.base_test import BaseTestArangoDBQueries
 
@@ -8,10 +8,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def load_configuration(cls):
         super().load_configuration()
         cls.ARANGODB_DATABASE = "s2a_tests"
-        cls.ARANGODB_COLLECTION = "test4"
-        cls.STIX2ARANGO_NOTE_1 = "test4A"
-        cls.STIX2ARANGO_NOTE_2 = "test4B"
-        cls.STIX2ARANGO_NOTE_3 = "test4C"
+        cls.ARANGODB_COLLECTION = "test04"
+        cls.STIX2ARANGO_NOTE_1 = "test04A"
+        cls.STIX2ARANGO_NOTE_2 = "test04B"
+        cls.STIX2ARANGO_NOTE_3 = "test04C"
         cls.TEST_FILE_1 = "sigma-rule-bundle.json"
         cls.TEST_FILE_2 = "sigma-rule-bundle.json"
         cls.TEST_FILE_3 = "sigma-rule-bundle.json"
@@ -22,10 +22,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_1(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test4_vertex_collection
+            FOR doc IN test04_vertex_collection
                 FILTER doc._is_latest == true
                 AND doc._stix2arango_note != "automatically imported on collection creation"
-                AND doc._stix2arango_note == "test4C"
+                AND doc._stix2arango_note == "test04C"
                 RETURN doc
         )
         """
@@ -38,10 +38,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_2(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test4_vertex_collection
+            FOR doc IN test04_vertex_collection
                 FILTER doc._is_latest == false
                 AND doc._stix2arango_note != "automatically imported on collection creation"
-                AND (doc._stix2arango_note == "test4A" OR doc._stix2arango_note == "test4B")
+                AND (doc._stix2arango_note == "test04A" OR doc._stix2arango_note == "test04B")
                 RETURN doc
         )
         """
@@ -55,7 +55,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_3(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test4_vertex_collection
+            FOR doc IN test04_vertex_collection
                 FILTER doc._is_latest == true
                 AND doc._stix2arango_note == "automatically imported on collection creation"
                 RETURN doc
@@ -71,7 +71,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_4(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test4_vertex_collection
+            FOR doc IN test04_vertex_collection
                 FILTER doc._is_latest == false
                 AND doc._stix2arango_note == "automatically imported on collection creation"
                 RETURN doc
@@ -86,7 +86,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_5(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test4_vertex_collection
+            FOR doc IN test04_vertex_collection
                 FILTER doc._stix2arango_note != "automatically imported on collection creation"
                 AND doc.id == "indicator--d38c3e67-c14b-5d67-84c7-5400fb66d368"
                 RETURN doc
@@ -100,7 +100,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
     def test_query_6(self):
         query = """
-        FOR doc IN test4_vertex_collection
+        FOR doc IN test04_vertex_collection
             FILTER doc._stix2arango_note != "automatically imported on collection creation"
             AND doc.id == "indicator--d38c3e67-c14b-5d67-84c7-5400fb66d368"
             SORT doc._record_modified DESC
@@ -112,17 +112,17 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         """
         expected_result = [
             {
-                "_stix2arango_note": "test4C",
+                "_stix2arango_note": "test04C",
                 "_is_latest": True,
                 "id": "indicator--d38c3e67-c14b-5d67-84c7-5400fb66d368"
             },
             {
-                "_stix2arango_note": "test4B",
+                "_stix2arango_note": "test04B",
                 "_is_latest": False,
                 "id": "indicator--d38c3e67-c14b-5d67-84c7-5400fb66d368"
             },
             {
-                "_stix2arango_note": "test4A",
+                "_stix2arango_note": "test04A",
                 "_is_latest": False,
                 "id": "indicator--d38c3e67-c14b-5d67-84c7-5400fb66d368"
             }
@@ -135,10 +135,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_7(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test4_edge_collection
+            FOR doc IN test04_edge_collection
                 FILTER doc._is_latest == true
                 AND doc._is_ref == false
-                AND doc._stix2arango_note == "test4C"
+                AND doc._stix2arango_note == "test04C"
                 RETURN doc
         )
         """
@@ -151,10 +151,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_8(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test4_edge_collection
+            FOR doc IN test04_edge_collection
                 FILTER doc._is_latest == false
                 AND doc._is_ref == false
-                AND (doc._stix2arango_note == "test4A" OR doc._stix2arango_note == "test4B")
+                AND (doc._stix2arango_note == "test04A" OR doc._stix2arango_note == "test04B")
                 RETURN doc
         )
         """
@@ -167,7 +167,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_9(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test4_edge_collection
+            FOR doc IN test04_edge_collection
                 FILTER doc._is_ref == false
                 AND doc.id == "relationship--3089bdec-3d25-5d1b-a6ac-9d152ab14e35"
                 RETURN doc
@@ -181,7 +181,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
     def test_query_10(self):
         query = """
-        FOR doc IN test4_edge_collection
+        FOR doc IN test04_edge_collection
             FILTER doc._is_ref == false
             AND doc.id == "relationship--3089bdec-3d25-5d1b-a6ac-9d152ab14e35"
             SORT doc._record_modified DESC
@@ -193,17 +193,17 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         """
         expected_result = [
             {
-                "_stix2arango_note": "test4C",
+                "_stix2arango_note": "test04C",
                 "_is_latest": True,
                 "id": "relationship--3089bdec-3d25-5d1b-a6ac-9d152ab14e35"
             },
             {
-                "_stix2arango_note": "test4B",
+                "_stix2arango_note": "test04B",
                 "_is_latest": False,
                 "id": "relationship--3089bdec-3d25-5d1b-a6ac-9d152ab14e35"
             },
             {
-                "_stix2arango_note": "test4A",
+                "_stix2arango_note": "test04A",
                 "_is_latest": False,
                 "id": "relationship--3089bdec-3d25-5d1b-a6ac-9d152ab14e35"
             }
@@ -216,11 +216,11 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_11(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test4_edge_collection
+            FOR doc IN test04_edge_collection
                 FILTER doc._is_latest == true
                 AND doc._is_ref == true
                 AND doc.created_by_ref == "identity--72e906ce-ca1b-5d73-adcd-9ea9eb66a1b4"
-                AND doc._stix2arango_note == "test4C"
+                AND doc._stix2arango_note == "test04C"
                 RETURN doc
         )
         """
@@ -233,11 +233,11 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_12(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test4_edge_collection
+            FOR doc IN test04_edge_collection
                 FILTER doc._is_latest == false
                 AND doc._is_ref == true
                 AND doc.created_by_ref == "identity--72e906ce-ca1b-5d73-adcd-9ea9eb66a1b4"
-                AND (doc._stix2arango_note == "test4A" OR doc._stix2arango_note == "test4B")
+                AND (doc._stix2arango_note == "test04A" OR doc._stix2arango_note == "test04B")
                 RETURN doc
         )
         """
@@ -250,7 +250,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_13(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test4_edge_collection
+            FOR doc IN test04_edge_collection
                 FILTER doc._is_ref == true
                 AND doc.id == "relationship--5b32a703-4317-5f58-b1ce-03735c756035"
                 RETURN doc
@@ -265,7 +265,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_14(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test4_edge_collection
+            FOR doc IN test04_edge_collection
                 FILTER doc._is_ref == true
                 AND doc._is_latest == true
                 AND doc.id == "relationship--5b32a703-4317-5f58-b1ce-03735c756035"
@@ -280,7 +280,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
     def test_query_15(self):
         query = """
-        FOR doc IN test4_edge_collection
+        FOR doc IN test04_edge_collection
             FILTER doc._is_ref == true
             AND doc.id == "relationship--5b32a703-4317-5f58-b1ce-03735c756035"
             SORT doc._record_modified DESC
@@ -292,17 +292,17 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         """
         expected_result = [
               {
-                "_stix2arango_note": "test4C",
+                "_stix2arango_note": "test04C",
                 "_is_latest": True,
                 "id": "relationship--5b32a703-4317-5f58-b1ce-03735c756035"
               },
               {
-                "_stix2arango_note": "test4B",
+                "_stix2arango_note": "test04B",
                 "_is_latest": False,
                 "id": "relationship--5b32a703-4317-5f58-b1ce-03735c756035"
               },
               {
-                "_stix2arango_note": "test4A",
+                "_stix2arango_note": "test04A",
                 "_is_latest": False,
                 "id": "relationship--5b32a703-4317-5f58-b1ce-03735c756035"
               }

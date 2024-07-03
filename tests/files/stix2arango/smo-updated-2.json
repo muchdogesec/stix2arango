@@ -1,0 +1,17 @@
+{
+    "type": "bundle",
+    "id": "bundle--7a9b85d3-69bb-4906-bf86-9cea0d8b0b1c",
+    "objects": [
+        {
+            "type": "marking-definition",
+            "spec_version": "2.1",
+            "id": "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41aa",
+            "created": "2023-08-01T00:00:00.000Z",
+            "definition_type": "statement",
+            "name": "UPDATED 2",
+            "definition": {
+                "statement": "UPDATED 2"
+            }
+        }
+    ]
+}
