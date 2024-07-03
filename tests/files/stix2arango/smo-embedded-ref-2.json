@@ -1,0 +1,22 @@
+{
+    "type": "bundle",
+    "id": "bundle--10dd13b6-d107-4f5c-a086-72c4bb975f52",
+    "objects": [
+        {
+            "type": "marking-definition",
+            "spec_version": "2.1",
+            "id": "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41aa",
+            "created": "2016-08-01T00:00:00.000Z",
+            "definition_type": "statement",
+            "name": "UPDATED",
+            "definition": {
+                "statement": "UPDATED"
+            },
+            "object_marking_refs": [
+                "marking-definition--904ac99b-7539-5de7-9ffa-23186f0e07b6",
+                "marking-definition--27557362-b745-4161-96e8-ccd62ce4cb26",
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
+            ]
+        }
+    ]
+}

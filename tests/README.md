@@ -95,10 +95,11 @@ Has 3 objects:
 * `custom-sco--0306ac42-a167-4eb6-a67a-969c255a85ae`
   * `title` changes between updates
 
-### `smo-original.json`, `smo-updated.json`
+### `smo-original.json`, `smo-updated.json`, `smo-updated-2.json`
 
 * `marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41aa`
   * `name` changes between updates
+  * in `smo-updated-2.json` the `created` time changes, which does not follow STIX rules never to update `created` time on update for same `id` (stix2arango should however treat it as same object)
 
 ### `non-standard-embedded-relationship`
 
