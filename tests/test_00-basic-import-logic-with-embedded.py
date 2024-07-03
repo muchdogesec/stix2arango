@@ -22,10 +22,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_1(self):
         query = """
         RETURN LENGTH(
-          FOR doc IN test0_vertex_collection
+          FOR doc IN test00_vertex_collection
             FILTER doc._is_latest == true
             AND doc._stix2arango_note != "automatically imported on collection creation"
-            AND doc._stix2arango_note == "test0"
+            AND doc._stix2arango_note == "test00"
               RETURN doc
         )
         """
@@ -38,10 +38,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_2(self):
         query = """
         RETURN LENGTH(
-          FOR doc IN test0_vertex_collection
+          FOR doc IN test00_vertex_collection
             FILTER doc._is_latest == false
             AND doc._stix2arango_note != "automatically imported on collection creation"
-            AND doc._stix2arango_note == "test0"
+            AND doc._stix2arango_note == "test00"
               RETURN doc
         )
         """
@@ -54,7 +54,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_3(self):
         query = """
         RETURN LENGTH(
-          FOR doc IN test0_vertex_collection
+          FOR doc IN test00_vertex_collection
             FILTER doc._is_latest == false
             AND doc._stix2arango_note == "automatically imported on collection creation"
               RETURN doc
@@ -69,10 +69,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_4(self):
         query = """
         RETURN LENGTH(
-          FOR doc IN test0_edge_collection
+          FOR doc IN test00_edge_collection
             FILTER doc._is_latest == true
             AND doc._is_ref == false
-            AND doc._stix2arango_note == "test0"
+            AND doc._stix2arango_note == "test00"
               RETURN doc
         )
         """
@@ -85,10 +85,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_5(self):
         query = """
         RETURN LENGTH(
-          FOR doc IN test0_edge_collection
+          FOR doc IN test00_edge_collection
             FILTER doc._is_latest == false
             AND doc._is_ref == false
-            AND doc._stix2arango_note == "test0"
+            AND doc._stix2arango_note == "test00"
               RETURN doc
         )
         """
@@ -101,11 +101,11 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_6(self):
         query = """
         RETURN LENGTH(
-          FOR doc IN test0_edge_collection
+          FOR doc IN test00_edge_collection
             FILTER doc._is_latest == true
             AND doc._is_ref == true
             AND doc.created_by_ref == "identity--72e906ce-ca1b-5d73-adcd-9ea9eb66a1b4"
-            AND doc._stix2arango_note == "test0"
+            AND doc._stix2arango_note == "test00"
               RETURN doc
         )
         """
@@ -118,11 +118,11 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_7(self):
         query = """
         RETURN LENGTH(
-          FOR doc IN test0_edge_collection
+          FOR doc IN test00_edge_collection
             FILTER doc._is_latest == false
             AND doc._is_ref == true
             AND doc.created_by_ref == "identity--72e906ce-ca1b-5d73-adcd-9ea9eb66a1b4"
-            AND doc._stix2arango_note == "test0"
+            AND doc._stix2arango_note == "test00"
               RETURN doc
         )
         """
@@ -135,10 +135,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_8(self):
         query = """
         RETURN LENGTH(
-          FOR doc IN test0_edge_collection
+          FOR doc IN test00_edge_collection
             FILTER doc._is_latest == true
             AND doc._is_ref == true
-            AND doc._stix2arango_note == "test0"
+            AND doc._stix2arango_note == "test00"
             AND doc.created_by_ref == "identity--72e906ce-ca1b-5d73-adcd-9ea9eb66a1b4"
             AND doc.relationship_type == "target_ref"
             OR doc.relationship_type == "source_ref"
@@ -154,7 +154,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_9(self):
         query = """
         RETURN LENGTH(
-          FOR doc IN test0_edge_collection
+          FOR doc IN test00_edge_collection
             FILTER doc._stix2arango_ref_err == true
               RETURN {
                 stix2arango_ref_err: doc._stix2arango_ref_err,
@@ -170,11 +170,11 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         # this query will show you those erronous objects
         #
         #LET vertex_ids = (
-        #  FOR v IN test0_vertex_collection
+        #  FOR v IN test00_vertex_collection
         #  RETURN v.id
         #)
         #
-        #FOR doc IN test0_edge_collection
+        #FOR doc IN test00_edge_collection
         #    FILTER doc._stix2arango_ref_err == true
         #    LET source_missing = POSITION(vertex_ids, doc.source_ref) == false
         #    LET target_missing = POSITION(vertex_ids, doc.target_ref) == false
@@ -192,7 +192,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_10(self):
         query = """
         RETURN LENGTH(
-          FOR doc IN test0_edge_collection
+          FOR doc IN test00_edge_collection
             FILTER doc._stix2arango_ref_err == false
               RETURN {
                 stix2arango_ref_err: doc._stix2arango_ref_err,
@@ -206,10 +206,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
     def test_query_11(self):
         query = """
-        FOR doc IN test0_edge_collection
+        FOR doc IN test00_edge_collection
           FILTER doc._is_latest == true
           AND doc._is_ref == true
-          AND doc._stix2arango_note == "test0"
+          AND doc._stix2arango_note == "test00"
           AND doc.created_by_ref == "identity--72e906ce-ca1b-5d73-adcd-9ea9eb66a1b4"
             RETURN DISTINCT doc.relationship_type
         """

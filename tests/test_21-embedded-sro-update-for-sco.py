@@ -77,8 +77,8 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         """
         expected_result = [
           {
-            "modified": null,
-            "created": null
+            "modified": None,
+            "created": None
           }
         ]
         result = self.query_arango(query)

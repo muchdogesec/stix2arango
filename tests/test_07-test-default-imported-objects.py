@@ -23,7 +23,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_1(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test3_vertex_collection
+            FOR doc IN test07_vertex_collection
                 FILTER doc._is_latest == true
                 AND doc._stix2arango_note == "automatically imported on collection creation"
                 RETURN doc
@@ -39,7 +39,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_2(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test3_vertex_collection
+            FOR doc IN test07_vertex_collection
                 FILTER doc._is_latest == false
                 AND doc._stix2arango_note == "automatically imported on collection creation"
                 RETURN doc

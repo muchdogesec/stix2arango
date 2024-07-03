@@ -23,7 +23,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_1(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test9_vertex_collection
+            FOR doc IN test09_vertex_collection
                 FILTER doc._is_latest == true
                 AND doc._stix2arango_note != "automatically imported on collection creation"
                     RETURN doc
@@ -36,7 +36,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_2(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test9_vertex_collection
+            FOR doc IN test09_vertex_collection
                 FILTER doc._is_latest == false
                 AND doc._stix2arango_note != "automatically imported on collection creation"
                     RETURN doc
@@ -49,7 +49,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_3(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test9_edge_collection
+            FOR doc IN test09_edge_collection
                 FILTER doc._is_latest == true
                 AND doc._is_ref == false
                 AND doc._stix2arango_note != "automatically imported on collection creation"
@@ -63,7 +63,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_4(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test9_edge_collection
+            FOR doc IN test09_edge_collection
                 FILTER doc._is_latest == false
                 AND doc._is_ref == false
                 AND doc._stix2arango_note != "automatically imported on collection creation"
@@ -76,7 +76,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
     def test_query_5(self):
         query = """
-        FOR doc IN test9_vertex_collection
+        FOR doc IN test09_vertex_collection
             FILTER doc.id == "indicator--7a5dedb9-30f9-51c0-a49d-91aeda1fd7fd"
             SORT doc.modified DESC
             RETURN {
@@ -102,7 +102,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
     def test_query_6(self):
         query = """
-        FOR doc IN test9_vertex_collection
+        FOR doc IN test09_vertex_collection
             FILTER doc.id == "software--50fa0834-9c63-5b0f-bf0e-dce02183253a"
             RETURN {
                 id: doc.id,

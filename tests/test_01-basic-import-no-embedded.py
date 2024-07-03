@@ -22,7 +22,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_1(self):
         query = """
         RETURN LENGTH(
-          FOR doc IN test1_edge_collection
+          FOR doc IN test01_edge_collection
             FILTER doc._is_latest == true
             AND doc._is_ref == true
               RETURN doc
@@ -37,7 +37,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_2(self):
         query = """
         RETURN LENGTH(
-          FOR doc IN test1_edge_collection
+          FOR doc IN test01_edge_collection
             FILTER doc._is_latest == false
             AND doc._is_ref == true
               RETURN doc

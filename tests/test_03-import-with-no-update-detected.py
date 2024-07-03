@@ -22,10 +22,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_1(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test3_vertex_collection
+            FOR doc IN test03_vertex_collection
                 FILTER doc._is_latest == true
                 AND doc._stix2arango_note != "automatically imported on collection creation"
-                AND doc._stix2arango_note == "test3"
+                AND doc._stix2arango_note == "test03"
                 RETURN doc
         )
         """
@@ -38,10 +38,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_2(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test3_vertex_collection
+            FOR doc IN test03_vertex_collection
                 FILTER doc._is_latest == false
                 AND doc._stix2arango_note != "automatically imported on collection creation"
-                AND doc._stix2arango_note == "test3"
+                AND doc._stix2arango_note == "test03"
                 RETURN doc
         )
         """
@@ -54,10 +54,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_3(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test3_edge_collection
+            FOR doc IN test03_edge_collection
                 FILTER doc._is_latest == true
                 AND doc._is_ref == false
-                AND doc._stix2arango_note == "test3"
+                AND doc._stix2arango_note == "test03"
                 RETURN doc
         )
         """
@@ -70,10 +70,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_4(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test3_edge_collection
+            FOR doc IN test03_edge_collection
                 FILTER doc._is_latest == false
                 AND doc._is_ref == false
-                AND doc._stix2arango_note == "test3"
+                AND doc._stix2arango_note == "test03"
                 RETURN doc
         )
         """
@@ -86,10 +86,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_5(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test3_edge_collection
+            FOR doc IN test03_edge_collection
                 FILTER doc._is_latest == true
                 AND doc._is_ref == true
-                AND doc._stix2arango_note == "test3"
+                AND doc._stix2arango_note == "test03"
                 RETURN doc
         )
         """
@@ -102,10 +102,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_6(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test3_edge_collection
+            FOR doc IN test03_edge_collection
                 FILTER doc._is_latest == false
                 AND doc._is_ref == true
-                AND doc._stix2arango_note == "test3"
+                AND doc._stix2arango_note == "test03"
                 RETURN doc
         )
         """

@@ -22,7 +22,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_1(self):
         query = """
         RETURN LENGTH(
-          FOR doc IN test2_vertex_collection
+          FOR doc IN test02_vertex_collection
             FILTER doc._is_latest == true
             AND doc._stix2arango_note == ""
               RETURN doc

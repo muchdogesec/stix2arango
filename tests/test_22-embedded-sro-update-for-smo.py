@@ -49,7 +49,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
-        # 
+        # whilst the smo is updated with different md5 hash, the embedded sros created have exactly the same md5 hash, so it is not updated
 
     def test_query_3(self):
         query = """
@@ -64,7 +64,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
-        # 
+        # check created time exists
 
     def test_query_4(self):
         query = """
@@ -77,14 +77,14 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         """
         expected_result = [
           {
-            "modified": null,
+            "modified": None,
             "created": "2016-08-01T00:00:00.000Z"
           }
         ]
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
-        # 
+        # follow up to test 3 checking that created property is as expected
 
 if __name__ == '__main__':
     unittest.main()
