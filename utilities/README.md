@@ -38,26 +38,10 @@ python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py
 Download and insert only 15.0 and 15.1 versions of MITRE ATT&CK Enterprise and ignore embedded relationships
 
 ```shell
-python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py --database cti --versions 15_0,15_1 --ignore_embedded_relationships true
+python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py --database mitre_attack --versions 15_0,15_1 --ignore_embedded_relationships true
 ```
 
-For arango_cti_processor we run the following;
-
-```shell
-python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py --database cti --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_attack_ics.py --database cti --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_attack_mobile.py --database cti --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_capec.py --database cti --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_cwe.py --database cti --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_disarm.py --database cti --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_locations.py --database cti --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_sigma_rules.py --database cti --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_yara_rules.py --database cti --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_cve.py --database cti --ignore_embedded_relationships false && \
-python3 utilities/arango_cti_processor/insert_archive_cpe.py --database cti --ignore_embedded_relationships false
-```
-
-IMPORTANT NOTE on CPE / CVE scripts: due to the way dates are generated dynamically you will see alot of errors like
+**IMPORTANT NOTE** on CPE / CVE scripts: due to the way dates are generated dynamically you will see alot of errors like
 
 ```txt
 ailed to download file from https://pub-ce0133952c6947428e077da707513ff5.r2.dev/nvd-cve%2Fcve-bundle-2007_11_01-00_00_00-2007_11_30-23_59_59.json with status code 404
