@@ -4,15 +4,48 @@ import os
 import requests
 import time
 import calendar
+from datetime import datetime
+
+# Calculate the last full month
+current_year = datetime.now().year
+current_month = datetime.now().month
+
+if current_month == 1:
+    last_full_month_year = current_year - 1
+    last_full_month = 12
+else:
+    last_full_month_year = current_year
+    last_full_month = current_month - 1
+
+print(f"Last full month: {last_full_month_year}-{str(last_full_month).zfill(2)}")
 
 # List of CVE files
 all_versions = []
-for year in range(2005, 2025):
-    for month in range(1, 13):
+missing_files = [
+    "2005_10", "2007_07", "2008_09", "2008_10", "2008_11", "2008_12", "2009_01"
+]
+
+# Add missing files
+for entry in missing_files:
+    year, month = map(int, entry.split('_'))
+    start_date = f"{year}_{str(month).zfill(2)}_01-00_00_00"
+    end_day = calendar.monthrange(year, month)[1]
+    end_date = f"{year}_{str(month).zfill(2)}_{str(end_day).zfill(2)}-23_59_59"
+    all_versions.append(f"{start_date}-{end_date}")
+
+# Add all months from 2009 onwards up to the last full month
+for year in range(2009, last_full_month_year + 1):
+    start_month = 1
+    end_month = 12 if year < last_full_month_year else last_full_month
+    for month in range(start_month, end_month + 1):
         start_date = f"{year}_{str(month).zfill(2)}_01-00_00_00"
         end_day = calendar.monthrange(year, month)[1]
         end_date = f"{year}_{str(month).zfill(2)}_{str(end_day).zfill(2)}-23_59_59"
         all_versions.append(f"{start_date}-{end_date}")
+
+print("All versions to be processed:")
+for version in all_versions:
+    print(version)
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Process NVD CVE versions.")

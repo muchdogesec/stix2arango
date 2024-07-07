@@ -4,17 +4,55 @@ import os
 import requests
 import time
 import calendar
+from datetime import datetime
+
+# Calculate the latest full quarter
+current_year = datetime.now().year
+current_month = datetime.now().month
+
+if current_month <= 3:
+    latest_year = current_year - 1
+    latest_quarter = 4
+elif current_month <= 6:
+    latest_year = current_year
+    latest_quarter = 1
+elif current_month <= 9:
+    latest_year = current_year
+    latest_quarter = 2
+else:
+    latest_year = current_year
+    latest_quarter = 3
+
+print(f"Latest full quarter: Q{latest_quarter} {latest_year}")
 
 # List of CPE files
 all_versions = []
-for year in range(2007, 2025):
-    for quarter in range(1, 13, 3):
-        start_month = quarter
-        end_month = start_month + 2
+for year in range(2007, latest_year + 1):
+    start_quarter = 3 if year == 2007 else 1
+    end_quarter = 4 if year < latest_year else latest_quarter
+
+    for quarter in range(start_quarter, end_quarter + 1):
+        if quarter == 1:
+            start_month = 1
+            end_month = 3
+        elif quarter == 2:
+            start_month = 4
+            end_month = 6
+        elif quarter == 3:
+            start_month = 7
+            end_month = 9
+        elif quarter == 4:
+            start_month = 10
+            end_month = 12
+
         start_date = f"{year}_{str(start_month).zfill(2)}_01"
         end_day = calendar.monthrange(year, end_month)[1]
         end_date = f"{year}_{str(end_month).zfill(2)}_{str(end_day).zfill(2)}"
         all_versions.append(f"{start_date}-{end_date}")
+
+print("All versions to be processed:")
+for version in all_versions:
+    print(version)
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Process NVD CPE versions.")

@@ -13,16 +13,18 @@ python3 utilities/arango_cti_processor/SCRIPT.py --versions XX,YY,ZZ
 Where:
 
 * `SCRIPT` (required): is either
-	* `mitre_attack_enterprise`
-	* `mitre_attack_ics`
-	* `mitre_attack_mobile`
-	* `mitre_capec`
-	* `mitre_cwe`
-	* `nvd_cve`
-	* `nvd_cpe`
-	* `sigma-rules`
-	* `yara-rules`
-	* `locations`
+	* `insert_archive_attack_enterprise`
+	* `insert_archive_attack_ics`
+	* `insert_archive_attack_mobile`
+	* `insert_archive_capec`
+	* `insert_archive_cpe`
+	* `insert_archive_cve`
+	* `insert_archive_cwe`
+	* `insert_archive_disarm`
+	* `insert_archive_locations`
+	* `insert_archive_sigma_rules`
+	* `insert_archive_yara_rules`
+	
 * `--database` (required): is the name of the Arango database the objects should be stored in. If database does not exist, stix2arango will create it
 * `--versions` (optional): are one or more of the versions listed in each Python file. e.g. for `insert_archive_disarm.py` are currently `1_2`, `1_3`, `1_4`. If no version flag is passed, all listed versions will be downloaded. 
 * `--ignore_embedded_relationships` (optional): boolean, if `true` passed, this will stop any embedded relationships from being generated. Default is `false`
@@ -40,11 +42,3 @@ Download and insert only 15.0 and 15.1 versions of MITRE ATT&CK Enterprise and i
 ```shell
 python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py --database mitre_attack --versions 15_0,15_1 --ignore_embedded_relationships true
 ```
-
-**IMPORTANT NOTE** on CPE / CVE scripts: due to the way dates are generated dynamically you will see alot of errors like
-
-```txt
-ailed to download file from https://pub-ce0133952c6947428e077da707513ff5.r2.dev/nvd-cve%2Fcve-bundle-2007_11_01-00_00_00-2007_11_30-23_59_59.json with status code 404
-```
-
-This is normal. These files don't exist (as there is no data for these periods), however the script has been built in a dumb way to iterate through all possible data hence these errors.
