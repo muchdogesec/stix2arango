@@ -2,6 +2,7 @@ import os
 import json
 
 import logging
+import pkgutil
 import re
 
 from .. import config
@@ -46,7 +47,7 @@ class Stix2Arango:
             data = json.loads(utils.load_file_from_url(obj))
             object_list.append(data)
 
-        for obj in utils.read_file_data("templates/marking-definition.json"):
+        for obj in json.loads(pkgutil.get_data('stix2arango', "templates/marking-definition.json")):
             object_list.append(obj)
         return object_list
 
