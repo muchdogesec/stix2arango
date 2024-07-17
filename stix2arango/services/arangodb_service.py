@@ -7,7 +7,7 @@ import arango.database
 from arango import ArangoClient
 from arango.exceptions import ArangoServerError
 
-from datetime import datetime
+from datetime import datetime, timezone
 from tqdm import tqdm
 
 from .. import config
@@ -104,7 +104,7 @@ class ArangoDBService:
 
         for _, obj in enumerate(objects):
             obj["_is_latest"] = False
-            obj["_record_created"] = datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")
+            obj["_record_created"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
             obj["_record_modified"] = obj["_record_created"]
             obj["_key"] = f'{obj["id"]}+{obj.get("_record_modified")}'
 
