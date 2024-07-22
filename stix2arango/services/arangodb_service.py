@@ -4,6 +4,7 @@ import logging
 import time
 from typing import Any
 import arango.database
+from arango.collection import StandardCollection
 from arango import ArangoClient
 from arango.exceptions import ArangoServerError
 
@@ -19,7 +20,7 @@ module_logger = logging.getLogger("data_ingestion_service")
 
 class ArangoDBService:
 
-    def __init__(self, db, vertex_collections, edge_collections, relationship=None, create=False):
+    def __init__(self, db, vertex_collections, edge_collections, relationship=None, create=False, username=None, password=None, host_url=None):
         self.ARANGO_DB = self.get_db_name(db)
         self.ARANGO_GRAPH = f"{self.ARANGO_DB.split('_database')[0]}_graph"
         self.COLLECTIONS_VERTEX = vertex_collections
@@ -28,24 +29,26 @@ class ArangoDBService:
         self.missing_collection = True
 
         module_logger.info("Establishing connection...")
-        client = ArangoClient(hosts=f"http://{config.ARANGODB_HOST}:{config.ARANGODB_PORT}")
+        client = ArangoClient(hosts=host_url)
+        self._client = client
 
-        sys_db = client.db(
-            "_system", username=config.ARANGODB_USERNAME, password=config.ARANGODB_PASSWORD
+        self.sys_db = client.db(
+            "_system", username=username, password=password
         )
 
         module_logger.info("_system database - OK")
 
-        if not sys_db.has_database(self.ARANGO_DB):
+        if not self.sys_db.has_database(self.ARANGO_DB):
             if create:
-                sys_db.create_database(self.ARANGO_DB)
+                self.create_database(self.ARANGO_DB)
             else:
                 raise Exception("Database not found")
 
         self.db = client.db(
             self.ARANGO_DB,
-            username=config.ARANGODB_USERNAME,
-            password=config.ARANGODB_PASSWORD,
+            username=username,
+            password=password,
+            verify=True
         )
 
         if self.db.has_graph(self.ARANGO_GRAPH):
@@ -53,35 +56,42 @@ class ArangoDBService:
         elif create:
             self.cti2stix_graph = self.db.create_graph(self.ARANGO_GRAPH)
 
-        self.collections = {}
+        self.collections: dict[str, StandardCollection] = {}
         for collection in self.COLLECTIONS_VERTEX:
-            if self.db.has_collection(collection):
-                self.collections[collection] = self.db.collection(collection)
-            elif create:
-                self.collections[collection] = self.db.create_collection(collection)
-            else:
-                raise Exception(f"Vertex collection missing: {collection}")
+            if create:
+                self.collections[collection] = self.create_collection(collection)
+            
+            self.collections[collection] = self.db.collection(collection)
 
         for collection in self.COLLECTIONS_EDGE:
-            if self.cti2stix_graph.has_edge_definition(collection):
-                self.cti2stix_objects_relationship = (
+            
+            if create:
+                try:
+                    self.cti2stix_objects_relationship = (
+                        self.cti2stix_graph.create_edge_definition(
+                            edge_collection=collection,
+                            from_vertex_collections=self.COLLECTIONS_VERTEX,
+                            to_vertex_collections=self.COLLECTIONS_VERTEX,
+                        )
+                    )
+                except Exception as e:
+                    module_logger.debug(f"create edge collection {collection} failed with {e}")
+            
+            self.cti2stix_objects_relationship = (
                     self.cti2stix_graph.edge_collection(collection)
                 )
-            elif create:
-                self.cti2stix_objects_relationship = (
-                    self.cti2stix_graph.create_edge_definition(
-                        edge_collection=collection,
-                        from_vertex_collections=self.COLLECTIONS_VERTEX,
-                        to_vertex_collections=self.COLLECTIONS_VERTEX,
-                    )
-                )
-            else:
-                raise Exception(f"Edges collection missing: {collection}")
+            self.collections[collection] = self.cti2stix_objects_relationship
 
 
         module_logger.info("ArangoDB Connected now!")
 
-    def create_if_not_exist(self, collection_name):
+    def create_database(self, db_name):
+        try:
+            self.sys_db.create_database(db_name)
+        except arango.exceptions.DatabaseCreateError as e:
+            module_logger.debug(f"create database {db_name} failed with {e}")
+
+    def create_collection(self, collection_name):
         try:
             return self.db.create_collection(collection_name)
         except arango.exceptions.CollectionCreateError:

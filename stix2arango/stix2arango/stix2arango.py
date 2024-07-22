@@ -1,7 +1,9 @@
+from datetime import datetime
 import os
 import json
 
 import logging
+from pathlib import Path
 import pkgutil
 import re
 
@@ -17,28 +19,48 @@ module_logger = logging.getLogger("data_ingestion_service")
 
 class Stix2Arango:
     EMBEDDED_RELATIONSHIP_RE = re.compile(r"([a-z\-_]+)[_\-]refs{0,1}")
+    filename = "bundle.json"
+    ARANGODB_URL = f"http://{config.ARANGODB_HOST}:{config.ARANGODB_PORT}"
 
-    def __init__(self, **kwargs):
+    def __init__(self, database, collection, file, stix2arango_note="", ignore_embedded_relationships=False, bundle_id=None, username=config.ARANGODB_USERNAME, password=config.ARANGODB_PASSWORD, host_url=ARANGODB_URL):
         self.core_collection_vertex, self.core_collection_edge = (
-            utils.get_vertex_and_edge_collection_names(kwargs.get("collection"))
+            utils.get_vertex_and_edge_collection_names(collection)
         )
         EDGE_COLLECTIONS = [self.core_collection_edge]
         VERTEX_COLLECTIONS = [self.core_collection_vertex]
 
         self.arango = ArangoDBService(
-            kwargs.get("database"),
+            database,
             VERTEX_COLLECTIONS,
             EDGE_COLLECTIONS,
-            create=True
+            create=True,
+            username=username,
+            password=password,
+            host_url=host_url,
         )
 
-        self.file = kwargs.get("file")
-        self.note = kwargs.get("stix2arango_note") if kwargs.get("stix2arango_note") else ""
+        self.file = file
+        self.note = stix2arango_note or ""
         self.identity_ref = json.loads(utils.load_file_from_url(config.STIX2ARANGO_IDENTITY))
         self.marking_definition_refs = [json.loads(utils.load_file_from_url(link)) for link in config.MARKING_DEFINITION_REFS]
-        self.bundle_id = utils.read_file_data(self.file).get("id")
-        self.ignore_embedded_relationships = eval(kwargs.get("ignore_embedded_relationships").capitalize()) if kwargs.get("ignore_embedded_relationships", None) else False
+        self.bundle_id = bundle_id
+        self.ignore_embedded_relationships = ignore_embedded_relationships
         self.object_key_mapping = {}
+        self.create_indexes()
+
+        if self.file:
+            self.filename = Path(self.file).name
+    
+
+    def create_indexes(self):
+        for name, collection in self.arango.collections.items():
+            module_logger.info(f"creating indexes for collection {collection}")
+            time = int(datetime.now().timestamp())
+            collection.add_persistent_index(["id"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash"], in_background=True, name=f"by_stix_id_{time}")
+            collection.add_persistent_index(["modified", "created"], storedValues=["type", "_record_modified", "id", "spec_version", "_record_md5_hash"], in_background=True, name=f"by_stix_version_{time}")
+            collection.add_persistent_index(["type"], storedValues=["modified", "created", "_record_modified", "id", "spec_version", "_record_md5_hash"], in_background=True, name=f"by_stix_type_{time}")
+            collection.add_persistent_index(["_record_modified", "_record_created"], storedValues=["modified","created", "type", "id", "spec_version", "_record_md5_hash"], in_background=True, name=f"by_insertion_time_{time}")
+
 
 
     def default_objects(self):
@@ -51,31 +73,18 @@ class Stix2Arango:
             object_list.append(obj)
         return object_list
 
-    def process_bundle_into_graph(self, filename: str, data=None, notes=None):
+    def process_bundle_into_graph(self, filename: str, data, notes=None):
         module_logger.info(f"Reading vertex from file {self.file} now")
-        if not data:
-            with open(filename, "r") as input_file:
-                file_data = input_file.read()
-                try:
-                    data = json.loads(file_data)
-                except Exception as e:
-                    raise Exception("Invalid file type")
-
-            try:
-                validate(instance=data, schema=config.json_schema)
-            except Exception as e:
-                raise Exception("Invalid File structure")
 
         if data.get("type", None) != "bundle":
-            module_logger.error("Provided file is not a STIX bundle. Aborted")
-            return False
+            raise Exception("Provided file is not a STIX bundle. Aborted")
 
         objects = []; insert_data = []  # That would be the overall statement
         for obj in tqdm(data["objects"]):
             if obj.get("type") == "relationship":
                 continue
             obj['_bundle_id'] = self.bundle_id if filename!= "" else ""
-            obj['_file_name'] = os.path.basename(filename) if len(filename.split("/"))>1 else ""
+            obj['_file_name'] = self.filename if filename != "" else ""
             obj['_stix2arango_note'] = notes or self.note
             obj['_record_md5_hash'] = utils.generate_md5(obj)
             objects.append(obj)
@@ -88,6 +97,7 @@ class Stix2Arango:
         inserted_object_ids, existing_objects = self.arango.insert_several_objects_chunked(objects, self.core_collection_vertex)
         self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_vertex)
         self.update_object_key_mapping(objects, existing_objects)
+        return inserted_object_ids, existing_objects
 
     def update_object_key_mapping(self, objects, existing_objects={}):
         for obj in objects:
@@ -98,14 +108,10 @@ class Stix2Arango:
 
                 
 
-    def map_relationships(self, filename):
-        with open(filename, "r") as input_file:
-            file_data = input_file.read()
-            data = json.loads(file_data)
+    def map_relationships(self, filename, data):
 
         if data.get("type", None) != "bundle":
-            module_logger.error("Provided file is not a STIX bundle. Aborted")
-            return False
+            raise Exception("Provided file is not a STIX bundle. Aborted")
         module_logger.info("Mapping Prebuilt Relationship Objects -> ")
         objects = []; inserted_data = []
         for obj in tqdm(data["objects"]):
@@ -113,16 +119,11 @@ class Stix2Arango:
 
                 source_ref = obj.get("source_ref")
                 target_ref = obj.get("target_ref")
-                if not self.core_collection_vertex:
-                    module_logger.info(f"source_ref_collection_name is not found: {obj}")
-                    continue
-                if not self.core_collection_vertex:
-                    module_logger.info(f"target_ref_collection_name is not found: {obj}")
-                    continue
+                
                 obj["_from"] = f"{self.core_collection_vertex}/{source_ref}"
                 obj["_to"] = f"{self.core_collection_vertex}/{target_ref}"
                 obj['_bundle_id'] = data.get("id")
-                obj['_file_name'] = os.path.basename(filename) if len(filename.split("/"))>1 else ""
+                obj['_file_name'] = filename
                 obj['_stix2arango_note'] = self.note
                 obj['_is_ref'] = False
                 obj['_record_md5_hash'] = utils.generate_md5(obj)
@@ -134,29 +135,26 @@ class Stix2Arango:
         self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_edge)
         self.update_object_key_mapping(objects, existing_objects)
 
+    def map_embedded_relationships(self, data):
+        objects = [];inserted_data = []
+        for obj in tqdm(data["objects"]):
+            for ref_type, targets in utils.get_embedded_refs(obj):
+                utils.create_relationship_obj(
+                    obj=obj,
+                    source=obj.get("id"),
+                    targets=targets,
+                    relationship=ref_type,
+                    arango_obj=self,
+                    bundle_id=data["id"],
+                    insert_statement = objects
+                )
 
-        if not self.ignore_embedded_relationships:
-            module_logger.info("Creating new embedded relationships using _refs and _ref")
-            objects = [];inserted_data = []
-            for obj in tqdm(data["objects"]):
-                for ref_type, targets in utils.get_embedded_refs(obj):
-                    utils.create_relationship_obj(
-                        obj=obj,
-                        source=obj.get("id"),
-                        targets=targets,
-                        relationship=ref_type,
-                        arango_obj=self,
-                        bundle_id=data["id"],
-                        insert_statement = objects
-                    )
+        module_logger.info(f"Inserting embedded relationship into database. Total objects: {len(objects)}")
+        inserted_object_ids, existing_objects = self.arango.insert_relationships_chunked(objects, self.object_key_mapping, self.core_collection_edge)
+        self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_edge)
+        return inserted_object_ids, existing_objects
 
-            module_logger.info(f"Inserting embedded relationship into database. Total objects: {len(objects)}")
-            inserted_object_ids, _ = self.arango.insert_relationships_chunked(objects, self.object_key_mapping, self.core_collection_edge)
-            self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_edge)
-
-
-    def run(self):
-        module_logger.info(f"Loading default objects from url and store into {self.core_collection_vertex}")
+    def import_default_objects(self):
         self.process_bundle_into_graph(
             filename="",
             data={
@@ -166,11 +164,32 @@ class Stix2Arango:
             notes="automatically imported on collection creation"
         )
 
+
+    def run(self, data=None):
+        if not data:
+            with open(self.file, "r") as input_file:
+                file_data = input_file.read()
+                try:
+                    data = json.loads(file_data)
+                    self.bundle_id = self.bundle_id or data["id"]
+                except Exception as e:
+                    raise Exception("Invalid file type")
+            try:
+                validate(instance=data, schema=config.json_schema)
+            except Exception as e:
+                raise Exception("Invalid File structure")
+            
+        if data.get("type", None) != "bundle":
+            raise Exception("Provided file is not a STIX bundle. Aborted")
+
+        module_logger.info(f"Loading default objects from url and store into {self.core_collection_vertex}")
+        self.import_default_objects()
+
         module_logger.info(f"Load objects from file: {self.file} and store into {self.core_collection_vertex}")
-        self.process_bundle_into_graph(
-            filename=self.file
-        )
+        self.process_bundle_into_graph(self.filename, data)
         module_logger.info("Mapping relationships now -> ")
-        self.map_relationships(
-            filename=self.file
-        )
+        self.map_relationships(self.filename, data)
+
+        if not self.ignore_embedded_relationships:
+            module_logger.info("Creating new embedded relationships using _refs and _ref")
+            self.map_embedded_relationships(data)

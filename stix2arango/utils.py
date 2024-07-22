@@ -12,34 +12,15 @@ module_logger = logging.getLogger("data_ingestion_service")
 
 EMBEDDED_RELATIONSHIP_RE = re.compile(r"([a-z\-_]+)[_\-]refs{0,1}")
 
+
+
 def load_file_from_url(url):
     try:
         response = requests.get(url)
         response.raise_for_status()  # Raise an HTTPError for bad responses
         return response.text
     except requests.exceptions.RequestException as e:
-        print(f"Error loading JSON from {url}: {e}")
-        return None
-
-
-def verify_duplication(obj, object_list):
-
-    if isinstance(object_list, list) and isinstance(obj, dict):
-        match_string = f'"_key": "{obj.get("_key")}",'
-        filtered_list = [obj_ for obj_ in object_list if match_string in obj_ ]
-        if len(filtered_list)>0:
-            return True
-    return False
-
-
-def get_object_details(obj, arango_obj):
-    filters = f"doc.id=='{obj['id']}'"
-    filters_dates = arango_obj.arango.execute_raw_query(
-        query=f"for doc in {arango_obj.core_collection_edge} "
-              f"filter {filters} limit 1 sort doc.created desc return "
-              f"doc.created"
-    )
-    return filters_dates[0] if len(filters_dates)>0 else obj.get("modified")
+        raise Exception(f"Error loading JSON from {url}: {e}") from e
 
 def create_relationship_obj(
         obj:dict, source:str, targets:list, relationship:str, insert_statement,
@@ -100,7 +81,7 @@ def read_file_data(filename:str):
         try:
             data = json.loads(file_data)
         except Exception as e:
-            raise Exception("Invalid file type")
+            raise Exception("Invalid file type") from e
     return data
 
 
