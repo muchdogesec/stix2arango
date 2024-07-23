@@ -34,11 +34,39 @@ e.g.
 Download and insert all versions of MITRE ATT&CK Enterprise
 
 ```shell
-python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py
+python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py \
+	--database cti
+```
+
+Download and insert all data (what we use when spinning up a new arango_cti_processor install):
+
+```shell
+python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py \
+	--database cti && \
+python3 utilities/arango_cti_processor/insert_archive_attack_ics.py \
+	--database cti && \
+python3 utilities/arango_cti_processor/insert_archive_attack_mobile.py \
+	--database cti && \
+python3 utilities/arango_cti_processor/insert_archive_capec.py \
+	--database cti && \
+python3 utilities/arango_cti_processor/insert_archive_cpe.py \
+	--database cti && \
+python3 utilities/arango_cti_processor/insert_archive_cve.py \
+	--database cti && \
+python3 utilities/arango_cti_processor/insert_archive_cwe.py \
+	--database cti && \
+python3 utilities/arango_cti_processor/insert_archive_disarm.py \
+	--database cti && \
+python3 utilities/arango_cti_processor/insert_archive_locations.py \
+	--database cti && \
+python3 utilities/arango_cti_processor/insert_archive_sigma_rules.py \
+	--database cti && \
+python3 utilities/arango_cti_processor/insert_archive_yara_rules.py \
+	--database cti && \
 ```
 
 Download and insert only 15.0 and 15.1 versions of MITRE ATT&CK Enterprise and ignore embedded relationships
 
 ```shell
-python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py --database mitre_attack --versions 15_0,15_1 --ignore_embedded_relationships true
+python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py --database cti --versions 15_0,15_1 --ignore_embedded_relationships true
 ```
