@@ -142,7 +142,7 @@ def main():
     base_url = "https://pub-ce0133952c6947428e077da707513ff5.r2.dev/"
     files_to_download = [
         {
-            "url": f"{base_url}nvd-cve%2Fcve-bundle-{version}.json",
+            "url": f"{base_url}nvd_cve/cve-bundle-{version}.json",
             "destination": os.path.join(root_path, "cti_knowledge_base_store", "nvd-cve", f"cve-bundle-{version}.json")
         } for version in versions
     ]
