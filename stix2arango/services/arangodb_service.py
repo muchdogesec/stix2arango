@@ -224,7 +224,7 @@ class ArangoDBService:
 
 
     def map_relationships(self, data, func, collection_vertex, collection_edge, notes):
-        insert_data = []
+        objects = []
         for obj in tqdm(data):
             if obj.get("type") not in [
                 "relationship",
@@ -233,10 +233,11 @@ class ArangoDBService:
                 "marking-definition",
             ]:
                 # noinspection PyUnresolvedReferences
-                insert_data += func(
+                objects += func(
                     obj, self, collection_vertex, collection_edge, notes
                 )
-        return insert_data
+        
+        return objects
 
     def filter_objects_in_collection_using_custom_query(
         self, collection_name: str = None, custom_query: str = ""

@@ -54,7 +54,7 @@ class Stix2Arango:
 
     def create_indexes(self):
         for name, collection in self.arango.collections.items():
-            module_logger.info(f"creating indexes for collection {collection}")
+            module_logger.info(f"creating indexes for collection {collection.db_name}/{collection}")
             time = int(datetime.now().timestamp())
             collection.add_persistent_index(["id"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash"], in_background=True, name=f"by_stix_id_{time}")
             collection.add_persistent_index(["modified", "created"], storedValues=["type", "_record_modified", "id", "spec_version", "_record_md5_hash"], in_background=True, name=f"by_stix_version_{time}")
