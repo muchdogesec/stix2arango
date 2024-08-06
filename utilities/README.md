@@ -107,10 +107,12 @@ python3 utilities/arango_cti_processor/insert_archive_yara_rules.py \
 python3 utilities/arango_cti_processor/insert_archive_cve.py \
 	--database cti \
 	--ignore_embedded_relationships false \
-	--years 2024 && \
+	--years 2017,2018,2019,2020,2021,2022,2023,2024 && \
 python3 utilities/arango_cti_processor/insert_archive_cpe.py \
 	--database cti \
 	--ignore_embedded_relationships false
 ```
 
 Note, old products are often referenced in CVEs, so to be safe, all CPE data is downloaded.
+
+CVEs are downloaded from 2017, as this is the earliest CVE year referenced in a Sigma rule.
