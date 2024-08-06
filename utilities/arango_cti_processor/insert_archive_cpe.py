@@ -56,7 +56,7 @@ for version in all_versions:
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Process NVD CPE versions.")
-    parser.add_argument('--versions', type=str, help='Comma-separated list of versions to process. Default is all versions.')
+    parser.add_argument('--years', type=str, help='Comma-separated list of years to process. Default is all versions.')
     parser.add_argument('--ignore_embedded_relationships', type=bool, default=False, help='Flag to ignore embedded relationships. Default is false.')
     parser.add_argument('--database', type=str, default="cti", help='Name of the database to use. Default is "cti".')
     return parser.parse_args()
@@ -118,8 +118,9 @@ def run_command(command, root_path, ignore_embedded_relationships):
 def main():
     args = parse_arguments()
 
-    if args.versions:
-        versions = args.versions.split(',')
+    if args.years:
+        selected_years = args.years.split(',')
+        versions = [version for version in all_versions if any(version.startswith(year) for year in selected_years)]
     else:
         versions = all_versions
 
