@@ -6,7 +6,11 @@ import re
 
 # Define the version strings
 all_versions = [
-    "3_5", "3_6", "3_7", "3_8", "3_9"
+    "3_5",
+    "3_6",
+    "3_7",
+    "3_8",
+    "3_9"
 ]
 
 def version_key(version):
