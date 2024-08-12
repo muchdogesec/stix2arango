@@ -54,12 +54,14 @@ class Stix2Arango:
 
     def create_indexes(self):
         for name, collection in self.arango.collections.items():
-            module_logger.info(f"creating indexes for collection {collection.db_name}/{collection}")
+            module_logger.info(f"creating indexes for collection {collection.db_name}/{name}")
             time = int(datetime.now().timestamp())
             collection.add_persistent_index(["id"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash"], in_background=True, name=f"by_stix_id_{time}")
             collection.add_persistent_index(["modified", "created"], storedValues=["type", "_record_modified", "id", "spec_version", "_record_md5_hash"], in_background=True, name=f"by_stix_version_{time}")
             collection.add_persistent_index(["type"], storedValues=["modified", "created", "_record_modified", "id", "spec_version", "_record_md5_hash"], in_background=True, name=f"by_stix_type_{time}")
             collection.add_persistent_index(["_record_modified", "_record_created"], storedValues=["modified","created", "type", "id", "spec_version", "_record_md5_hash"], in_background=True, name=f"by_insertion_time_{time}")
+            if name.endswith("_edge_collection"):
+                collection.add_persistent_index(["source_ref", "target_ref"], storedValues=["modified", "created", "type", "relationship_type", "_record_modified", "spec_version", "_record_md5_hash", "id"], in_background=True, name=f"edge_ref_{time}")
 
 
 
