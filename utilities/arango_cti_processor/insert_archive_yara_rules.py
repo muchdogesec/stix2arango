@@ -96,10 +96,10 @@ def main():
         create_directory(directory)
     
     # Download files
-    base_url = "https://pub-ce0133952c6947428e077da707513ff5.r2.dev/"
+    base_url = "https://pub-68393751cf1643a987d2bd8486ec031c.r2.dev/"
     files_to_download = [
         {
-            "url": f"{base_url}yara-rules%2Fyara-rule-bundle-{version}.json",
+            "url": f"{base_url}yara-rule-bundle-{version}.json",
             "destination": os.path.join(root_path, "cti_knowledge_base_store", "yara-rules", f"yara-rule-bundle-{version}.json")
         } for version in versions
     ]

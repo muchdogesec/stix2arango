@@ -94,10 +94,10 @@ def main():
         create_directory(directory)
     
     # Download files
-    base_url = "https://pub-ce0133952c6947428e077da707513ff5.r2.dev/"
+    base_url = "https://pub-035800b8078c4fa1a27327ea24327397.r2.dev/"
     files_to_download = [
         {
-            "url": f"{base_url}locations%2Flocations-bundle{version}.json",
+            "url": f"{base_url}locations-bundle{version}.json",
             "destination": os.path.join(root_path, "cti_knowledge_base_store", "locations", f"locations-bundle{version}.json")
         } for version in versions
     ]

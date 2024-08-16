@@ -100,10 +100,10 @@ def main():
         create_directory(directory)
     
     # Download files
-    base_url = "https://pub-ce0133952c6947428e077da707513ff5.r2.dev/"
+    base_url = "https://pub-1898be85e41644a8839de8804cc98671.r2.dev/"
     files_to_download = [
         {
-            "url": f"{base_url}mitre-capec%2Fstix-capec-v{version}.json",
+            "url": f"{base_url}stix-capec-v{version}.json",
             "destination": os.path.join(root_path, "cti_knowledge_base_store", "mitre-capec", f"stix-capec-v{version}.json")
         } for version in versions
     ]

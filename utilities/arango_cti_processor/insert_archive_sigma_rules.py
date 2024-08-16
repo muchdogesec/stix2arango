@@ -111,10 +111,10 @@ def main():
         create_directory(directory)
     
     # Download files
-    base_url = "https://pub-ce0133952c6947428e077da707513ff5.r2.dev/"
+    base_url = "https://pub-9a00ff87237e4fdb880766c78e5b0ce8.r2.dev/"
     files_to_download = [
         {
-            "url": f"{base_url}sigma-rules%2Fsigma-rule-bundle-r{version}.json",
+            "url": f"{base_url}sigma-rule-bundle-r{version}.json",
             "destination": os.path.join(root_path, "cti_knowledge_base_store", "sigma-rules", f"sigma-rule-bundle-r{version}.json")
         } for version in versions
     ]
