@@ -6,53 +6,28 @@ import time
 import calendar
 from datetime import datetime
 
-# Calculate the latest full quarter
+# Calculate the latest full year and month
 current_year = datetime.now().year
 current_month = datetime.now().month
+latest_year = current_year - 1 if current_month <= 12 else current_year
 
-if current_month <= 3:
-    latest_year = current_year - 1
-    latest_quarter = 4
-elif current_month <= 6:
-    latest_year = current_year
-    latest_quarter = 1
-elif current_month <= 9:
-    latest_year = current_year
-    latest_quarter = 2
-else:
-    latest_year = current_year
-    latest_quarter = 3
+print(f"Latest full year: {latest_year}")
 
-print(f"Latest full quarter: Q{latest_quarter} {latest_year}")
-
-# List of CPE files
+# List of CPE files split by month
 all_versions = []
 for year in range(2007, latest_year + 1):
-    start_quarter = 3 if year == 2007 else 1
-    end_quarter = 4 if year < latest_year else latest_quarter
+    start_month = 9 if year == 2007 else 1
+    end_month = 12 if year < latest_year else current_month - 1
 
-    for quarter in range(start_quarter, end_quarter + 1):
-        if quarter == 1:
-            start_month = 1
-            end_month = 3
-        elif quarter == 2:
-            start_month = 4
-            end_month = 6
-        elif quarter == 3:
-            start_month = 7
-            end_month = 9
-        elif quarter == 4:
-            start_month = 10
-            end_month = 12
-
-        start_date = f"{year}_{str(start_month).zfill(2)}_01"
-        end_day = calendar.monthrange(year, end_month)[1]
-        end_date = f"{year}_{str(end_month).zfill(2)}_{str(end_day).zfill(2)}"
-        all_versions.append(f"{start_date}-{end_date}")
+    for month in range(start_month, end_month + 1):
+        start_date = f"{year}_{str(month).zfill(2)}_01"
+        end_day = calendar.monthrange(year, month)[1]
+        end_date = f"{year}_{str(month).zfill(2)}_{str(end_day).zfill(2)}"
+        all_versions.append((year, f"{start_date}-00_00_00-{end_date}-23_59_59"))
 
 print("All versions to be processed:")
-for version in all_versions:
-    print(version)
+for year, version in all_versions:
+    print(f"{year}: {version}")
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Process NVD CPE versions.")
@@ -120,7 +95,7 @@ def main():
 
     if args.years:
         selected_years = args.years.split(',')
-        versions = [version for version in all_versions if any(version.startswith(year) for year in selected_years)]
+        versions = [(year, version) for year, version in all_versions if str(year) in selected_years]
     else:
         versions = all_versions
 
@@ -134,10 +109,10 @@ def main():
     # Define the commands and their arguments for the files
     commands = [
         {
-            "file": f"nvd-cpe/cpe-bundle-{version}.json",
+            "file": f"cti_knowledge_base_store/nvd-cpe/{year}/cpe-bundle-{version}.json",
             "database": database,
             "collection": "nvd_cpe"
-        } for version in versions
+        } for year, version in versions
     ]
     
     # Collect unique directories to create
@@ -151,12 +126,12 @@ def main():
         create_directory(directory)
     
     # Download files
-    base_url = "https://pub-ce0133952c6947428e077da707513ff5.r2.dev/"
+    base_url = "https://pub-4cfd2eaec94c4f6ea8b57724cccfca70.r2.dev/"
     files_to_download = [
         {
-            "url": f"{base_url}nvd-cpe%2Fcpe-bundle-{version}.json",
-            "destination": os.path.join(root_path, "cti_knowledge_base_store", "nvd-cpe", f"cpe-bundle-{version}.json")
-        } for version in versions
+            "url": f"{base_url}cpe%2F{year}%2Fcpe-bundle-{version}.json",
+            "destination": os.path.join(root_path, "cti_knowledge_base_store", f"nvd-cpe/{year}", f"cpe-bundle-{version}.json")
+        } for year, version in versions
     ]
 
     download_errors = []
