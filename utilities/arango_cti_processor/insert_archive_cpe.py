@@ -13,17 +13,30 @@ latest_year = current_year - 1 if current_month <= 12 else current_year
 
 print(f"Latest full year: {latest_year}")
 
+# Files that do not exist
+non_existent_files = {
+    "2008_05_01-00_00_00-2008_05_31-23_59_59",
+    "2008_07_01-00_00_00-2008_07_31-23_59_59",
+    "2008_08_01-00_00_00-2008_08_31-23_59_59",
+    "2009_08_01-00_00_00-2009_08_31-23_59_59",
+    "2011_10_01-00_00_00-2011_10_31-23_59_59",
+}
+
 # List of CPE files split by month
 all_versions = []
-for year in range(2007, latest_year + 1):
-    start_month = 9 if year == 2007 else 1
+for year in range(2008, latest_year + 1):
+    start_month = 1
     end_month = 12 if year < latest_year else current_month - 1
 
     for month in range(start_month, end_month + 1):
         start_date = f"{year}_{str(month).zfill(2)}_01"
         end_day = calendar.monthrange(year, month)[1]
         end_date = f"{year}_{str(month).zfill(2)}_{str(end_day).zfill(2)}"
-        all_versions.append((year, f"{start_date}-00_00_00-{end_date}-23_59_59"))
+        version = f"{start_date}-00_00_00-{end_date}-23_59_59"
+        if version not in non_existent_files:
+            all_versions.append((year, version))
+        else:
+            print(f"Skipping non-existent file: cpe-bundle-{version}.json")
 
 print("All versions to be processed:")
 for year, version in all_versions:
@@ -109,7 +122,7 @@ def main():
     # Define the commands and their arguments for the files
     commands = [
         {
-            "file": f"cti_knowledge_base_store/nvd-cpe/{year}/cpe-bundle-{version}.json",
+            "file": f"nvd-cpe/{year}/cpe-bundle-{version}.json",
             "database": database,
             "collection": "nvd_cpe"
         } for year, version in versions
