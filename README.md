@@ -12,6 +12,8 @@ stix2arango is a command line tool that takes a group of STIX 2.1 objects in a b
 
 [![stix2arango](https://img.youtube.com/vi/zn6KCj2O5CY/0.jpg)](https://www.youtube.com/watch?v=zn6KCj2O5CY)
 
+[Watch the demo](https://www.youtube.com/watch?v=zn6KCj2O5CY).
+
 ## Usage
 
 ### Install the script
@@ -120,7 +122,7 @@ We store a lot of STIX data from popular knowledgebases on Cloudflare R2.
 
 This is a useful resource to quickly populate STIX data using stix2arango if you want to see what it can do. It is also what is used to populate the data required by [arango_cti_processor](https://github.com/muchdogesec/arango_cti_processor/)
 
-To use this for yourself, check out `utilities/README.md`
+To populate this data for yourself, check out `utilities/README.md`
 
 ## Useful supporting tools
 
@@ -134,4 +136,4 @@ To use this for yourself, check out `utilities/README.md`
 
 ## License
 
-[AGPLv3](/LICENSE).
+[Apache 2.0](/LICENSE).
