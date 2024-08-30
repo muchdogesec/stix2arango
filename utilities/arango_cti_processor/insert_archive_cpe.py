@@ -122,7 +122,7 @@ def main():
     # Define the commands and their arguments for the files
     commands = [
         {
-            "file": f"nvd-cpe/{year}/cpe-bundle-{version}.json",
+            "file": os.path.join("cti_knowledge_base_store", "nvd-cpe", version.split('_')[0], f"/cpe-bundle-{version}.json"),
             "database": database,
             "collection": "nvd_cpe"
         } for year, version in versions

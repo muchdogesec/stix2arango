@@ -21,12 +21,12 @@ print(f"Last full month: {last_full_month_year}-{str(last_full_month).zfill(2)}"
 
 # List of CVE files
 all_versions = []
-missing_files = [
+files_in_partial_years = [
     "2005_10", "2007_07", "2008_09", "2008_10", "2008_11", "2008_12", "2009_01"
 ]
 
 # Add missing files
-for entry in missing_files:
+for entry in files_in_partial_years:
     year, month = map(int, entry.split('_'))
     start_date = f"{year}_{str(month).zfill(2)}_01-00_00_00"
     end_day = calendar.monthrange(year, month)[1]
@@ -123,7 +123,7 @@ def main():
     # Define the commands and their arguments for the files
     commands = [
         {
-            "file": os.path.join("cti_knowledge_base_store", "nvd-cve", f"cve-bundle-{version}.json"),
+            "file": os.path.join("cti_knowledge_base_store", "nvd-cve", version.split('_')[0], f"cve-bundle-{version}.json"),
             "database": database,
             "collection": "nvd_cve"
         } for version in versions
@@ -140,11 +140,11 @@ def main():
         create_directory(directory)
     
     # Download files
-    base_url = "https://pub-ce0133952c6947428e077da707513ff5.r2.dev/"
+    base_url = "https://pub-4cfd2eaec94c4f6ea8b57724cccfca70.r2.dev/cve/"
     files_to_download = [
         {
-            "url": f"{base_url}nvd_cve/cve-bundle-{version}.json",
-            "destination": os.path.join(root_path, "cti_knowledge_base_store", "nvd-cve", f"cve-bundle-{version}.json")
+            "url": f"{base_url}{version.split('_')[0]}/cve-bundle-{version}.json",
+            "destination": os.path.join(root_path, "cti_knowledge_base_store", "nvd-cve", version.split('_')[0], f"cve-bundle-{version}.json")
         } for version in versions
     ]
 
