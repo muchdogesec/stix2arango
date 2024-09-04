@@ -37,7 +37,6 @@ Download and insert all versions of MITRE ATT&CK Enterprise
 ```shell
 python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py \
 	--database cti \
-	--ignore_embedded_relationships false
 ```
 
 Download specific versions of MITRE ATT&CK Enterprise and ignore embedded relationships
@@ -45,7 +44,6 @@ Download specific versions of MITRE ATT&CK Enterprise and ignore embedded relati
 ```shell
 python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py \
 	--database cti \
-	--ignore_embedded_relationships false \
 	--versions 15_0,15_1
 ```
 
@@ -54,7 +52,6 @@ Download all CVE data
 ```shell
 python3 utilities/arango_cti_processor/insert_archive_cve.py \
 	--database cti \
-	--ignore_embedded_relationships false
 ```
 
 Download only CVE data for year 2023 and 2024
@@ -62,7 +59,6 @@ Download only CVE data for year 2023 and 2024
 ```shell
 python3 utilities/arango_cti_processor/insert_archive_cve.py \
 	--database cti \
-	--ignore_embedded_relationships false \
 	--years 2023,2024
 ```
 
