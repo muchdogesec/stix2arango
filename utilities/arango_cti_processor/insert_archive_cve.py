@@ -4,44 +4,42 @@ import os
 import requests
 import time
 import calendar
-from datetime import datetime
+from datetime import datetime, timedelta
 
-# Calculate the last full month
-current_year = datetime.now().year
-current_month = datetime.now().month
+# Calculate the last full day
+yesterday = datetime.now() - timedelta(days=1)
+latest_year = yesterday.year
+latest_month = yesterday.month
+latest_day = yesterday.day
 
-if current_month == 1:
-    last_full_month_year = current_year - 1
-    last_full_month = 12
-else:
-    last_full_month_year = current_year
-    last_full_month = current_month - 1
-
-print(f"Last full month: {last_full_month_year}-{str(last_full_month).zfill(2)}")
+print(f"Latest full year: {latest_year}, Latest full month: {latest_month}, Latest full day: {latest_day}")
 
 # List of CVE files
 all_versions = []
-files_in_partial_years = [
-    "2005_10", "2007_07", "2008_09", "2008_10", "2008_11", "2008_12", "2009_01"
-]
 
-# Add missing files
-for entry in files_in_partial_years:
-    year, month = map(int, entry.split('_'))
-    start_date = f"{year}_{str(month).zfill(2)}_01-00_00_00"
-    end_day = calendar.monthrange(year, month)[1]
-    end_date = f"{year}_{str(month).zfill(2)}_{str(end_day).zfill(2)}-23_59_59"
-    all_versions.append(f"{start_date}-{end_date}")
-
-# Add all months from 2009 onwards up to the last full month
-for year in range(2009, last_full_month_year + 1):
-    start_month = 1
-    end_month = 12 if year < last_full_month_year else last_full_month
-    for month in range(start_month, end_month + 1):
-        start_date = f"{year}_{str(month).zfill(2)}_01-00_00_00"
-        end_day = calendar.monthrange(year, month)[1]
-        end_date = f"{year}_{str(month).zfill(2)}_{str(end_day).zfill(2)}-23_59_59"
-        all_versions.append(f"{start_date}-{end_date}")
+# Add all months from 2007 onwards up to the last full month or day
+for year in range(2007, latest_year + 1):
+    if year < 2024 or (year == 2024 and latest_month < 9):
+        # Pre-September 2024 (Monthly files)
+        start_month = 1
+        end_month = 12 if year < latest_year else latest_month
+        for month in range(start_month, end_month + 1):
+            start_date = f"{year}_{str(month).zfill(2)}_01-00_00_00"
+            end_day = calendar.monthrange(year, month)[1]
+            if year == latest_year and month == latest_month:
+                end_day = latest_day
+            end_date = f"{year}_{str(month).zfill(2)}_{str(end_day).zfill(2)}-23_59_59"
+            all_versions.append(f"{start_date}-{end_date}")
+    elif year == 2024 and latest_month >= 9:
+        # Post-September 2024 (Daily files)
+        for month in range(9, latest_month + 1):
+            days_in_month = calendar.monthrange(year, month)[1]
+            if year == latest_year and month == latest_month:
+                days_in_month = latest_day
+            for day in range(1, days_in_month + 1):
+                start_date = f"{year}_{str(month).zfill(2)}_{str(day).zfill(2)}-00_00_00"
+                end_date = f"{year}_{str(month).zfill(2)}_{str(day).zfill(2)}-23_59_59"
+                all_versions.append(f"{start_date}-{end_date}")
 
 print("All versions to be processed:")
 for version in all_versions:
@@ -121,18 +119,27 @@ def main():
     root_path = os.path.abspath(os.path.join(script_path, "../.."))  # Move up two levels to the directory containing stix2arango.py and cti_knowledge_base_store
     
     # Define the commands and their arguments for the files
-    commands = [
-        {
-            "file": os.path.join("cti_knowledge_base_store", "nvd-cve", version.split('_')[0], f"cve-bundle-{version}.json"),
+    commands = []
+    for version in versions:
+        year = version.split('_')[0]
+        if int(year) < 2024 or (int(year) == 2024 and latest_month < 9):
+            file_path = os.path.join("cti_knowledge_base_store", "nvd-cve", year, f"cve-bundle-{version}.json")
+        else:
+            month = version.split('_')[1]
+            file_path = os.path.join("cti_knowledge_base_store", "nvd-cve", f"{year}-{month}", f"cve-bundle-{version}.json")
+
+        commands.append({
+            "file": file_path,
             "database": database,
             "collection": "nvd_cve"
-        } for version in versions
-    ]
+        })
     
     # Collect unique directories to create
     directories_to_create = set()
     for command in commands:
         directory = os.path.dirname(os.path.join(root_path, command["file"]))
+        year_directory = os.path.join(root_path, "cti_knowledge_base_store", "nvd-cve", str(command["file"].split('/')[2].split('-')[0]))
+        directories_to_create.add(year_directory)
         directories_to_create.add(directory)
     
     # Create necessary directories dynamically if they do not already exist
@@ -141,12 +148,21 @@ def main():
     
     # Download files
     base_url = "https://pub-4cfd2eaec94c4f6ea8b57724cccfca70.r2.dev/cve/"
-    files_to_download = [
-        {
-            "url": f"{base_url}{version.split('_')[0]}/cve-bundle-{version}.json",
-            "destination": os.path.join(root_path, "cti_knowledge_base_store", "nvd-cve", version.split('_')[0], f"cve-bundle-{version}.json")
-        } for version in versions
-    ]
+    files_to_download = []
+    for version in versions:
+        year = version.split('_')[0]
+        if int(year) < 2024 or (int(year) == 2024 and latest_month < 9):
+            download_url = f"{base_url}{year}/cve-bundle-{version}.json"
+            destination_path = os.path.join(root_path, "cti_knowledge_base_store", f"nvd-cve/{year}", f"cve-bundle-{version}.json")
+        else:
+            month = version.split('_')[1]
+            download_url = f"{base_url}{year}-{month}/cve-bundle-{version}.json"
+            destination_path = os.path.join(root_path, "cti_knowledge_base_store", f"nvd-cve/{year}-{month}", f"cve-bundle-{version}.json")
+        
+        files_to_download.append({
+            "url": download_url,
+            "destination": destination_path
+        })
 
     download_errors = []
 
