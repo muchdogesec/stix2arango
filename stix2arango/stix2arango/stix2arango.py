@@ -98,6 +98,8 @@ class Stix2Arango:
         module_logger.info(f"Inserting objects into database. Total objects: {len(objects)}")
         inserted_object_ids, existing_objects = self.arango.insert_several_objects_chunked(objects, self.core_collection_vertex)
         self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_vertex)
+        self.arango.update_is_latest_for_embedded_refs(inserted_object_ids, self.core_collection_edge)
+
         self.update_object_key_mapping(objects, existing_objects)
         return inserted_object_ids, existing_objects
 
@@ -135,6 +137,7 @@ class Stix2Arango:
         module_logger.info(f"Inserting relationship into database. Total objects: {len(objects)}")
         inserted_object_ids, existing_objects = self.arango.insert_relationships_chunked(objects, self.object_key_mapping, self.core_collection_edge)
         self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_edge)
+        self.arango.update_is_latest_for_embedded_refs(inserted_object_ids, self.core_collection_edge)
         self.update_object_key_mapping(objects, existing_objects)
 
     def map_embedded_relationships(self, data):
@@ -152,6 +155,7 @@ class Stix2Arango:
                 )
 
         module_logger.info(f"Inserting embedded relationship into database. Total objects: {len(objects)}")
+        
         inserted_object_ids, existing_objects = self.arango.insert_relationships_chunked(objects, self.object_key_mapping, self.core_collection_edge)
         self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_edge)
         return inserted_object_ids, existing_objects
