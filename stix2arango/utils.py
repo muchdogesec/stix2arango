@@ -24,7 +24,7 @@ def load_file_from_url(url):
 
 def create_relationship_obj(
         obj:dict, source:str, targets:list, relationship:str, insert_statement,
-        bundle_id:str, arango_obj =None):
+        bundle_id:str, arango_obj =None, extra_data=None):
     insert_data = []
     if not isinstance(targets, list):
         return []
@@ -60,6 +60,8 @@ def create_relationship_obj(
         relationship_object['type'] = "relationship"
         relationship_object['spec_version'] = "2.1"
         relationship_object['_record_md5_hash'] = generate_md5(relationship_object)
+        if extra_data:
+            relationship_object.update(extra_data)
 
         insert_statement.append(relationship_object)
         insert_data.append(
