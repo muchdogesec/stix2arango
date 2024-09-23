@@ -171,16 +171,16 @@ def main():
         create_directory(directory)
     
     # Download files
-    base_url = "https://pub-4cfd2eaec94c4f6ea8b57724cccfca70.r2.dev/"
+    base_url = "https://downloads.ctibutler.com/"
     files_to_download = []
     for item in versions:
         if len(item) == 2:  # Pre-Sept 2024 format
             year, version = item
-            download_url = f"{base_url}cve%2F{year}%2Fcve-bundle-{version}.json"
+            download_url = f"{base_url}cxe2stix-helper-github-action-output/cve%2F{year}%2Fcve-bundle-{version}.json"
             destination_path = os.path.join(root_path, "cti_knowledge_base_store", f"nvd-cve/{year}", f"cve-bundle-{version}.json")
         else:  # Post-Sept 2024 format
             year, month, version = item
-            download_url = f"{base_url}cve%2F{year}-{str(month).zfill(2)}%2Fcve-bundle-{version}.json"
+            download_url = f"{base_url}cxe2stix-helper-github-action-output/cve%2F{year}-{str(month).zfill(2)}%2Fcve-bundle-{version}.json"
             destination_path = os.path.join(root_path, "cti_knowledge_base_store", f"nvd-cve/{year}-{str(month).zfill(2)}", f"cve-bundle-{version}.json")
         
         files_to_download.append({
