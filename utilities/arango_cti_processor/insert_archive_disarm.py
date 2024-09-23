@@ -99,10 +99,10 @@ def main():
         create_directory(directory)
     
     # Download files
-    base_url = "https://pub-0d00951d297744aeb36ae013fc7da552.r2.dev/"
+    base_url = "https://downloads.ctibutler.com/"
     files_to_download = [
         {
-            "url": f"{base_url}disarm-bundle-v{version}.json",
+            "url": f"{base_url}disarm2stix-manual-output/disarm-bundle-v{version}.json",
             "destination": os.path.join(root_path, "cti_knowledge_base_store", "disarm", f"disarm-bundle-v{version}.json")
         } for version in versions
     ]

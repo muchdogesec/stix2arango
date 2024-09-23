@@ -106,10 +106,10 @@ def main():
         create_directory(directory)
     
     # Download files
-    base_url = "https://pub-42a2b0ce4133422ba45cd5a92dbe0644.r2.dev/"
+    base_url = "https://downloads.ctibutler.com/"
     files_to_download = [
         {
-            "url": f"{base_url}cwe-bundle-v{version}.json",
+            "url": f"{base_url}cwe2stix-manual-output/cwe-bundle-v{version}.json",
             "destination": os.path.join(root_path, "cti_knowledge_base_store", "mitre-cwe", f"cwe-bundle-v{version}.json")
         } for version in versions
     ]

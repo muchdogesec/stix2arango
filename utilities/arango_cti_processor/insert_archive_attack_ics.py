@@ -93,10 +93,10 @@ def main():
         create_directory(directory)
     
     # Download files
-    base_url = "https://pub-0ee46653127f421982acd8b77f3231ce.r2.dev/"
+    base_url = "https://downloads.ctibutler.com/"
     files_to_download = [
         {
-            "url": f"{base_url}ics-attack-{version}.json",
+            "url": f"{base_url}mitre-attack-ics-repo-data/ics-attack-{version}.json",
             "destination": os.path.join(root_path, "cti_knowledge_base_store", "mitre-attack-ics", f"ics-attack-{version}.json")
         } for version in versions
     ]

@@ -21,7 +21,7 @@ Where:
 	* `insert_archive_cve`
 	* `insert_archive_cwe`
 	* `insert_archive_disarm`
-	* `insert_archive_locations`
+	* `insert_archive_location`
 	* `insert_archive_sigma_rules`
 	* `insert_archive_yara_rules`
 	
@@ -36,7 +36,7 @@ Download and insert all versions of MITRE ATT&CK Enterprise
 
 ```shell
 python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py \
-	--database cti \
+	--database cti
 ```
 
 Download specific versions of MITRE ATT&CK Enterprise and ignore embedded relationships
@@ -51,7 +51,7 @@ Download all CVE data
 
 ```shell
 python3 utilities/arango_cti_processor/insert_archive_cve.py \
-	--database cti \
+	--database cti
 ```
 
 Download only CVE data for year 2023 and 2024

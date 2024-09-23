@@ -99,10 +99,10 @@ def main():
         create_directory(directory)
     
     # Download files
-    base_url = "https://pub-f132ba0b2589413384d5ea40ea5c8d5f.r2.dev/"
+    base_url = "https://downloads.ctibutler.com/"
     files_to_download = [
         {
-            "url": f"{base_url}mobile-attack-{version}.json",
+            "url": f"{base_url}mitre-attack-mobile-repo-data/mobile-attack-{version}.json",
             "destination": os.path.join(root_path, "cti_knowledge_base_store", "mitre-attack-mobile", f"mobile-attack-{version}.json")
         } for version in versions
     ]
