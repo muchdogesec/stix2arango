@@ -4,55 +4,56 @@ import os
 import requests
 import time
 import calendar
-from datetime import datetime
+from datetime import datetime, timedelta
 
-# Calculate the latest full quarter
+# Calculate the latest full year and month
 current_year = datetime.now().year
 current_month = datetime.now().month
+yesterday = datetime.now() - timedelta(days=1)
+latest_year = yesterday.year
+latest_month = yesterday.month
+latest_day = yesterday.day
 
-if current_month <= 3:
-    latest_year = current_year - 1
-    latest_quarter = 4
-elif current_month <= 6:
-    latest_year = current_year
-    latest_quarter = 1
-elif current_month <= 9:
-    latest_year = current_year
-    latest_quarter = 2
-else:
-    latest_year = current_year
-    latest_quarter = 3
+print(f"Latest full year: {latest_year}, Latest full month: {latest_month}, Latest full day: {latest_day}")
 
-print(f"Latest full quarter: Q{latest_quarter} {latest_year}")
-
-# List of CPE files
+# List of CPE files split by month or day depending on the date
 all_versions = []
 for year in range(2007, latest_year + 1):
-    start_quarter = 3 if year == 2007 else 1
-    end_quarter = 4 if year < latest_year else latest_quarter
-
-    for quarter in range(start_quarter, end_quarter + 1):
-        if quarter == 1:
-            start_month = 1
-            end_month = 3
-        elif quarter == 2:
-            start_month = 4
-            end_month = 6
-        elif quarter == 3:
-            start_month = 7
-            end_month = 9
-        elif quarter == 4:
-            start_month = 10
-            end_month = 12
-
-        start_date = f"{year}_{str(start_month).zfill(2)}_01"
-        end_day = calendar.monthrange(year, end_month)[1]
-        end_date = f"{year}_{str(end_month).zfill(2)}_{str(end_day).zfill(2)}"
-        all_versions.append(f"{start_date}-{end_date}")
+    if year < 2024 or (year == 2024 and latest_month < 9):
+        # Pre-September 2024 (Monthly files)
+        start_month = 1
+        end_month = 12 if year < latest_year else latest_month
+        for month in range(start_month, end_month + 1):
+            start_date = f"{year}_{str(month).zfill(2)}_01"
+            end_day = calendar.monthrange(year, month)[1]
+            if year == latest_year and month == latest_month:
+                end_day = latest_day
+            end_date = f"{year}_{str(month).zfill(2)}_{str(end_day).zfill(2)}"
+            version = f"{start_date}-00_00_00-{end_date}-23_59_59"
+            all_versions.append((year, version))
+    elif year == 2024 and latest_month >= 9:
+        # Post-September 2024 (Daily files)
+        for month in range(1, 9):
+            start_date = f"{year}_{str(month).zfill(2)}_01"
+            end_day = calendar.monthrange(year, month)[1]
+            end_date = f"{year}_{str(month).zfill(2)}_{str(end_day).zfill(2)}"
+            version = f"{start_date}-00_00_00-{end_date}-23_59_59"
+            all_versions.append((year, version))
+        for month in range(9, latest_month + 1):
+            days_in_month = calendar.monthrange(year, month)[1]
+            if year == latest_year and month == latest_month:
+                days_in_month = latest_day
+            for day in range(1, days_in_month + 1):
+                start_date = f"{year}_{str(month).zfill(2)}_{str(day).zfill(2)}"
+                version = f"{start_date}-00_00_00-{start_date}-23_59_59"
+                all_versions.append((year, month, version))
 
 print("All versions to be processed:")
-for version in all_versions:
-    print(version)
+for item in all_versions:
+    if len(item) == 2:
+        print(f"{item[0]}: {item[1]}")
+    else:
+        print(f"{item[0]}-{str(item[1]).zfill(2)}: {item[2]}")
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Process NVD CPE versions.")
@@ -93,7 +94,7 @@ def download_file(url, destination, error_list, max_retries=5, wait_time=60):
     print(f"Failed to download file from {url} after {retries} attempts")
 
 def run_command(command, root_path, ignore_embedded_relationships):
-    file_path = os.path.join(root_path, "cti_knowledge_base_store", command["file"])
+    file_path = os.path.join(root_path, command["file"])
     stix2arango_path = os.path.join(root_path, "stix2arango.py")
     stix2arango_dir = os.path.dirname(stix2arango_path)  # Directory containing stix2arango.py
     if not os.path.exists(file_path):
@@ -120,7 +121,11 @@ def main():
 
     if args.years:
         selected_years = args.years.split(',')
-        versions = [version for version in all_versions if any(version.startswith(year) for year in selected_years)]
+        versions = [
+            item for item in all_versions 
+            if str(item[0]) in selected_years 
+            and (len(item) == 2 or (item[0] == latest_year and item[1] <= latest_month))
+        ]
     else:
         versions = all_versions
 
@@ -132,18 +137,33 @@ def main():
     root_path = os.path.abspath(os.path.join(script_path, "../.."))  # Move up two levels to the directory containing stix2arango.py and cti_knowledge_base_store
     
     # Define the commands and their arguments for the files
-    commands = [
-        {
-            "file": f"nvd-cpe/cpe-bundle-{version}.json",
+    commands = []
+    for item in versions:
+        if len(item) == 2:  # Pre-Sept 2024 format
+            year, version = item
+            file_path = os.path.join("cti_knowledge_base_store", "nvd-cpe", str(year), f"cpe-bundle-{version}.json")
+        else:  # Post-Sept 2024 format
+            year, month, version = item
+            file_path = os.path.join("cti_knowledge_base_store", "nvd-cpe", f"{year}-{str(month).zfill(2)}", f"cpe-bundle-{version}.json")
+        
+        commands.append({
+            "file": file_path,
             "database": database,
             "collection": "nvd_cpe"
-        } for version in versions
-    ]
+        })
     
     # Collect unique directories to create
     directories_to_create = set()
     for command in commands:
         directory = os.path.dirname(os.path.join(root_path, command["file"]))
+        year_directory = os.path.dirname(directory)
+        directories_to_create.add(year_directory)
+
+        # Ensure the year-level directory is also added for pre-September 2024
+        if len(command["file"].split('/')) == 4:  # This checks if it's the pre-Sept 2024 format
+            directories_to_create.add(os.path.join(root_path, "cti_knowledge_base_store", "nvd-cpe", str(year)))
+
+        # Create the year-month-level directory (e.g., 2024-09) for post-September 2024 files
         directories_to_create.add(directory)
     
     # Create necessary directories dynamically if they do not already exist
@@ -151,13 +171,22 @@ def main():
         create_directory(directory)
     
     # Download files
-    base_url = "https://pub-ce0133952c6947428e077da707513ff5.r2.dev/"
-    files_to_download = [
-        {
-            "url": f"{base_url}nvd-cpe%2Fcpe-bundle-{version}.json",
-            "destination": os.path.join(root_path, "cti_knowledge_base_store", "nvd-cpe", f"cpe-bundle-{version}.json")
-        } for version in versions
-    ]
+    base_url = "https://downloads.ctibutler.com/"
+    files_to_download = []
+    for item in versions:
+        if len(item) == 2:  # Pre-Sept 2024 format
+            year, version = item
+            download_url = f"{base_url}cxe2stix-helper-github-action-output/cpe%2F{year}%2Fcpe-bundle-{version}.json"
+            destination_path = os.path.join(root_path, "cti_knowledge_base_store", f"nvd-cpe/{year}", f"cpe-bundle-{version}.json")
+        else:  # Post-Sept 2024 format
+            year, month, version = item
+            download_url = f"{base_url}cxe2stix-helper-github-action-output/cpe%2F{year}-{str(month).zfill(2)}%2Fcpe-bundle-{version}.json"
+            destination_path = os.path.join(root_path, "cti_knowledge_base_store", f"nvd-cpe/{year}-{str(month).zfill(2)}", f"cpe-bundle-{version}.json")
+        
+        files_to_download.append({
+            "url": download_url,
+            "destination": destination_path
+        })
 
     download_errors = []
     for file in files_to_download:

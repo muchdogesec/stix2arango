@@ -39,6 +39,8 @@ class Stix2Arango:
             host_url=host_url,
         )
 
+        self.arangodb_extra_data = {}
+
         self.file = file
         self.note = stix2arango_note or ""
         self.identity_ref = json.loads(utils.load_file_from_url(config.STIX2ARANGO_IDENTITY))
@@ -89,6 +91,7 @@ class Stix2Arango:
             obj['_file_name'] = self.filename if filename != "" else ""
             obj['_stix2arango_note'] = notes or self.note
             obj['_record_md5_hash'] = utils.generate_md5(obj)
+            obj.update(self.arangodb_extra_data)
             objects.append(obj)
             insert_data.append([
                     obj.get("type"), obj.get("id"),
@@ -98,6 +101,8 @@ class Stix2Arango:
         module_logger.info(f"Inserting objects into database. Total objects: {len(objects)}")
         inserted_object_ids, existing_objects = self.arango.insert_several_objects_chunked(objects, self.core_collection_vertex)
         self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_vertex)
+        self.arango.update_is_latest_for_embedded_refs(inserted_object_ids, self.core_collection_edge)
+
         self.update_object_key_mapping(objects, existing_objects)
         return inserted_object_ids, existing_objects
 
@@ -129,12 +134,14 @@ class Stix2Arango:
                 obj['_stix2arango_note'] = self.note
                 obj['_is_ref'] = False
                 obj['_record_md5_hash'] = utils.generate_md5(obj)
+                obj.update(self.arangodb_extra_data)
                 objects.append(obj)
                 inserted_data.append([obj.get("type"), obj.get("id"), True if "modified" in obj else False])
 
         module_logger.info(f"Inserting relationship into database. Total objects: {len(objects)}")
         inserted_object_ids, existing_objects = self.arango.insert_relationships_chunked(objects, self.object_key_mapping, self.core_collection_edge)
         self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_edge)
+        self.arango.update_is_latest_for_embedded_refs(inserted_object_ids, self.core_collection_edge)
         self.update_object_key_mapping(objects, existing_objects)
 
     def map_embedded_relationships(self, data):
@@ -148,10 +155,11 @@ class Stix2Arango:
                     relationship=ref_type,
                     arango_obj=self,
                     bundle_id=data["id"],
-                    insert_statement = objects
+                    insert_statement = objects, extra_data=self.arangodb_extra_data,
                 )
 
         module_logger.info(f"Inserting embedded relationship into database. Total objects: {len(objects)}")
+        
         inserted_object_ids, existing_objects = self.arango.insert_relationships_chunked(objects, self.object_key_mapping, self.core_collection_edge)
         self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_edge)
         return inserted_object_ids, existing_objects

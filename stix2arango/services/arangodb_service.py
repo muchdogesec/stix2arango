@@ -210,6 +210,20 @@ class ArangoDBService:
         for chunk in progress_bar:
             self.update_is_latest_several(chunk, collection_name)
             progress_bar.update(len(chunk))
+
+    def update_is_latest_for_embedded_refs(self, object_ids, edge_collection):
+        query = """
+        FOR doc in @@collection
+            FILTER doc._is_ref AND @objects_in[doc.source_ref]
+            LET ref_obj = DOCUMENT(doc._from)
+            FILTER ref_obj AND NOT ref_obj._is_latest
+            UPDATE {_key: doc._key, _is_latest: FALSE} IN @@collection
+            RETURN doc.id
+        """
+        return self.execute_raw_query(query, bind_vars={
+            "@collection": edge_collection,
+            "objects_in": {k: True for k  in object_ids}
+        })
     
     def validate_collections(self):
         prebuilt_collections = [

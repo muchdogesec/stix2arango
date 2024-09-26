@@ -21,7 +21,7 @@ Where:
 	* `insert_archive_cve`
 	* `insert_archive_cwe`
 	* `insert_archive_disarm`
-	* `insert_archive_locations`
+	* `insert_archive_location`
 	* `insert_archive_sigma_rules`
 	* `insert_archive_yara_rules`
 	
@@ -36,8 +36,7 @@ Download and insert all versions of MITRE ATT&CK Enterprise
 
 ```shell
 python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py \
-	--database cti \
-	--ignore_embedded_relationships false
+	--database cti
 ```
 
 Download specific versions of MITRE ATT&CK Enterprise and ignore embedded relationships
@@ -45,7 +44,6 @@ Download specific versions of MITRE ATT&CK Enterprise and ignore embedded relati
 ```shell
 python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py \
 	--database cti \
-	--ignore_embedded_relationships false \
 	--versions 15_0,15_1
 ```
 
@@ -53,8 +51,7 @@ Download all CVE data
 
 ```shell
 python3 utilities/arango_cti_processor/insert_archive_cve.py \
-	--database cti \
-	--ignore_embedded_relationships false
+	--database cti
 ```
 
 Download only CVE data for year 2023 and 2024
@@ -62,8 +59,18 @@ Download only CVE data for year 2023 and 2024
 ```shell
 python3 utilities/arango_cti_processor/insert_archive_cve.py \
 	--database cti \
-	--ignore_embedded_relationships false \
 	--years 2023,2024
 ```
 
 You can see the full commands we use to import data to arango_cti_processor here: https://github.com/muchdogesec/arango_cti_processor/tree/main/examples
+
+#### A note on CVE and CPE data
+
+You might see errors like this:
+
+```txt
+Download Errors:
+Failed to download file from https://pub-4cfd2eaec94c4f6ea8b57724cccfca70.r2.dev/cpe%2F2007%2Fcpe-bundle-2007_01_01-00_00_00-2007_01_31-23_59_59.json with status code 404
+```
+
+This is expected. It is expected because no data CPE/CVE exists between this time range, as such, no file exists and thus the download fails.
