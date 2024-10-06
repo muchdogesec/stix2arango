@@ -30,7 +30,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description="Process MITRE CWE versions.")
     parser.add_argument('--versions', type=str, help='Comma-separated list of versions to process (e.g., 4_5,4_6). Default is all versions.')
     parser.add_argument('--ignore_embedded_relationships', type=bool, default=False, help='Flag to ignore embedded relationships. Default is false.')
-    parser.add_argument('--database', type=str, default="cti", help='Name of the database to use. Default is "cti".')
+    parser.add_argument('--database', type=str, default="cti_knowledge_base_store", help='Name of the database to use. Default is "cti".')
     return parser.parse_args()
 
 def create_directory(path):
