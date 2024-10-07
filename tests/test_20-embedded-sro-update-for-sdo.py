@@ -70,6 +70,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         query = """
         FOR doc IN test20_edge_collection
             FILTER doc.id == "relationship--5b32a703-4317-5f58-b1ce-03735c756035"
+            SORT doc.modified
             RETURN {
                 modified: doc.modified,
                 created: doc.created

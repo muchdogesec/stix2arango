@@ -122,12 +122,12 @@ class ArangoDBService:
             //LET obj_map = ZIP(@objects[*].id, @objects[*]._record_md5_hash) //make a map so we don't have to do `CONTAINS(ARRAY[60000000], id)`
             LET obj_map = MERGE_RECURSIVE(
                 FOR obj in @objects
-                RETURN {[obj.id]: {[obj._record_md5_hash]: TRUE}}
+                RETURN {[obj.id]: {[obj._record_md5_hash]: [obj._from, obj._to]}}
             )
             LET existing_objects = MERGE(
                 FOR doc in @@collection
                 FILTER obj_map[doc.id] != NULL
-                FILTER CONTAINS(ATTRIBUTES(obj_map[doc.id]), doc._record_md5_hash)
+                FILTER [doc._from, doc._to] == obj_map[doc.id][doc._record_md5_hash]
                 LET obj_hashkey = CONCAT(doc.id, ";", doc._record_md5_hash)
                 RETURN {[obj_hashkey]: doc._id}
             )
@@ -172,6 +172,7 @@ class ArangoDBService:
             relationship['_stix2arango_ref_err'] = not (target_key and source_key)
             relationship['_from'] = source_key or relationship['_from']
             relationship['_to'] = target_key or relationship['_to']
+            relationship['_record_md5_hash'] = relationship.get('_record_md5_hash', utils.generate_md5(relationship))
         return self.insert_several_objects_chunked(relationships, collection_name, chunk_size=chunk_size)
 
     def update_is_latest_several(self, object_ids, collection_name):
@@ -204,11 +205,13 @@ class ArangoDBService:
             "objects_in": objects_in
         })
     
-    def update_is_latest_several_chunked(self, object_ids, collection_name, chunk_size=500):
+    def update_is_latest_several_chunked(self, object_ids, collection_name, edge_collection=None, chunk_size=500):
         logging.info(f"Updating _is_latest for {len(object_ids)} newly inserted items")
         progress_bar = tqdm(utils.chunked(object_ids, chunk_size), total=len(object_ids))
         for chunk in progress_bar:
             self.update_is_latest_several(chunk, collection_name)
+            if edge_collection:
+                self.update_is_latest_for_embedded_refs(chunk, edge_collection)
             progress_bar.update(len(chunk))
 
     def update_is_latest_for_embedded_refs(self, object_ids, edge_collection):

@@ -63,7 +63,9 @@ class Stix2Arango:
             collection.add_persistent_index(["type"], storedValues=["modified", "created", "_record_modified", "id", "spec_version", "_record_md5_hash"], in_background=True, name=f"by_stix_type_{time}")
             collection.add_persistent_index(["_record_modified", "_record_created"], storedValues=["modified","created", "type", "id", "spec_version", "_record_md5_hash"], in_background=True, name=f"by_insertion_time_{time}")
             if name.endswith("_edge_collection"):
-                collection.add_persistent_index(["source_ref", "target_ref"], storedValues=["modified", "created", "type", "relationship_type", "_record_modified", "spec_version", "_record_md5_hash", "id"], in_background=True, name=f"edge_ref_{time}")
+                collection.add_persistent_index(["source_ref", "target_ref", "relationship_type"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash", "id"], in_background=True, name=f"relation_from_{time}")
+                collection.add_persistent_index(["target_ref", "source_ref", "relationship_type"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash", "id"], in_background=True, name=f"relation_to_{time}")
+                collection.add_persistent_index(["relationship_type", "target_ref", "source_ref"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash", "id"], in_background=True, name=f"relation_type_{time}")
 
 
 
@@ -101,7 +103,6 @@ class Stix2Arango:
         module_logger.info(f"Inserting objects into database. Total objects: {len(objects)}")
         inserted_object_ids, existing_objects = self.arango.insert_several_objects_chunked(objects, self.core_collection_vertex)
         self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_vertex)
-        self.arango.update_is_latest_for_embedded_refs(inserted_object_ids, self.core_collection_edge)
 
         self.update_object_key_mapping(objects, existing_objects)
         return inserted_object_ids, existing_objects
@@ -113,7 +114,6 @@ class Stix2Arango:
             else:
                 self.object_key_mapping[obj['id']] = "{collection}/{_key}".format(collection=self.core_collection_vertex, _key=obj.get('_key', "not_imported"))
 
-                
 
     def map_relationships(self, filename, data):
 
@@ -140,13 +140,15 @@ class Stix2Arango:
 
         module_logger.info(f"Inserting relationship into database. Total objects: {len(objects)}")
         inserted_object_ids, existing_objects = self.arango.insert_relationships_chunked(objects, self.object_key_mapping, self.core_collection_edge)
-        self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_edge)
-        self.arango.update_is_latest_for_embedded_refs(inserted_object_ids, self.core_collection_edge)
+        self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_edge, self.core_collection_edge)
         self.update_object_key_mapping(objects, existing_objects)
+        return inserted_object_ids
 
-    def map_embedded_relationships(self, data):
+    def map_embedded_relationships(self, data, inserted_object_ids):
         objects = [];inserted_data = []
         for obj in tqdm(data["objects"]):
+            if obj['id'] not in inserted_object_ids:
+                continue
             for ref_type, targets in utils.get_embedded_refs(obj):
                 utils.create_relationship_obj(
                     obj=obj,
@@ -196,10 +198,11 @@ class Stix2Arango:
         self.import_default_objects()
 
         module_logger.info(f"Load objects from file: {self.file} and store into {self.core_collection_vertex}")
-        self.process_bundle_into_graph(self.filename, data)
+        inserted_object_ids, _ = self.process_bundle_into_graph(self.filename, data)
         module_logger.info("Mapping relationships now -> ")
-        self.map_relationships(self.filename, data)
+        inserted_relationship_ids = self.map_relationships(self.filename, data)
 
         if not self.ignore_embedded_relationships:
             module_logger.info("Creating new embedded relationships using _refs and _ref")
-            self.map_embedded_relationships(data)
+            self.map_embedded_relationships(data, inserted_object_ids+inserted_relationship_ids)
+        self.arango.update_is_latest_for_embedded_refs(inserted_object_ids+inserted_relationship_ids, self.core_collection_edge)

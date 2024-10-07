@@ -45,7 +45,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
               RETURN doc
         )
         """
-        expected_result = [0]
+        expected_result = [3]
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
@@ -56,7 +56,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         RETURN LENGTH(
           FOR doc IN test22_edge_collection
             FILTER doc.id == "relationship--1cce4dca-d80c-5650-a9c2-858ad6707779"
-            AND NOT HAS(doc, 'modified') AND HAS(doc, 'created')
+            AND NOT HAS(doc, 'modified') AND HAS(doc, 'created') AND doc._is_latest
             RETURN doc
         )
         """
@@ -69,7 +69,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_4(self):
         query = """
         FOR doc IN test22_edge_collection
-            FILTER doc.id == "relationship--1cce4dca-d80c-5650-a9c2-858ad6707779"
+            FILTER doc.id == "relationship--1cce4dca-d80c-5650-a9c2-858ad6707779" AND doc._is_latest
             RETURN {
                 modified: doc.modified,
                 created: doc.created
