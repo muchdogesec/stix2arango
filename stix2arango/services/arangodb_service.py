@@ -113,10 +113,11 @@ class ArangoDBService:
             return
 
         for _, obj in enumerate(objects):
+            now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
             obj["_is_latest"] = False
-            obj["_record_created"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-            obj["_record_modified"] = obj["_record_created"]
-            obj["_key"] = f'{obj["id"]}+{obj.get("_record_modified")}'
+            obj["_record_created"] = obj.get("_record_created", now)
+            obj["_record_modified"] = now
+            obj["_key"] = obj.get('_key', f'{obj["id"]}+{now}')
 
         query = """
             //LET obj_map = ZIP(@objects[*].id, @objects[*]._record_md5_hash) //make a map so we don't have to do `CONTAINS(ARRAY[60000000], id)`
