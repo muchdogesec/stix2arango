@@ -2,6 +2,8 @@
 
 ## Overview
 
+![](docs/stix2arango.png)
+
 stix2arango is a command line tool that takes a group of STIX 2.1 objects in a bundle and inserts them into ArangoDB. It can also handle updates to existing objects in ArangoDB imported in a bundle.
 
 1. STIX 2.1 bundle entered
