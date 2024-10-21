@@ -25,6 +25,7 @@ Where:
 	* `insert_archive_sigma_rules.py`
 	* `insert_archive_yara_rules.py`
 	* `insert_archive_tlp.py`
+	* `insert_archive_atlas.py`
 	
 * `--database` (required): is the name of the Arango database the objects should be stored in. If database does not exist, stix2arango will create it
 * `--ignore_embedded_relationships` (optional): boolean, if `true` passed, this will stop any embedded relationships from being generated. Default is `false`
@@ -76,32 +77,3 @@ Failed to download file from https://downloads.ctibutler.com/cxe2stix-helper-git
 This is expected. It is expected because no data CPE/CVE exists between this time range, as such, no file exists and thus the download fails.
 
 This is more of an issue when downloading all CVE or CPE data because in the earlier years large periods of time have no data (e.g. in 2007 there is no data until 2007-09).
-
-#### Quick-start
-
-Download all versions, and create embedded relationships;
-
-```shell
-python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py \
-  --database cti_knowledge_base_store && \
-python3 utilities/arango_cti_processor/insert_archive_attack_ics.py \
-  --database cti_knowledge_base_store && \
-python3 utilities/arango_cti_processor/insert_archive_attack_mobile.py \
-  --database cti_knowledge_base_store && \
-python3 utilities/arango_cti_processor/insert_archive_capec.py \
-  --database cti_knowledge_base_store && \
-python3 utilities/arango_cti_processor/insert_archive_cwe.py \
-  --database cti_knowledge_base_store && \
-python3 utilities/arango_cti_processor/insert_archive_sigma_rules.py \
-  --database cti_knowledge_base_store && \
-python3 utilities/arango_cti_processor/insert_archive_cve.py \
-  --database cti_knowledge_base_store && \
-python3 utilities/arango_cti_processor/insert_archive_cpe.py \
-  --database cti_knowledge_base_store && \
-python3 utilities/arango_cti_processor/insert_archive_disarm.py \
-  --database cti_knowledge_base_store && \
-python3 utilities/arango_cti_processor/insert_archive_locations.py \
-  --database cti_knowledge_base_store && \
-python3 utilities/arango_cti_processor/insert_archive_yara_rules.py \
-  --database cti_knowledge_base_store
-```
