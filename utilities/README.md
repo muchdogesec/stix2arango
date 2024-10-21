@@ -7,23 +7,24 @@ Downloads and imports files to ArangoDB used as the base data for arango_cti_pro
 To run these scripts, from the root of stix2arango;
 
 ```shell
-python3 utilities/arango_cti_processor/SCRIPT.py
+python3 utilities/arango_cti_processor/SCRIPT
 ```
 
 Where:
 
 * `SCRIPT` (required): is either
-	* `insert_archive_attack_enterprise`
-	* `insert_archive_attack_ics`
-	* `insert_archive_attack_mobile`
-	* `insert_archive_capec`
-	* `insert_archive_cpe`
-	* `insert_archive_cve`
-	* `insert_archive_cwe`
-	* `insert_archive_disarm`
-	* `insert_archive_location`
-	* `insert_archive_sigma_rules`
-	* `insert_archive_yara_rules`
+	* `insert_archive_attack_enterprise.py`
+	* `insert_archive_attack_ics.py`
+	* `insert_archive_attack_mobile.py`
+	* `insert_archive_capecv`
+	* `insert_archive_cpe.py`
+	* `insert_archive_cve.py`
+	* `insert_archive_cwe.py`
+	* `insert_archive_disarm.py`
+	* `insert_archive_location.py`
+	* `insert_archive_sigma_rules.py`
+	* `insert_archive_yara_rules.py`
+	* `insert_archive_tlp.py`
 	
 * `--database` (required): is the name of the Arango database the objects should be stored in. If database does not exist, stix2arango will create it
 * `--ignore_embedded_relationships` (optional): boolean, if `true` passed, this will stop any embedded relationships from being generated. Default is `false`
