@@ -6,7 +6,7 @@ import re
 
 # Define the version strings
 all_versions = [
-    ""
+    "ac1bbfc"
 ]
 
 def version_key(version):
@@ -53,6 +53,7 @@ def run_command(command, root_path, ignore_embedded_relationships):
             "--file", file_path,
             "--database", command["database"],
             "--collection", command["collection"],
+            "--stix2arango_note", command.get("stix2arango_note", ""),
             "--ignore_embedded_relationships", str(ignore_embedded_relationships).lower()
         ], check=True)
         print(f"Successfully processed {file_path}")
@@ -77,9 +78,10 @@ def main():
     # Define the commands and their arguments for the files
     commands = [
         {
-            "file": os.path.join("cti_knowledge_base_store", "locations", f"locations-bundle{version}.json"),
+            "file": os.path.join("cti_knowledge_base_store", "locations", f"locations-bundle-{version}.json"),
             "database": database,
             "collection": "locations",
+            "stix2arango_note": f"v{version}"
         } for version in versions
     ]
     
@@ -97,8 +99,8 @@ def main():
     base_url = "https://downloads.ctibutler.com/"
     files_to_download = [
         {
-            "url": f"{base_url}location2stix-manual-output/locations-bundle{version}.json",
-            "destination": os.path.join(root_path, "cti_knowledge_base_store", "locations", f"locations-bundle{version}.json")
+            "url": f"{base_url}location2stix-manual-output/locations-bundle-{version}.json",
+            "destination": os.path.join(root_path, "cti_knowledge_base_store", "locations", f"locations-bundle-{version}.json")
         } for version in versions
     ]
 
