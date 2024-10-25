@@ -16,7 +16,7 @@ Where:
 	* `insert_archive_attack_enterprise.py`
 	* `insert_archive_attack_ics.py`
 	* `insert_archive_attack_mobile.py`
-	* `insert_archive_capecv`
+	* `insert_archive_capec.py`
 	* `insert_archive_cpe.py`
 	* `insert_archive_cve.py`
 	* `insert_archive_cwe.py`
