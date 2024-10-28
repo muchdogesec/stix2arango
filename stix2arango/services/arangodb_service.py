@@ -211,14 +211,15 @@ class ArangoDBService:
         progress_bar = tqdm(utils.chunked(object_ids, chunk_size), total=len(object_ids))
         for chunk in progress_bar:
             self.update_is_latest_several(chunk, collection_name)
-            if edge_collection:
-                self.update_is_latest_for_embedded_refs(chunk, edge_collection)
             progress_bar.update(len(chunk))
+            
+        if edge_collection:
+            self.update_is_latest_for_embedded_refs(object_ids, edge_collection)
 
-    def update_is_latest_for_embedded_refs(self, object_ids, edge_collection):
+    def _update_is_latest_for_embedded_refs(self, object_ids, edge_collection):
         query = """
         FOR doc in @@collection
-            FILTER doc._is_ref AND @objects_in[doc.source_ref]
+            FILTER doc._is_ref AND doc._is_latest AND @objects_in[doc.source_ref]
             LET ref_obj = DOCUMENT(doc._from)
             FILTER ref_obj AND NOT ref_obj._is_latest
             UPDATE {_key: doc._key, _is_latest: FALSE} IN @@collection
@@ -228,7 +229,11 @@ class ArangoDBService:
             "@collection": edge_collection,
             "objects_in": {k: True for k  in object_ids}
         })
-    
+    def update_is_latest_for_embedded_refs(self, object_ids, edge_collection, chunk_size=300):
+        progress_bar = tqdm(utils.chunked(object_ids, chunk_size), total=len(object_ids), desc="update_is_latest_for_embedded_refs")
+        for chunk in progress_bar:
+            self._update_is_latest_for_embedded_refs(chunk, edge_collection)
+            progress_bar.update(len(chunk))
     def validate_collections(self):
         prebuilt_collections = [
             collection.get("name")
