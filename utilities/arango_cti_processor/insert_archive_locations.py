@@ -6,7 +6,7 @@ import re
 
 # Define the version strings
 all_versions = [
-    "ac1bbfc"
+    "59da722"
 ]
 
 def version_key(version):
