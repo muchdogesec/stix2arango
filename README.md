@@ -49,17 +49,17 @@ brew services start arangodb
 brew services stop arangodb
 ```
 
-Sorry for the lack of other OS's -- I use a Mac.
+### Configuration options
 
-### Setup configoration options
+stix2arango has various settings that are defined in an `.env` file.
 
-You will need to create an `.env` file as follows;
+To create a template for the file:
 
 ```shell
 cp .env.example .env
 ```
 
-You will then need to specify details of your ArangoDB install (host, user, and password). It is important the user chosen has the ability to write/update new databases, collections and records.
+To see more information about how to set the variables, and what they do, read the `.env.markdown` file.
 
 ### Run
 
