@@ -102,8 +102,7 @@ def main():
         selected_years = args.years.split(',')
         versions = [
             item for item in all_versions 
-            if str(item[0]) in selected_years 
-            and (len(item) == 3 and item[0] == latest_year and item[1] <= latest_month)
+            if str(item[0]) in selected_years
         ]
     else:
         versions = all_versions
@@ -166,3 +165,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
