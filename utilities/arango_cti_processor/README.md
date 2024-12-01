@@ -24,7 +24,7 @@ Where:
 	* `insert_archive_atlas.py`
 	
 * `--database` (required): is the name of the Arango database the objects should be stored in. If database does not exist, stix2arango will create it
-* `--ignore_embedded_relationships` (optional): boolean, if `true` passed, this will stop any embedded relationships from being generated. Default is `false`
+* `--ignore_embedded_relationships` (optional): boolean, if `True` passed, this will stop any embedded relationships from being generated. Default is `False`
 * `--versions` (optional): are one or more of the versions listed in each script. e.g. for `insert_archive_disarm.py` are currently `1_2`, `1_3`, `1_4`. If no `version` flag is passed, all listed versions will be downloaded. IMPORTANT: flag does not work with `insert_archive_cve.py` and `insert_archive_cpe.py`
 
 e.g.
