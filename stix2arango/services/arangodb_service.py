@@ -229,11 +229,15 @@ class ArangoDBService:
             "@collection": edge_collection,
             "objects_in": {k: True for k  in object_ids}
         })
+
     def update_is_latest_for_embedded_refs(self, object_ids, edge_collection, chunk_size=300):
+        retval = []
         progress_bar = tqdm(utils.chunked(object_ids, chunk_size), total=len(object_ids), desc="update_is_latest_for_embedded_refs")
         for chunk in progress_bar:
-            self._update_is_latest_for_embedded_refs(chunk, edge_collection)
+            retval.extend(self._update_is_latest_for_embedded_refs(chunk, edge_collection))
             progress_bar.update(len(chunk))
+        return retval
+    
     def validate_collections(self):
         prebuilt_collections = [
             collection.get("name")
