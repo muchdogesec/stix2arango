@@ -58,14 +58,15 @@ class Stix2Arango:
         for name, collection in self.arango.collections.items():
             module_logger.info(f"creating indexes for collection {collection.db_name}/{name}")
             time = int(datetime.now().timestamp())
-            collection.add_persistent_index(["id"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash"], in_background=True, name=f"by_stix_id_{time}")
-            collection.add_persistent_index(["modified", "created"], storedValues=["type", "_record_modified", "id", "spec_version", "_record_md5_hash"], in_background=True, name=f"by_stix_version_{time}")
-            collection.add_persistent_index(["type"], storedValues=["modified", "created", "_record_modified", "id", "spec_version", "_record_md5_hash"], in_background=True, name=f"by_stix_type_{time}")
-            collection.add_persistent_index(["_record_modified", "_record_created"], storedValues=["modified","created", "type", "id", "spec_version", "_record_md5_hash"], in_background=True, name=f"by_insertion_time_{time}")
+            
+            collection.add_index(dict(type='persistent', fields=["id"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash"], inBackground=True, name=f"by_stix_id_{time}"))
+            collection.add_index(dict(type='persistent', fields=["modified", "created"], storedValues=["type", "_record_modified", "id", "spec_version", "_record_md5_hash"], inBackground=True, name=f"by_stix_version_{time}"))
+            collection.add_index(dict(type='persistent', fields=["type"], storedValues=["modified", "created", "_record_modified", "id", "spec_version", "_record_md5_hash"], inBackground=True, name=f"by_stix_type_{time}"))
+            collection.add_index(dict(type='persistent', fields=["_record_modified", "_record_created"], storedValues=["modified","created", "type", "id", "spec_version", "_record_md5_hash"], inBackground=True, name=f"by_insertion_time_{time}"))
             if name.endswith("_edge_collection"):
-                collection.add_persistent_index(["source_ref", "target_ref", "relationship_type"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash", "id"], in_background=True, name=f"relation_from_{time}")
-                collection.add_persistent_index(["target_ref", "source_ref", "relationship_type"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash", "id"], in_background=True, name=f"relation_to_{time}")
-                collection.add_persistent_index(["relationship_type", "target_ref", "source_ref"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash", "id"], in_background=True, name=f"relation_type_{time}")
+                collection.add_index(dict(type='persistent', fields=["source_ref", "target_ref", "relationship_type"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash", "id"], inBackground=True, name=f"relation_from_{time}"))
+                collection.add_index(dict(type='persistent', fields=["target_ref", "source_ref", "relationship_type"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash", "id"], inBackground=True, name=f"relation_to_{time}"))
+                collection.add_index(dict(type='persistent', fields=["relationship_type", "target_ref", "source_ref"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash", "id"], inBackground=True, name=f"relation_type_{time}"))
 
 
 
