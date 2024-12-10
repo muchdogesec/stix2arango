@@ -177,12 +177,13 @@ class ArangoDBService:
         return self.insert_several_objects_chunked(relationships, collection_name, chunk_size=chunk_size)
 
     def update_is_latest_several(self, object_ids, collection_name):
+        #returns newly deprecated _ids
         objects_in = {k: True for k  in object_ids}
         query = """
             LET matched_objects = ( // collect all the modified into a single list of {id: ?, modified: ?, _record_modified: ?, _key: ?}
                 FOR object in @@collection
                 FILTER @objects_in[object.id] !=  NULL
-                RETURN KEEP(object, 'id', 'modified', '_record_modified', '_key')
+                RETURN KEEP(object, 'id', 'modified', '_record_modified', '_key', '_id')
             )
             
             LET modified_map = MERGE( // get max modified by ID
@@ -200,6 +201,8 @@ class ArangoDBService:
             FOR doc IN matched_objects
             LET _is_latest = modified_map[doc.id] == doc._key
             UPDATE {_key: doc._key, _is_latest} IN @@collection
+            FILTER _is_latest != doc._is_latest AND _is_latest == FALSE
+            RETURN doc._id
         """
         return self.execute_raw_query(query, bind_vars={
             "@collection": collection_name,
@@ -209,12 +212,38 @@ class ArangoDBService:
     def update_is_latest_several_chunked(self, object_ids, collection_name, edge_collection=None, chunk_size=500):
         logging.info(f"Updating _is_latest for {len(object_ids)} newly inserted items")
         progress_bar = tqdm(utils.chunked(object_ids, chunk_size), total=len(object_ids))
+        deprecated_key_ids = [] # contains newly deprecated _ids
         for chunk in progress_bar:
-            self.update_is_latest_several(chunk, collection_name)
-            progress_bar.update(len(chunk))
+            deprecated_key_ids = self.update_is_latest_several(chunk, collection_name)
+            progress_bar.update(len(chunk)/2)
+            self.deprecate_relationships(deprecated_key_ids, edge_collection)
+            progress_bar.update(len(chunk)/2)
             
         if edge_collection:
             self.update_is_latest_for_embedded_refs(object_ids, edge_collection)
+        return deprecated_key_ids
+    
+    def deprecate_relationships(self, deprecated_key_ids: list, edge_collection: str):
+        deprecation_count = 0
+        query = """
+        FOR doc IN @@collection
+        FILTER doc._from IN @deprecated_key_ids AND doc._is_latest
+        UPDATE {_key: doc._key, _is_latest: FALSE} IN @@collection
+        // FILTER doc._is_ref != TRUE // no need for further propagation for embedded relationships
+        RETURN doc._id
+        """
+        logging.info("deprecating relationships for %d objects", len(deprecated_key_ids))
+
+        while deprecated_key_ids and edge_collection:
+            deprecated_key_ids = self.execute_raw_query(query, bind_vars={
+                "@collection": edge_collection,
+                "deprecated_key_ids": deprecated_key_ids,
+            })
+            deprecation_count += len(deprecated_key_ids)
+        logging.info("deprecated %d relationships", deprecation_count)
+        
+        return deprecation_count
+            
 
     def _update_is_latest_for_embedded_refs(self, object_ids, edge_collection):
         query = """
