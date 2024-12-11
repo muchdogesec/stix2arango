@@ -33,7 +33,8 @@ Download and insert all versions of MITRE ATT&CK Enterprise
 
 ```shell
 python3 utilities/arango_cti_processor/insert_archive_attack_enterprise.py \
-	--database cti_knowledge_base_store
+	--database cti_knowledge_base_store \
+	--ignore_embedded_relationships True
 ```
 
 Download specific versions of MITRE ATT&CK Enterprise and ignore embedded relationships
