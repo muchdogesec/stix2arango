@@ -37,8 +37,8 @@ for item in all_versions:
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Process NVD CPE versions.")
     parser.add_argument('--years', type=str, help='Comma-separated list of years to process. Default is all versions.')
-    parser.add_argument('--ignore_embedded_relationships', type=bool, default=False, help='Flag to ignore embedded relationships. Default is false.')
-    parser.add_argument('--database', type=str, default="cti_knowledge_base_store", help='Name of the database to use. Default is "cti".')
+    parser.add_argument('--ignore_embedded_relationships', action='store_true', help='Flag to ignore embedded relationships. Default is false.')
+    parser.add_argument('--database', type=str, default="cti_knowledge_base_store", help='Name of the database to use. Default is "cti_knowledge_base_store".')
     return parser.parse_args()
 
 def create_directory(path):
@@ -89,7 +89,7 @@ def run_command(command, root_path, ignore_embedded_relationships):
             "--file", file_path,
             "--database", command["database"],
             "--collection", command["collection"],
-            "--ignore_embedded_relationships", str(ignore_embedded_relationships).lower()
+            "--ignore_embedded_relationships", str(ignore_embedded_relationships)
         ], check=True, cwd=stix2arango_dir)
         print(f"Successfully processed {file_path}")
     except subprocess.CalledProcessError as e:

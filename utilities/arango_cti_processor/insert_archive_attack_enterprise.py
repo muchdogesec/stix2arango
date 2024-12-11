@@ -17,7 +17,7 @@ all_versions.sort(key=lambda x: list(map(int, x.split('_'))))
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Process MITRE ATT&CK versions.")
     parser.add_argument('--versions', type=str, help='Comma-separated list of versions to process (e.g., 1_0,2_0). Default is all versions.')
-    parser.add_argument('--ignore_embedded_relationships', type=bool, default=False, help='Flag to ignore embedded relationships. Default is false.')
+    parser.add_argument('--ignore_embedded_relationships', action='store_true', help='Flag to ignore embedded relationships. Default is false.')
     parser.add_argument('--database', type=str, default="cti_knowledge_base_store", help='Name of the database to use. Default is "cti".')
     return parser.parse_args()
 
@@ -52,7 +52,7 @@ def run_command(command, root_path, ignore_embedded_relationships):
             "--database", command["database"],
             "--collection", command["collection"],
             "--stix2arango_note", command.get("stix2arango_note", ""),
-            "--ignore_embedded_relationships", str(ignore_embedded_relationships).lower()
+            "--ignore_embedded_relationships", str(ignore_embedded_relationships)
         ], check=True)
         print(f"Successfully processed {file_path}")
     except subprocess.CalledProcessError as e:
