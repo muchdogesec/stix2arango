@@ -14,7 +14,7 @@ Where:
 	* `insert_archive_cve.py`
 	* `insert_archive_cpe.py` (ARCHIVED -- logic now exists in [cpe2stix](https://github.com/muchdogesec/cpe2stix), and thus these objects are now imported via `insert_archive_cve.py`))
 * `--database` (required): is the name of the Arango database the objects should be stored in. If database does not exist, stix2arango will create it
-* `--ignore_embedded_relationships` (optional): boolean, if `True` passed, this will stop any embedded relationships from being generated. Default is `false`
+* `--ignore_embedded_relationships` (optional): if flag passes this will stop any embedded relationships from being generated
 * `--years` (optional): the years for which you want CPE and CVE data separated by a comma (e.g. `2024,2023)`. If no `years` flag is passed, all available years will be downloaded. IMPORTANT: flag only works with `insert_archive_cve.py` and `insert_archive_cpe.py`
 
 e.g.
@@ -24,7 +24,7 @@ Download all CVE data
 ```shell
 python3 utilities/arango_cve_processor/insert_archive_cve.py \
 	--database cti_knowledge_base_store \
-	--ignore_embedded_relationships True
+	--ignore_embedded_relationships
 ```
 
 Download only CVE data for year 2023 and 2024
@@ -32,7 +32,17 @@ Download only CVE data for year 2023 and 2024
 ```shell
 python3 utilities/arango_cve_processor/insert_archive_cve.py \
 	--database cti_knowledge_base_store \
-	--years 2023,2024
+	--years 2023,2024 \
+	--ignore_embedded_relationships
+```
+
+Download only CPE data for 2024
+
+```shell
+python3 utilities/arango_cve_processor/insert_archive_cpe.py \
+	--database cti_knowledge_base_store \
+	--years 2024 \
+	--ignore_embedded_relationships
 ```
 
 #### A note on CVE and CPE data
