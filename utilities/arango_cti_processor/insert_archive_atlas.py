@@ -5,7 +5,8 @@ import requests
 
 # Define the version strings
 all_versions = [
-    "4_5_2"
+    "4_5_2",
+    "4_7_0"
 ]
 
 # Sort the versions
