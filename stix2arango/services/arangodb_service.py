@@ -218,9 +218,7 @@ class ArangoDBService:
             progress_bar.update(len(chunk)/2)
             self.deprecate_relationships(deprecated_key_ids, edge_collection)
             progress_bar.update(len(chunk)/2)
-            
-        if edge_collection:
-            self.update_is_latest_for_embedded_refs(object_ids, edge_collection)
+
         return deprecated_key_ids
     
     def deprecate_relationships(self, deprecated_key_ids: list, edge_collection: str):
@@ -229,10 +227,10 @@ class ArangoDBService:
         FOR doc IN @@collection
         FILTER doc._from IN @deprecated_key_ids AND doc._is_latest
         UPDATE {_key: doc._key, _is_latest: FALSE} IN @@collection
-        // FILTER doc._is_ref != TRUE // no need for further propagation for embedded relationships
+        FILTER doc._is_ref != TRUE // no need for further propagation for embedded relationships
         RETURN doc._id
         """
-        logging.info("deprecating relationships for %d objects", len(deprecated_key_ids))
+        # logging.info("deprecating relationships for %d objects", len(deprecated_key_ids))
 
         while deprecated_key_ids and edge_collection:
             deprecated_key_ids = self.execute_raw_query(query, bind_vars={
@@ -240,99 +238,11 @@ class ArangoDBService:
                 "deprecated_key_ids": deprecated_key_ids,
             })
             deprecation_count += len(deprecated_key_ids)
-        logging.info("deprecated %d relationships", deprecation_count)
+
+        if deprecation_count:
+            logging.info("deprecated %d relationships", deprecation_count)
         
         return deprecation_count
-            
-
-    def _update_is_latest_for_embedded_refs(self, object_ids, edge_collection):
-        query = """
-        FOR doc in @@collection
-            FILTER doc._is_ref AND doc._is_latest AND @objects_in[doc.source_ref]
-            LET ref_obj = DOCUMENT(doc._from)
-            FILTER ref_obj AND NOT ref_obj._is_latest
-            UPDATE {_key: doc._key, _is_latest: FALSE} IN @@collection
-            RETURN doc.id
-        """
-        return self.execute_raw_query(query, bind_vars={
-            "@collection": edge_collection,
-            "objects_in": {k: True for k  in object_ids}
-        })
-
-    def update_is_latest_for_embedded_refs(self, object_ids, edge_collection, chunk_size=300):
-        retval = []
-        progress_bar = tqdm(utils.chunked(object_ids, chunk_size), total=len(object_ids), desc="update_is_latest_for_embedded_refs")
-        for chunk in progress_bar:
-            retval.extend(self._update_is_latest_for_embedded_refs(chunk, edge_collection))
-            progress_bar.update(len(chunk))
-        return retval
-    
-    def validate_collections(self):
-        prebuilt_collections = [
-            collection.get("name")
-            for collection in self.db.collections()
-            if not collection.get("system")
-        ]
-        if utils.validate_collections(prebuilt_collections):
-            self.missing_collection = False
-            return None
-
-
-
-    def map_relationships(self, data, func, collection_vertex, collection_edge, notes):
-        objects = []
-        for obj in tqdm(data):
-            if obj.get("type") not in [
-                "relationship",
-                "report",
-                "identity",
-                "marking-definition",
-            ]:
-                # noinspection PyUnresolvedReferences
-                objects += func(
-                    obj, self, collection_vertex, collection_edge, notes
-                )
-        
-        return objects
-
-    def filter_objects_in_collection_using_custom_query(
-        self, collection_name: str = None, custom_query: str = ""
-    ):
-
-        query = f"FOR doc IN {collection_name} "
-        query += custom_query
-        query += "RETURN doc"
-        # print(query)
-        try:
-            cursor = self.db.aql.execute(query)
-            result = [doc for doc in cursor]
-            return result
-        except arango.exceptions.AQLQueryExecuteError:
-            module_logger.error(f"AQL exception in the query: {query}")
-            raise
-
-    def filter_objects_in_list_collection_using_custom_query(
-        self, collection_list: list = [], filters: str = ""
-    ):
-        subqueries = ""
-        for collection in collection_list:
-            subqueries += " let %s = (for t in %s %s return t)" % (
-                collection,
-                collection,
-                filters,
-            )
-        collection_ = ", ".join(collection_list)
-        query = (
-            "LET results = (%s For doc IN UNION (%s) RETURN doc ) RETURN results"
-            % (subqueries, collection_)
-        )
-        try:
-            cursor = self.db.aql.execute(query)
-            result = [doc for doc in cursor]
-            return result
-        except arango.exceptions.AQLQueryExecuteError:
-            module_logger.error(f"AQL exception in the query: {query}")
-            raise
 
     @staticmethod
     def get_db_name(name):
