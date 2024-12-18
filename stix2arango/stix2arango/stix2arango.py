@@ -103,10 +103,10 @@ class Stix2Arango:
 
         module_logger.info(f"Inserting objects into database. Total objects: {len(objects)}")
         inserted_object_ids, existing_objects = self.arango.insert_several_objects_chunked(objects, self.core_collection_vertex)
-        self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_vertex, self.core_collection_edge)
+        deprecated_key_ids = self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_vertex, self.core_collection_edge)
 
         self.update_object_key_mapping(objects, existing_objects)
-        return inserted_object_ids, existing_objects
+        return inserted_object_ids, existing_objects, deprecated_key_ids
 
     def update_object_key_mapping(self, objects, existing_objects={}):
         for obj in objects:
@@ -141,9 +141,9 @@ class Stix2Arango:
 
         module_logger.info(f"Inserting relationship into database. Total objects: {len(objects)}")
         inserted_object_ids, existing_objects = self.arango.insert_relationships_chunked(objects, self.object_key_mapping, self.core_collection_edge)
-        self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_edge, self.core_collection_edge)
+        deprecated_key_ids = self.arango.update_is_latest_several_chunked(inserted_object_ids, self.core_collection_edge, self.core_collection_edge)
         self.update_object_key_mapping(objects, existing_objects)
-        return inserted_object_ids
+        return inserted_object_ids, deprecated_key_ids
 
     def map_embedded_relationships(self, data, inserted_object_ids):
         objects = [];inserted_data = []
@@ -199,11 +199,13 @@ class Stix2Arango:
         self.import_default_objects()
 
         module_logger.info(f"Load objects from file: {self.file} and store into {self.core_collection_vertex}")
-        inserted_object_ids, _ = self.process_bundle_into_graph(self.filename, data)
+        inserted_object_ids, _, deprecated_key_ids1 = self.process_bundle_into_graph(self.filename, data)
         module_logger.info("Mapping relationships now -> ")
-        inserted_relationship_ids = self.map_relationships(self.filename, data)
+        inserted_relationship_ids, deprecated_key_ids2 = self.map_relationships(self.filename, data)
 
         if not self.ignore_embedded_relationships:
             module_logger.info("Creating new embedded relationships using _refs and _ref")
             self.map_embedded_relationships(data, inserted_object_ids+inserted_relationship_ids)
-        self.arango.update_is_latest_for_embedded_refs(inserted_object_ids+inserted_relationship_ids, self.core_collection_edge)
+        # self.arango.update_is_latest_for_embedded_refs(inserted_object_ids+inserted_relationship_ids, self.core_collection_edge)
+        self.arango.deprecate_relationships(deprecated_key_ids1, self.core_collection_edge)
+        self.arango.deprecate_relationships(deprecated_key_ids2, self.core_collection_edge)
