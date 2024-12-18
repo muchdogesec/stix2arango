@@ -18,7 +18,7 @@ print(f"Latest full year: {latest_year}, Latest full month: {latest_month}, Late
 
 # List of CVE files with daily file names
 all_versions = []
-for year in range(2007, latest_year + 1):
+for year in range(1988, latest_year + 1):
     start_month = 1
     end_month = 12 if year < latest_year else latest_month
     for month in range(start_month, end_month + 1):
@@ -137,11 +137,11 @@ def main():
         create_directory(directory)
     
     # Download files
-    base_url = "https://downloads.ctibutler.com/"
+    base_url = "https://cve2stix.vulmatch.com/"
     files_to_download = []
     for item in versions:
         year, month, version = item
-        download_url = f"{base_url}cxe2stix-helper-github-action-output/cve%2F{year}-{str(month).zfill(2)}%2Fcve-bundle-{version}.json"
+        download_url = f"{base_url}{year}-{str(month).zfill(2)}/cve-bundle-{version}.json"
         destination_path = os.path.join(root_path, "cti_knowledge_base_store", f"nvd-cve/{year}-{str(month).zfill(2)}", f"cve-bundle-{version}.json")
         
         files_to_download.append({
