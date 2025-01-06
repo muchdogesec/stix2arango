@@ -58,11 +58,12 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         FOR doc IN test18_edge_collection
             FILTER doc._is_ref == true
             AND doc._is_latest == true
+            SORT doc.relationship_type
                 RETURN DISTINCT doc.relationship_type
         """
         expected_result = [
+              "object-marking",
               "output-address",
-              "object-marking"
             ]
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)

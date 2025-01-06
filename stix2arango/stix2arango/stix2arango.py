@@ -87,7 +87,7 @@ class Stix2Arango:
             raise Exception("Provided file is not a STIX bundle. Aborted")
 
         objects = []; insert_data = []  # That would be the overall statement
-        for obj in tqdm(data["objects"]):
+        for obj in tqdm(data["objects"], desc='upload_vertices'):
             if obj.get("type") == "relationship":
                 continue
             obj['_bundle_id'] = self.bundle_id if filename!= "" else ""
@@ -122,7 +122,7 @@ class Stix2Arango:
             raise Exception("Provided file is not a STIX bundle. Aborted")
         module_logger.info("Mapping Prebuilt Relationship Objects -> ")
         objects = []; inserted_data = []
-        for obj in tqdm(data["objects"]):
+        for obj in tqdm(data["objects"], desc='upload_edges'):
             if obj.get("type") == "relationship":
 
                 source_ref = obj.get("source_ref")
@@ -134,7 +134,7 @@ class Stix2Arango:
                 obj['_file_name'] = filename
                 obj['_stix2arango_note'] = self.note
                 obj['_is_ref'] = False
-                obj['_record_md5_hash'] = utils.generate_md5(obj)
+                # obj['_record_md5_hash'] = utils.generate_md5(obj)
                 obj.update(self.arangodb_extra_data)
                 objects.append(obj)
                 inserted_data.append([obj.get("type"), obj.get("id"), True if "modified" in obj else False])
@@ -147,7 +147,7 @@ class Stix2Arango:
 
     def map_embedded_relationships(self, data, inserted_object_ids):
         objects = [];inserted_data = []
-        for obj in tqdm(data["objects"]):
+        for obj in tqdm(data["objects"], desc='upload_embedded_edges'):
             if obj['id'] not in inserted_object_ids:
                 continue
             for ref_type, targets in utils.get_embedded_refs(obj):

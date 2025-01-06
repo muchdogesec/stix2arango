@@ -39,6 +39,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
           FILTER doc._is_latest == true
           AND doc._is_ref == true
           AND doc.created_by_ref == "identity--72e906ce-ca1b-5d73-adcd-9ea9eb66a1b4"
+            SORT doc.relationship_type
             RETURN DISTINCT doc.relationship_type
         """
         expected_result = [
