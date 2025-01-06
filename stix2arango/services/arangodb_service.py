@@ -19,7 +19,7 @@ module_logger = logging.getLogger("data_ingestion_service")
 
 
 class ArangoDBService:
-    SKIP_DEPRECATION = os.getenv('SKIP_DEPRECATION', False)
+    ALWAYS_LATEST = os.getenv('ALWAYS_LATEST', False)
 
 
     def __init__(self, db, vertex_collections, edge_collections, relationship=None, create=False, username=None, password=None, host_url=None):
@@ -120,6 +120,8 @@ class ArangoDBService:
             obj["_record_created"] = obj.get("_record_created", now)
             obj["_record_modified"] = now
             obj["_key"] = obj.get('_key', f'{obj["id"]}+{now}')
+            if self.ALWAYS_LATEST:
+                obj['_is_latest'] = True
 
         query = """
             //LET obj_map = ZIP(@objects[*].id, @objects[*]._record_md5_hash) //make a map so we don't have to do `CONTAINS(ARRAY[60000000], id)`
@@ -209,6 +211,9 @@ class ArangoDBService:
         })
     
     def update_is_latest_several_chunked(self, object_ids, collection_name, edge_collection=None, chunk_size=500):
+        if self.ALWAYS_LATEST:
+            logging.debug('Skipped update _is_latest')
+            return []
         logging.info(f"Updating _is_latest for {len(object_ids)} newly inserted items")
         progress_bar = tqdm(utils.chunked(object_ids, chunk_size), total=len(object_ids), desc='update_is_latest_several_chunked')
         deprecated_key_ids = [] # contains newly deprecated _ids
@@ -216,9 +221,8 @@ class ArangoDBService:
             deprecated_key_ids.extend(self.update_is_latest_several(chunk, collection_name))
             progress_bar.update(len(chunk))
 
-        if not self.SKIP_DEPRECATION:
-            logging.info(f"Updating relationship's _is_latest for {len(deprecated_key_ids)} items")
-            self.deprecate_relationships(deprecated_key_ids, edge_collection)
+        logging.info(f"Updating relationship's _is_latest for {len(deprecated_key_ids)} items")
+        self.deprecate_relationships(deprecated_key_ids, edge_collection)
         return deprecated_key_ids
     
     def deprecate_relationships(self, deprecated_key_ids: list, edge_collection: str):
