@@ -19,6 +19,8 @@ module_logger = logging.getLogger("data_ingestion_service")
 
 
 class ArangoDBService:
+    ALWAYS_LATEST = os.getenv('ALWAYS_LATEST', False)
+
 
     def __init__(self, db, vertex_collections, edge_collections, relationship=None, create=False, username=None, password=None, host_url=None):
         self.ARANGO_DB = self.get_db_name(db)
@@ -118,17 +120,18 @@ class ArangoDBService:
             obj["_record_created"] = obj.get("_record_created", now)
             obj["_record_modified"] = now
             obj["_key"] = obj.get('_key', f'{obj["id"]}+{now}')
+            if self.ALWAYS_LATEST:
+                obj['_is_latest'] = True
 
         query = """
             //LET obj_map = ZIP(@objects[*].id, @objects[*]._record_md5_hash) //make a map so we don't have to do `CONTAINS(ARRAY[60000000], id)`
             LET obj_map = MERGE_RECURSIVE(
                 FOR obj in @objects
-                RETURN {[obj.id]: {[obj._record_md5_hash]: [obj._from, obj._to]}}
+                RETURN {[obj.id]: obj._record_md5_hash}
             )
             LET existing_objects = MERGE(
-                FOR doc in @@collection
-                FILTER obj_map[doc.id] != NULL
-                FILTER [doc._from, doc._to] == obj_map[doc.id][doc._record_md5_hash]
+                FOR doc in @@collection FILTER doc.id IN KEYS(obj_map) AND doc._record_md5_hash == obj_map[doc.id]
+                // FILTER [doc._from, doc._to] == obj_map[doc.id][doc._record_md5_hash]
                 LET obj_hashkey = CONCAT(doc.id, ";", doc._record_md5_hash)
                 RETURN {[obj_hashkey]: doc._id}
             )
@@ -155,7 +158,7 @@ class ArangoDBService:
             objects = utils.remove_duplicates(objects)
             logging.info("removed {count} duplicates from imported objects.".format(count=original_length-len(objects)))
         
-        progress_bar = tqdm(utils.chunked(objects, chunk_size), total=len(objects))
+        progress_bar = tqdm(utils.chunked(objects, chunk_size), total=len(objects), desc='insert_several_objects_chunked')
         inserted_objects = []
         existing_objects = {}
         for chunk in progress_bar:
@@ -178,11 +181,9 @@ class ArangoDBService:
 
     def update_is_latest_several(self, object_ids, collection_name):
         #returns newly deprecated _ids
-        objects_in = {k: True for k  in object_ids}
         query = """
             LET matched_objects = ( // collect all the modified into a single list of {id: ?, modified: ?, _record_modified: ?, _key: ?}
-                FOR object in @@collection
-                FILTER @objects_in[object.id] !=  NULL
+                FOR object in @@collection FILTER object.id IN @object_ids
                 RETURN KEEP(object, 'id', 'modified', '_record_modified', '_key', '_id')
             )
             
@@ -206,19 +207,22 @@ class ArangoDBService:
         """
         return self.execute_raw_query(query, bind_vars={
             "@collection": collection_name,
-            "objects_in": objects_in
+            "object_ids": object_ids,
         })
     
     def update_is_latest_several_chunked(self, object_ids, collection_name, edge_collection=None, chunk_size=500):
+        if self.ALWAYS_LATEST:
+            logging.debug('Skipped update _is_latest')
+            return []
         logging.info(f"Updating _is_latest for {len(object_ids)} newly inserted items")
-        progress_bar = tqdm(utils.chunked(object_ids, chunk_size), total=len(object_ids))
+        progress_bar = tqdm(utils.chunked(object_ids, chunk_size), total=len(object_ids), desc='update_is_latest_several_chunked')
         deprecated_key_ids = [] # contains newly deprecated _ids
         for chunk in progress_bar:
-            deprecated_key_ids = self.update_is_latest_several(chunk, collection_name)
-            progress_bar.update(len(chunk)/2)
-            self.deprecate_relationships(deprecated_key_ids, edge_collection)
-            progress_bar.update(len(chunk)/2)
+            deprecated_key_ids.extend(self.update_is_latest_several(chunk, collection_name))
+            progress_bar.update(len(chunk))
 
+        logging.info(f"Updating relationship's _is_latest for {len(deprecated_key_ids)} items")
+        self.deprecate_relationships(deprecated_key_ids, edge_collection)
         return deprecated_key_ids
     
     def deprecate_relationships(self, deprecated_key_ids: list, edge_collection: str):

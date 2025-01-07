@@ -59,7 +59,7 @@ def create_relationship_obj(
         relationship_object['_is_ref'] = True
         relationship_object['type'] = "relationship"
         relationship_object['spec_version'] = "2.1"
-        relationship_object['_record_md5_hash'] = generate_md5(relationship_object)
+        # relationship_object['_record_md5_hash'] = generate_md5(relationship_object)
         if extra_data:
             relationship_object.update(extra_data)
 
@@ -69,11 +69,12 @@ def create_relationship_obj(
         )
     return insert_data
 
-
-def generate_md5(obj:dict):
+def generate_md5(obj: dict):
     obj_copy = {k: v for k, v in obj.items() if not k.startswith("_")}
-    obj_copy["_stix2arango_note"] = obj.get("_stix2arango_note")
-    json_str = json.dumps(obj_copy, sort_keys=True).encode('utf-8')
+    for k in ['_from', '_to', '_stix2arango_note']:
+        if v := obj.get(k):
+            obj_copy[k] = v
+    json_str = json.dumps(obj_copy, sort_keys=True, default=str).encode("utf-8")
     return hashlib.md5(json_str).hexdigest()
 
 
