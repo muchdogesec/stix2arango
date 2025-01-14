@@ -9,7 +9,8 @@ all_versions = [
     "1_2",
     "1_3",
     "1_4",
-    "1_5"
+    "1_5",
+    "1_6"
 ]
 
 def version_key(version):
