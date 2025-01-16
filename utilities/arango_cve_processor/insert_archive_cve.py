@@ -36,10 +36,6 @@ for year in range(1988, latest_year + 1):
             version = f"{start_date}-00_00_00-{start_date}-23_59_59"
             all_versions.append((year, month, version))
 
-print("All versions to be processed:")
-for item in all_versions:
-    print(f"{item[0]}-{str(item[1]).zfill(2)}: {item[2]}")
-
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Process NVD CVE versions.")
     parser.add_argument('--years', type=str, help='Comma-separated list of years to process. Default is all versions.')
