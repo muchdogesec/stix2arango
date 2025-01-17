@@ -8,7 +8,9 @@ from datetime import datetime, timedelta
 from stix2arango.stix2arango.stix2arango import Stix2Arango
 from manager import VersionManager
 from pathlib import Path
+from dotenv import load_dotenv
 
+load_dotenv()
 
 manager = VersionManager('utility_fails.db', 'cve_fails')
 
