@@ -22,7 +22,7 @@ class Stix2Arango:
     filename = "bundle.json"
     ARANGODB_URL = f"http://{config.ARANGODB_HOST}:{config.ARANGODB_PORT}"
 
-    def __init__(self, database, collection, file, stix2arango_note="", ignore_embedded_relationships=False, bundle_id=None, username=config.ARANGODB_USERNAME, password=config.ARANGODB_PASSWORD, host_url=ARANGODB_URL):
+    def __init__(self, database, collection, file, stix2arango_note="", ignore_embedded_relationships=False, bundle_id=None, username=config.ARANGODB_USERNAME, password=config.ARANGODB_PASSWORD, host_url=ARANGODB_URL, **kwargs):
         self.core_collection_vertex, self.core_collection_edge = (
             utils.get_vertex_and_edge_collection_names(collection)
         )
@@ -37,6 +37,7 @@ class Stix2Arango:
             username=username,
             password=password,
             host_url=host_url,
+            **kwargs,
         )
 
         self.arangodb_extra_data = {}

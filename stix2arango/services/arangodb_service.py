@@ -22,13 +22,14 @@ class ArangoDBService:
     ALWAYS_LATEST = os.getenv('ALWAYS_LATEST', False)
 
 
-    def __init__(self, db, vertex_collections, edge_collections, relationship=None, create=False, username=None, password=None, host_url=None):
+    def __init__(self, db, vertex_collections, edge_collections, relationship=None, create=False, username=None, password=None, host_url=None, always_latest=ALWAYS_LATEST, **kwargs):
         self.ARANGO_DB = self.get_db_name(db)
         self.ARANGO_GRAPH = f"{self.ARANGO_DB.split('_database')[0]}_graph"
         self.COLLECTIONS_VERTEX = vertex_collections
         self.COLLECTIONS_EDGE = edge_collections
         self.FORCE_RELATIONSHIP = [relationship] if relationship else None
         self.missing_collection = True
+        self.ALWAYS_LATEST = always_latest
 
         module_logger.info("Establishing connection...")
         client = ArangoClient(hosts=host_url)
