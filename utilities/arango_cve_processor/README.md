@@ -12,7 +12,9 @@ Where:
 
 * `--database` (required): is the name of the Arango database the objects should be stored in. If database does not exist, stix2arango will create it
 * `--ignore_embedded_relationships` (optional): if flag passes this will stop any embedded relationships from being generated
-* `--years` (optional): the years for which you want CVE data separated by a comma (e.g. `2024,2023)`. If no `years` flag is passed, all available years will be downloaded.
+* `--min_date` (optional): the first date to download data
+* `--max_date` (optional): the last date to download data
+* `--start_over` (optional): will delete logs from last run in sqlite
 
 e.g.
 
@@ -21,7 +23,8 @@ Download all CVE data
 ```shell
 python3 utilities/arango_cve_processor/insert_archive_cve.py \
 	--database cti_knowledge_base_store \
-	--ignore_embedded_relationships
+	--ignore_embedded_relationships \
+	--start_over
 ```
 
 Download only CVE data for year 2023 and 2024
@@ -30,7 +33,8 @@ Download only CVE data for year 2023 and 2024
 python3 utilities/arango_cve_processor/insert_archive_cve.py \
 	--database cti_knowledge_base_store \
 	--years 2023,2024 \
-	--ignore_embedded_relationships
+	--ignore_embedded_relationships \
+	--start_over
 ```
 
 #### A note on complete backfill

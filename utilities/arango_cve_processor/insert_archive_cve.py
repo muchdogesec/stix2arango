@@ -15,8 +15,6 @@ load_dotenv()
 manager = VersionManager('utility_fails.db', 'cve_fails')
 
 # Calculate the latest full year, month, and day
-current_year = datetime.now().year
-current_month = datetime.now().month
 yesterday = datetime.now() - timedelta(days=1)
 latest_year = yesterday.year
 latest_month = yesterday.month
@@ -36,139 +34,116 @@ for year in range(1988, latest_year + 1):
         for day in range(1, days_in_month + 1):
             start_date = f"{year}_{str(month).zfill(2)}_{str(day).zfill(2)}"
             version = f"{start_date}-00_00_00-{start_date}-23_59_59"
-            all_versions.append((year, month, version))
+            all_versions.append((year, month, day, version))
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Process NVD CVE versions.")
-    parser.add_argument('--years', type=str, help='Comma-separated list of years to process. Default is all versions.')
+    parser.add_argument('--min_date', type=str, help='Start date in yyyy-mm-dd format.')
+    parser.add_argument('--max_date', type=str, help='End date in yyyy-mm-dd format.')
     parser.add_argument('--ignore_embedded_relationships', action='store_true', help='Flag to ignore embedded relationships. Default is false.')
     parser.add_argument('--database', type=str, default="cti_knowledge_base_store", help='Name of the database to use. Default is "cti_knowledge_base_store".')
-    parser.add_argument('--start_over', action='store_true', help='delete database holding whether previous attempts failed or not')
+    parser.add_argument('--start_over', action='store_true', help='Delete database holding previous attempts.')
     return parser.parse_args()
+
+def filter_versions_by_date(min_date, max_date):
+    min_dt = datetime.strptime(min_date, "%Y-%m-%d")
+    max_dt = datetime.strptime(max_date, "%Y-%m-%d")
+    return [item for item in all_versions if min_dt <= datetime(item[0], item[1], item[2]) <= max_dt]
 
 def create_directory(path):
     if not os.path.exists(path):
         os.makedirs(path)
         print(f"Created directory: {path}")
+
+def download_file(url, destination):
+    response = requests.get(url)
+    if response.status_code == 200:
+        with open(destination, 'wb') as file:
+            file.write(response.content)
+        print(f"Downloaded file: {destination}")
+        return True
     else:
-        print(f"Directory already exists: {path}")
-
-def download_file(version, url, destination, error_list, max_retries=5, wait_time=60):
-
-    retries = 0
-    exc = None
-    while retries < max_retries:
-        exc = None
-        try:
-            if os.path.exists(destination):
-                print(f"File already exists: {destination}")
-                return True
-            response = requests.get(url)
-            if response.status_code == 200:
-                create_directory(os.path.dirname(destination))  # Ensure the directory exists before writing the file
-                with open(destination, 'wb') as file:
-                    file.write(response.content)
-                print(f"Downloaded file to {destination}")
-                return True
-            elif response.status_code == 404:
-                print(f"got 404 for {version}")
-                manager.set_failed(version, False, reason="status: 404")
-                return
-            elif response.status_code == 400:
-                #skipped
-                return
-            elif response.status_code == 429:
-                retries += 1
-                time.sleep(wait_time)
-                raise Exception(f"Rate limited. Retrying in {wait_time} seconds... (Attempt {retries} of {max_retries})")
-            else:
-                error_list.append(f"Failed to download file from {url} with status code {response.status_code}")
-                print(f"Failed to download file from {url} with status code {response.status_code}")
-                break
-        except Exception as e:
-            exc = e
-    manager.set_failed(version, True)
-    error_list.append(f"Failed to download file from {url} after {retries} attempts: {exc}")
-    print(f"Failed to download file from {url} after {retries} attempts")
-
+        print(f"Failed to download {url} - Status Code: {response.status_code}")
+        return False
 
 def run_command(command, root_path, ignore_embedded_relationships):
-    file_path = os.path.join(root_path, command["file"])
-    stix2arango_path = os.path.join(root_path, "stix2arango.py")
+    file_path = command["file"]
     if not os.path.exists(file_path):
         print(f"File not found: {file_path}")
         return
     try:
+        print(f"Inserting {file_path} into database {command['database']}...")
         Stix2Arango(database=command["database"], collection=command["collection"], file=file_path, ignore_embedded_relationships=ignore_embedded_relationships).run()
         manager.set_failed(command['version'], failed=False, reason="uploaded to arango")
-        return True
-    except subprocess.CalledProcessError as e:
+        print(f"Successfully inserted {command['version']} into database.")
+    except Exception as e:
         print(f"Failed to process {file_path}: {e}")
         manager.set_failed(command['version'], failed=True, reason=str(e))
 
 def main():
     args = parse_arguments()
+    print(f"Database to be used: {args.database}")
 
-    if args.years:
-        selected_years = args.years.split(',')
-        versions = [
-            item for item in all_versions 
-            if str(item[0]) in selected_years
-        ]
+    if args.min_date and args.max_date:
+        versions = filter_versions_by_date(args.min_date, args.max_date)
+    elif args.min_date or args.max_date:
+        print("Both --min_date and --max_date must be provided.")
+        return
     else:
-        versions = all_versions
+        versions = all_versions  # If no filter is applied, process all versions.
 
     if args.start_over:
+        print("Recreating database tables...")
         manager.recreate_table()
+
     new_versions = []
     failed_map = manager.get_versions()
     for item in versions:
-        year, month, version = item
+        year, month, day, version = item
         if failed_map.get(version) in [True, None]:
             new_versions.append(item)
 
-    print("will skip previously successful uploads")
-    print(f"only {len(new_versions)} of {len(versions)} items will be processed")
+    print("Will skip previously successful uploads")
+    print(f"Only {len(new_versions)} of {len(versions)} items will be processed")
     versions = new_versions
 
     ignore_embedded_relationships = args.ignore_embedded_relationships
     database = args.database
-
-    # Get the absolute path to the current directory (where this script is located)
+    
     script_path = os.path.dirname(os.path.abspath(__file__))
-    root_path = os.path.abspath(os.path.join(script_path, "../.."))  # Move up two levels to the directory containing stix2arango.py and cti_knowledge_base_store
+    root_path = os.path.abspath(os.path.join(script_path, "../.."))
     
-    # Define the commands and their arguments for the files
-    commands = []
-    
-    # Download files
     base_url = "https://cve2stix.vulmatch.com/"
     download_errors = []
+    commands = []
 
     for item in versions:
-        year, month, version = item
+        year, month, day, version = item
         download_url = f"{base_url}{year}-{str(month).zfill(2)}/cve-bundle-{version}.json"
         destination_path = os.path.join(root_path, "cti_knowledge_base_store", f"nvd-cve/{year}-{str(month).zfill(2)}", f"cve-bundle-{version}.json")
 
-        Path(destination_path).parent.mkdir(exist_ok=True, parents=True)
+        create_directory(Path(destination_path).parent)
+        print(f"Processing: {download_url} -> {destination_path}")
+        
+        if not os.path.exists(destination_path):
+            if not download_file(download_url, destination_path):
+                download_errors.append(destination_path)
+                continue
+        
+        commands.append(dict(version=version, collection='nvd_cve', database=database, file=destination_path))
 
-        if download_file(version, download_url, destination_path, download_errors):
-            commands.append(dict(version=version, collection='nvd_cve', database=database, file=destination_path))
-
-    # Run the commands
     for command in commands:
-        # if command["version"] in manager.get_versions(failed=False):
-        #     continue
+        print(f"Running command for version: {command['version']}")
         attempts = 0
         while attempts < 5:
             attempts += 1
             try:
                 run_command(command, root_path, ignore_embedded_relationships)
+                break
             except Exception as e:
-                print(e)
+                print(f"Attempt {attempts} failed for {command['version']}: {e}")
                 continue
 
-    # Print any download errors
     if download_errors:
         print("\nDownload Errors:")
         for error in download_errors:

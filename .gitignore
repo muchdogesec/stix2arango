@@ -177,3 +177,4 @@ stix2arango-venv/
 
 # quick start info
 cti_knowledge_base_store/
+utility_fails.db
