@@ -27,12 +27,13 @@ python3 utilities/arango_cve_processor/insert_archive_cve.py \
 	--start_over
 ```
 
-Download only CVE data for year 2023 and 2024
+Download only CVE data on `2025-01-09` through to, and including `2025-01-31`
 
 ```shell
 python3 utilities/arango_cve_processor/insert_archive_cve.py \
 	--database cti_knowledge_base_store \
-	--years 2023,2024 \
+	--min_date 2025-01-09 \
+	--max_date 2025-01-31 \
 	--ignore_embedded_relationships \
 	--start_over
 ```
