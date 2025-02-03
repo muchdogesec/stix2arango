@@ -15,14 +15,14 @@ from jsonschema import validate
 
 from .. import utils
 module_logger = logging.getLogger("data_ingestion_service")
-
+SMO_TYPES = ["marking-definition", "extension-definition", "language-content"]
 
 class Stix2Arango:
     EMBEDDED_RELATIONSHIP_RE = re.compile(r"([a-z\-_]+)[_\-]refs{0,1}")
     filename = "bundle.json"
     ARANGODB_URL = f"http://{config.ARANGODB_HOST}:{config.ARANGODB_PORT}"
 
-    def __init__(self, database, collection, file, stix2arango_note="", ignore_embedded_relationships=False, bundle_id=None, username=config.ARANGODB_USERNAME, password=config.ARANGODB_PASSWORD, host_url=ARANGODB_URL, **kwargs):
+    def __init__(self, database, collection, file, stix2arango_note="", ignore_embedded_relationships=False, ignore_embedded_relationtionships_sro=True, ignore_embedded_relationtionships_smo=True, bundle_id=None, username=config.ARANGODB_USERNAME, password=config.ARANGODB_PASSWORD, host_url=ARANGODB_URL, **kwargs):
         self.core_collection_vertex, self.core_collection_edge = (
             utils.get_vertex_and_edge_collection_names(collection)
         )
@@ -48,6 +48,8 @@ class Stix2Arango:
         self.marking_definition_refs = [json.loads(utils.load_file_from_url(link)) for link in config.MARKING_DEFINITION_REFS]
         self.bundle_id = bundle_id
         self.ignore_embedded_relationships = ignore_embedded_relationships
+        self.ignore_embedded_relationtionships_smo = ignore_embedded_relationtionships_smo
+        self.ignore_embedded_relationtionships_sro = ignore_embedded_relationtionships_sro
         self.object_key_mapping = {}
         self.create_indexes()
 
@@ -151,6 +153,15 @@ class Stix2Arango:
         for obj in tqdm(data["objects"], desc='upload_embedded_edges'):
             if obj['id'] not in inserted_object_ids:
                 continue
+            if (
+                    self.ignore_embedded_relationtionships_smo and obj['type'] in SMO_TYPES
+                ) or (
+                    self.ignore_embedded_relationtionships_sro and obj['type'] == 'relationship'
+                ) or (
+                    self.ignore_embedded_relationships and obj['type'] not in SMO_TYPES + ['relationship']
+                ):
+                continue
+
             for ref_type, targets in utils.get_embedded_refs(obj):
                 utils.create_relationship_obj(
                     obj=obj,
