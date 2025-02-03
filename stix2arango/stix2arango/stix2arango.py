@@ -11,6 +11,7 @@ from .. import config
 from tqdm import tqdm
 from ..services.arangodb_service import ArangoDBService
 from jsonschema import validate
+from arango.collection import StandardCollection
 
 
 from .. import utils
@@ -61,6 +62,7 @@ class Stix2Arango:
             time = int(datetime.now().timestamp())
             
             collection.add_index(dict(type='persistent', fields=["id"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash"], inBackground=True, name=f"by_stix_id_{time}"))
+            collection.add_index(dict(type='persistent', fields=["id", "type"], storedValues=["modified", "created", "_record_modified", "spec_version", "_record_md5_hash"], inBackground=True, name=f"by_stix_id_type_{time}"))
             collection.add_index(dict(type='persistent', fields=["modified", "created"], storedValues=["type", "_record_modified", "id", "spec_version", "_record_md5_hash"], inBackground=True, name=f"by_stix_version_{time}"))
             collection.add_index(dict(type='persistent', fields=["type"], storedValues=["modified", "created", "_record_modified", "id", "spec_version", "_record_md5_hash"], inBackground=True, name=f"by_stix_type_{time}"))
             collection.add_index(dict(type='persistent', fields=["_record_modified", "_record_created"], storedValues=["modified","created", "type", "id", "spec_version", "_record_md5_hash"], inBackground=True, name=f"by_insertion_time_{time}"))
@@ -68,7 +70,18 @@ class Stix2Arango:
                 collection.add_index(dict(type='persistent', fields=["source_ref", "target_ref", "relationship_type"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash", "id"], inBackground=True, name=f"relation_from_{time}"))
                 collection.add_index(dict(type='persistent', fields=["target_ref", "source_ref", "relationship_type"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash", "id"], inBackground=True, name=f"relation_to_{time}"))
                 collection.add_index(dict(type='persistent', fields=["relationship_type", "target_ref", "source_ref"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash", "id"], inBackground=True, name=f"relation_type_{time}"))
+                # self.add_computed_values(collection, dict(name='_source_type', expression='RETURN FIRST(SPLIT(@doc.source_ref, "--"))', overwrite=True))
+                # self.add_computed_values(collection, dict(name='_target_type', expression='RETURN FIRST(SPLIT(@doc.target_ref, "--"))', overwrite=True))
 
+    def add_computed_values(self, collection: StandardCollection, value_computer):
+        properties = collection.properties()
+        computed_values = properties.get('computedValues', [])
+        for i, v in enumerate(computed_values):
+            if v['name'] == value_computer['name']:
+                computed_values.pop(i)
+                break
+        computed_values.append(value_computer)
+        collection.configure(computed_values=computed_values)
 
 
     def default_objects(self):

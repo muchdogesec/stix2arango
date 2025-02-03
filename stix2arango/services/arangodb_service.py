@@ -124,6 +124,9 @@ class ArangoDBService:
             if self.ALWAYS_LATEST:
                 obj['_is_latest'] = True
 
+            if obj['type'] == 'relationship':
+                obj.update(_target_type=obj['target_ref'].split('--')[0], _source_type=obj['source_ref'].split('--')[0])
+
         query = """
             //LET obj_map = ZIP(@objects[*].id, @objects[*]._record_md5_hash) //make a map so we don't have to do `CONTAINS(ARRAY[60000000], id)`
             LET obj_map = MERGE_RECURSIVE(
