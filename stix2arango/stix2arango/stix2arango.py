@@ -170,8 +170,6 @@ class Stix2Arango:
                     self.ignore_embedded_relationships_smo and obj['type'] in SMO_TYPES
                 ) or (
                     self.ignore_embedded_relationships_sro and obj['type'] == 'relationship'
-                ) or (
-                    self.ignore_embedded_relationships and obj['type'] not in SMO_TYPES + ['relationship']
                 ):
                 continue
 
@@ -228,7 +226,7 @@ class Stix2Arango:
         module_logger.info("Mapping relationships now -> ")
         inserted_relationship_ids, deprecated_key_ids2 = self.map_relationships(self.filename, data)
 
-        if not (self.ignore_embedded_relationships or self.ignore_embedded_relationships_smo or self.ignore_embedded_relationships_sro):
+        if not self.ignore_embedded_relationships:
             module_logger.info("Creating new embedded relationships using _refs and _ref")
             self.map_embedded_relationships(data, inserted_object_ids+inserted_relationship_ids)
         # self.arango.update_is_latest_for_embedded_refs(inserted_object_ids+inserted_relationship_ids, self.core_collection_edge)
