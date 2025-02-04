@@ -28,7 +28,6 @@ cd stix2arango
 python3 -m venv stix2arango-venv
 source stix2arango-venv/bin/activate
 # install requirements
-pip3 install -r requirements.txt
 pip3 install .
 ````
 
@@ -79,7 +78,9 @@ Where;
 * `--database` (required): is the name of the Arango database the objects should be stored in. If database does not exist, stix2arango will create it
 * `--collection` (required): is the name of the Arango collection in the database specified the objects should be stored in. If the collection does not exist, stix2arango will create it
 * `--stix2arango_note` (optional): Will be stored under the `_stix2arango_note` custom attribute in ArangoDB. Useful as can be used in AQL. `a-z` characters only. Max 24 chars.
-* `--ignore_embedded_relationships` (optional): boolean, if `true` passed, this will stop any embedded relationships from being generated. Default is `false`
+* `--ignore_embedded_relationships` (optional): boolean, if `true` passed, this will stop ANY embedded relationships from being generated. This applies for all object types (SDO, SCO, SRO, SMO). If you want to target certain object types see `ignore_embedded_relationships_sro` and `ignore_embedded_relationships_sro` flags. ` Default is `false`
+* `--ignore_embedded_relationships_sro` (optional): boolean, if `true` passed, will stop any embedded relationships from being generated from SRO objects (`type` = `relationship`). Default is `false`
+* `--ignore_embedded_relationships_smo` (optional): boolean, if `true` passed, will stop any embedded relationships from being generated from SMO objects (`type` = `marking-definition`, `extension-definition`, `language-content`). Default is `false`
 
 For example, [using the MITRE ATT&CK Enterprise bundle](https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json);
 

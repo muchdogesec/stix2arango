@@ -40,6 +40,9 @@ class BaseTestArangoDBQueries(unittest.TestCase):
         cls.IGNORE_EMBEDDED_RELATIONSHIPS_1 = os.getenv("IGNORE_EMBEDDED_RELATIONSHIPS_1")
         cls.IGNORE_EMBEDDED_RELATIONSHIPS_2 = os.getenv("IGNORE_EMBEDDED_RELATIONSHIPS_2")
         cls.IGNORE_EMBEDDED_RELATIONSHIPS_3 = os.getenv("IGNORE_EMBEDDED_RELATIONSHIPS_3")
+        cls.CUSTOM_FLAG_1 = os.getenv("CUSTOM_FLAG_1")
+        cls.CUSTOM_FLAG_2 = os.getenv("CUSTOM_FLAG_2")
+        cls.CUSTOM_FLAG_3 = os.getenv("CUSTOM_FLAG_3")
 
     @classmethod
     def clear_collections(cls):
@@ -60,18 +63,24 @@ class BaseTestArangoDBQueries(unittest.TestCase):
             command = f'python3 stix2arango.py --file tests/files/stix2arango/{cls.TEST_FILE_1} --database {cls.ARANGODB_DATABASE} --collection {cls.ARANGODB_COLLECTION} --ignore_embedded_relationships {cls.IGNORE_EMBEDDED_RELATIONSHIPS_1}'
             if cls.STIX2ARANGO_NOTE_1:
                 command += f' --stix2arango_note {cls.STIX2ARANGO_NOTE_1}'
+            if cls.CUSTOM_FLAG_1:
+                command += f' {cls.CUSTOM_FLAG_1}'
             commands.append(command)
 
         if cls.TEST_FILE_2:
             command = f'python3 stix2arango.py --file tests/files/stix2arango/{cls.TEST_FILE_2} --database {cls.ARANGODB_DATABASE} --collection {cls.ARANGODB_COLLECTION} --ignore_embedded_relationships {cls.IGNORE_EMBEDDED_RELATIONSHIPS_2}'
             if cls.STIX2ARANGO_NOTE_2:
                 command += f' --stix2arango_note {cls.STIX2ARANGO_NOTE_2}'
+            if cls.CUSTOM_FLAG_2:
+                command += f' {cls.CUSTOM_FLAG_2}'
             commands.append(command)
 
         if cls.TEST_FILE_3:
             command = f'python3 stix2arango.py --file tests/files/stix2arango/{cls.TEST_FILE_3} --database {cls.ARANGODB_DATABASE} --collection {cls.ARANGODB_COLLECTION} --ignore_embedded_relationships {cls.IGNORE_EMBEDDED_RELATIONSHIPS_3}'
             if cls.STIX2ARANGO_NOTE_3:
                 command += f' --stix2arango_note {cls.STIX2ARANGO_NOTE_3}'
+            if cls.CUSTOM_FLAG_3:
+                command += f' {cls.CUSTOM_FLAG_3}'
             commands.append(command)
 
         for command in commands:

@@ -24,8 +24,9 @@
 * test 21: tests the creation and update of embedded relationships from SCOs (where no `modified` or `created` time exist exists in source object) -- expect embedded SROs generated to have no `modified` or `created` time
 * test 22: tests the creation and update of embedded relationships from SMOs (where only `created` time exist exists in source object) -- expect embedded SROs generated to have only `created` time
 * test 23: test the removal of `_refs`. The first file has 1 object with 3 refs (2 for object_markings, 1 for created_by). In the second update, all these ref properties are removed from the object, so it should have 0 ref relationships.
-* test 24: tests the custom properties added to objects
-
+* test 24: checks all the custom s2a hidden fields are generated for all objects
+* test 25: tests the ignore SMO embedded refs
+* test 26: tests the ignore SRO embedded refs
 
 ## Running tests
 

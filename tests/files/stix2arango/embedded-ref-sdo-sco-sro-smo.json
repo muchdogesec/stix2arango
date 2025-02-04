@@ -1,0 +1,101 @@
+{
+    "type": "bundle",
+    "id": "bundle--8014a234-ec3a-43a6-a0d8-c24f1385fa19",
+    "objects": [
+        {
+            "type": "indicator",
+            "spec_version": "2.1",
+            "id": "indicator--49150a4c-d831-51fa-9f61-aede5570a969",
+            "created_by_ref": "identity--efccc0ba-d237-5c9a-ad41-4f8bb6791be4",
+            "created": "2021-12-07T00:00:00.000Z",
+            "modified": "2023-02-14T00:00:00.000Z",
+            "name": "Suspicious Firewall Configuration Discovery Via Netsh.EXE",
+            "description": "Adversaries may look for details about the network configuration and settings of systems they access or through information discovery of remote systems. The following false positives can result from this detection; Administrative activity",
+            "indicator_types": [
+                "malicious-activity",
+                "anomalous-activity"
+            ],
+            "pattern": "{'title': 'Suspicious Firewall Configuration Discovery Via Netsh.EXE', 'id': '0e4164da-94bc-450d-a7be-a4b176179f1f', 'status': 'experimental', 'description': 'Adversaries may look for details about the network configuration and settings of systems they access or through information discovery of remote systems', 'references': ['https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1016/T1016.md#atomic-test-2---list-windows-firewall-rules', 'https://ss64.com/nt/netsh.html'], 'author': \"frack113, Christopher Peacock '@securepeacock', SCYTHE '@scythe_io'\", 'date': '2021/12/07', 'modified': '2023/02/14', 'tags': ['attack.discovery', 'attack.t1016'], 'logsource': {'category': 'process_creation', 'product': 'windows'}, 'detection': {'selection_img': [{'Image|endswith': '\\\\netsh.exe'}, {'OriginalFileName': 'netsh.exe'}], 'selection_cli': {'CommandLine|contains|all': ['netsh ', 'show ', 'firewall '], 'CommandLine|contains': ['config ', 'state ', 'rule ', 'name=all']}, 'condition': 'all of selection_*'}, 'falsepositives': ['Administrative activity'], 'level': 'low'}",
+            "pattern_type": "sigma",
+            "valid_from": "2021-12-07T00:00:00Z",
+            "labels": [
+                "level: low",
+                "status: experimental",
+                "author: frack113, Christopher Peacock '@securepeacock', SCYTHE '@scythe_io'",
+                "license: None",
+                "attack.discovery",
+                "attack.t1016"
+            ],
+            "external_references": [
+                {
+                    "source_name": "rule",
+                    "url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_netsh_fw_rules_discovery.yml"
+                },
+                {
+                    "source_name": "id",
+                    "url": "0e4164da-94bc-450d-a7be-a4b176179f1f"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1016/T1016.md#atomic-test-2---list-windows-firewall-rules"
+                },
+                {
+                    "source_name": "reference",
+                    "url": "https://ss64.com/nt/netsh.html"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--efccc0ba-d237-5c9a-ad41-4f8bb6791be4"
+            ]
+        },
+        {
+            "type": "software",
+            "spec_version": "2.1",
+            "id": "software--55388d12-8d7d-5ed1-b324-817a293a6854",
+            "name": "sha2 Project sha2 0.4.1 for Rust",
+            "cpe": "cpe:2.3:a:sha2_project:sha2:0.4.1:*:*:*:*:rust:*:*",
+            "swid": "8E3664E0-50A8-4AC3-8863-5552DD536F2F",
+            "languages": [
+                "en"
+            ],
+            "vendor": "sha2_project",
+            "version": "0.4.1",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--de23ef3b-83bf-56a9-95c3-46bc1703966c"
+            ]
+        },
+        {
+            "type": "marking-definition",
+            "spec_version": "2.1",
+            "id": "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41aa",
+            "created": "2016-08-01T00:00:00.000Z",
+            "definition_type": "statement",
+            "name": "UPDATED",
+            "definition": {
+                "statement": "UPDATED"
+            },
+            "object_marking_refs": [
+                "marking-definition--904ac99b-7539-5de7-9ffa-23186f0e07b6",
+                "marking-definition--27557362-b745-4161-96e8-ccd62ce4cb26",
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487"
+            ]
+        },
+        {
+            "type": "relationship",
+            "spec_version": "2.1",
+            "id": "relationship--688e0048-5190-45a8-a1bb-5b344757812c",
+            "created_by_ref": "identity--efccc0ba-d237-5c9a-ad41-4f8bb6791be4",
+            "created": "2020-10-16T00:00:00.000Z",
+            "modified": "2023-02-28T00:00:00.000Z",
+            "relationship_type": "similar",
+            "source_ref": "indicator--49150a4c-d831-51fa-9f61-aede5570a969",
+            "target_ref": "software--55388d12-8d7d-5ed1-b324-817a293a6854",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                "marking-definition--efccc0ba-d237-5c9a-ad41-4f8bb6791be4"
+            ]
+        }
+    ]
+}
