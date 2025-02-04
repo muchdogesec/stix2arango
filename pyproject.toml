@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "stix2arango"
-version = "0.0.3"
+version = "0.0.4-rc0"
 authors = [
   { name="DOGESEC", email="support@dogesec.com" },
 ]
