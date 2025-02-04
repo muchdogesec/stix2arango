@@ -28,8 +28,6 @@
 * test 25: tests the ignore SMO embedded refs
 * test 26: tests the ignore SRO embedded refs
 
-
-
 ## Running tests
 
 Run 
