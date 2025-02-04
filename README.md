@@ -28,7 +28,6 @@ cd stix2arango
 python3 -m venv stix2arango-venv
 source stix2arango-venv/bin/activate
 # install requirements
-pip3 install -r requirements.txt
 pip3 install .
 ````
 
