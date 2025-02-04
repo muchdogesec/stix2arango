@@ -13,8 +13,8 @@ def parse_arguments():
     parser.add_argument("--collection", required=True, help="ArangoDB collection name")
     parser.add_argument("--stix2arango_note", required=False, help="Note for the import", default="")
     parser.add_argument("--ignore_embedded_relationships", required=False, help="Ignore Embedded Relationship for the import", type=parse_bool, default=False)
-    parser.add_argument("--ignore_embedded_relationships_sro", required=False, help="Ignore Embedded Relationship for imported SROs", type=parse_bool, default=True)
-    parser.add_argument("--ignore_embedded_relationships_smo", required=False, help="Ignore Embedded Relationship for imported SMOs", type=parse_bool, default=True)
+    parser.add_argument("--ignore_embedded_relationships_sro", required=False, help="Ignore Embedded Relationship for imported SROs", type=parse_bool, default=False)
+    parser.add_argument("--ignore_embedded_relationships_smo", required=False, help="Ignore Embedded Relationship for imported SMOs", type=parse_bool, default=False)
 
     return parser.parse_args()
 

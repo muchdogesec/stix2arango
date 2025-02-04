@@ -18,7 +18,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         cls.IGNORE_EMBEDDED_RELATIONSHIPS_1 = "false"
         cls.IGNORE_EMBEDDED_RELATIONSHIPS_2 = ""
         cls.IGNORE_EMBEDDED_RELATIONSHIPS_3 = ""
-
+        
 # test everything has custom hidden fields in vertex
 
     def test_query_1(self):
