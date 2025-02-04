@@ -22,7 +22,7 @@ class Stix2Arango:
     filename = "bundle.json"
     ARANGODB_URL = f"http://{config.ARANGODB_HOST}:{config.ARANGODB_PORT}"
 
-    def __init__(self, database, collection, file, stix2arango_note="", ignore_embedded_relationships=False, ignore_embedded_relationtionships_sro=True, ignore_embedded_relationtionships_smo=True, bundle_id=None, username=config.ARANGODB_USERNAME, password=config.ARANGODB_PASSWORD, host_url=ARANGODB_URL, **kwargs):
+    def __init__(self, database, collection, file, stix2arango_note="", ignore_embedded_relationships=False, ignore_embedded_relationships_sro=True, ignore_embedded_relationships_smo=True, bundle_id=None, username=config.ARANGODB_USERNAME, password=config.ARANGODB_PASSWORD, host_url=ARANGODB_URL, **kwargs):
         self.core_collection_vertex, self.core_collection_edge = (
             utils.get_vertex_and_edge_collection_names(collection)
         )
@@ -48,8 +48,8 @@ class Stix2Arango:
         self.marking_definition_refs = [json.loads(utils.load_file_from_url(link)) for link in config.MARKING_DEFINITION_REFS]
         self.bundle_id = bundle_id
         self.ignore_embedded_relationships = ignore_embedded_relationships
-        self.ignore_embedded_relationtionships_smo = ignore_embedded_relationtionships_smo
-        self.ignore_embedded_relationtionships_sro = ignore_embedded_relationtionships_sro
+        self.ignore_embedded_relationships_smo = ignore_embedded_relationships_smo
+        self.ignore_embedded_relationships_sro = ignore_embedded_relationships_sro
         self.object_key_mapping = {}
         self.create_indexes()
 
@@ -154,9 +154,9 @@ class Stix2Arango:
             if obj['id'] not in inserted_object_ids:
                 continue
             if (
-                    self.ignore_embedded_relationtionships_smo and obj['type'] in SMO_TYPES
+                    self.ignore_embedded_relationships_smo and obj['type'] in SMO_TYPES
                 ) or (
-                    self.ignore_embedded_relationtionships_sro and obj['type'] == 'relationship'
+                    self.ignore_embedded_relationships_sro and obj['type'] == 'relationship'
                 ) or (
                     self.ignore_embedded_relationships and obj['type'] not in SMO_TYPES + ['relationship']
                 ):
@@ -215,7 +215,7 @@ class Stix2Arango:
         module_logger.info("Mapping relationships now -> ")
         inserted_relationship_ids, deprecated_key_ids2 = self.map_relationships(self.filename, data)
 
-        if not self.ignore_embedded_relationships:
+        if not (self.ignore_embedded_relationships or self.ignore_embedded_relationships_smo or self.ignore_embedded_relationships_sro):
             module_logger.info("Creating new embedded relationships using _refs and _ref")
             self.map_embedded_relationships(data, inserted_object_ids+inserted_relationship_ids)
         # self.arango.update_is_latest_for_embedded_refs(inserted_object_ids+inserted_relationship_ids, self.core_collection_edge)
