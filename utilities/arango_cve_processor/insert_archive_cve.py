@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 manager = VersionManager('utility_fails.db', 'cve_fails')
-
+MAX_RETRIES = 7
 # Calculate the latest full year, month, and day
 yesterday = datetime.now() - timedelta(days=1)
 latest_year = yesterday.year
@@ -70,15 +70,17 @@ def run_command(command, root_path, ignore_embedded_relationships):
     file_path = command["file"]
     if not os.path.exists(file_path):
         print(f"File not found: {file_path}")
-        return
+        return True
     try:
         print(f"Inserting {file_path} into database {command['database']}...")
         Stix2Arango(database=command["database"], collection=command["collection"], file=file_path, ignore_embedded_relationships=ignore_embedded_relationships).run()
         manager.set_failed(command['version'], failed=False, reason="uploaded to arango")
         print(f"Successfully inserted {command['version']} into database.")
+        return True
     except Exception as e:
         print(f"Failed to process {file_path}: {e}")
         manager.set_failed(command['version'], failed=True, reason=str(e))
+        return False
 
 def main():
     args = parse_arguments()
@@ -135,14 +137,17 @@ def main():
     for command in commands:
         print(f"Running command for version: {command['version']}")
         attempts = 0
-        while attempts < 5:
-            attempts += 1
+        while attempts < MAX_RETRIES:
             try:
-                run_command(command, root_path, ignore_embedded_relationships)
-                break
+                success = run_command(command, root_path, ignore_embedded_relationships)
+                if success:
+                    break
             except Exception as e:
-                print(f"Attempt {attempts} failed for {command['version']}: {e}")
-                continue
+                print(f"Attempt {attempts+1} failed for {command['version']}: {e}")
+            attempts += 1
+        if attempts == MAX_RETRIES:
+            print(f"upload failed after {attempts} retries, exiting...")
+            exit(12)
 
     if download_errors:
         print("\nDownload Errors:")
