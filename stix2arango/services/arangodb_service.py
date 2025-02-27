@@ -22,7 +22,7 @@ class ArangoDBService:
     ALWAYS_LATEST = os.getenv('ALWAYS_LATEST', False)
 
 
-    def __init__(self, db, vertex_collections, edge_collections, relationship=None, create=False, username=None, password=None, host_url=None, always_latest=ALWAYS_LATEST, **kwargs):
+    def __init__(self, db, vertex_collections, edge_collections, relationship=None, create_db=False, create=False, username=None, password=None, host_url=None, always_latest=ALWAYS_LATEST, **kwargs):
         self.ARANGO_DB = self.get_db_name(db)
         self.ARANGO_GRAPH = f"{self.ARANGO_DB.split('_database')[0]}_graph"
         self.COLLECTIONS_VERTEX = vertex_collections
@@ -35,17 +35,16 @@ class ArangoDBService:
         client = ArangoClient(hosts=host_url)
         self._client = client
 
-        self.sys_db = client.db(
-            "_system", username=username, password=password
-        )
+        if create_db:
+            module_logger.info(f"create db `{self.ARANGO_DB}` if not exist")
+            self.sys_db = client.db(
+                "_system", username=username, password=password
+            )
 
-        module_logger.info("_system database - OK")
+            module_logger.info("_system database - OK")
 
-        if not self.sys_db.has_database(self.ARANGO_DB):
-            if create:
+            if not self.sys_db.has_database(self.ARANGO_DB):
                 self.create_database(self.ARANGO_DB)
-            else:
-                raise Exception("Database not found")
 
         self.db = client.db(
             self.ARANGO_DB,
@@ -97,7 +96,8 @@ class ArangoDBService:
     def create_collection(self, collection_name):
         try:
             return self.db.create_collection(collection_name)
-        except arango.exceptions.CollectionCreateError:
+        except arango.exceptions.CollectionCreateError as e:
+            module_logger.warning(f"create collection {collection_name} failed with {e}")
             return self.db.collection(collection_name)
 
     def execute_raw_query(self, query: str, bind_vars=None, **kwargs) -> list:
