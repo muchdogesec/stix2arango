@@ -23,7 +23,7 @@ class Stix2Arango:
     filename = "bundle.json"
     ARANGODB_URL = f"http://{config.ARANGODB_HOST}:{config.ARANGODB_PORT}"
 
-    def __init__(self, database, collection, file, stix2arango_note="", ignore_embedded_relationships=False, ignore_embedded_relationships_sro=True, ignore_embedded_relationships_smo=True, bundle_id=None, username=config.ARANGODB_USERNAME, password=config.ARANGODB_PASSWORD, host_url=ARANGODB_URL, **kwargs):
+    def __init__(self, database, collection, file, create_collection=True, create_db=True, stix2arango_note="", ignore_embedded_relationships=False, ignore_embedded_relationships_sro=True, ignore_embedded_relationships_smo=True, bundle_id=None, username=config.ARANGODB_USERNAME, password=config.ARANGODB_PASSWORD, host_url=ARANGODB_URL, **kwargs):
         self.core_collection_vertex, self.core_collection_edge = (
             utils.get_vertex_and_edge_collection_names(collection)
         )
@@ -34,7 +34,8 @@ class Stix2Arango:
             database,
             VERTEX_COLLECTIONS,
             EDGE_COLLECTIONS,
-            create=True,
+            create=create_collection,
+            create_db=create_db,
             username=username,
             password=password,
             host_url=host_url,
@@ -52,7 +53,8 @@ class Stix2Arango:
         self.ignore_embedded_relationships_smo = ignore_embedded_relationships_smo
         self.ignore_embedded_relationships_sro = ignore_embedded_relationships_sro
         self.object_key_mapping = {}
-        self.create_indexes()
+        if create_collection:
+            self.create_indexes()
 
         if self.file:
             self.filename = Path(self.file).name
