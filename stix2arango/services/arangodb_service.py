@@ -229,7 +229,7 @@ class ArangoDBService:
         self.deprecate_relationships(deprecated_key_ids, edge_collection)
         return deprecated_key_ids
     
-    def deprecate_relationships(self, deprecated_key_ids: list, edge_collection: str):
+    def deprecate_relationships(self, deprecated_key_ids: list, edge_collection: str, chunk_size=5000):
         deprecation_count = 0
         query = """
         FOR doc IN @@collection
@@ -238,19 +238,35 @@ class ArangoDBService:
         FILTER doc._is_ref != TRUE // no need for further propagation for embedded relationships
         RETURN doc._id
         """
-        # logging.info("deprecating relationships for %d objects", len(deprecated_key_ids))
+        # logging.info("try deprecating relationships for %d objects", len(deprecated_key_ids))
 
+        i = 0
         while deprecated_key_ids and edge_collection:
-            deprecated_key_ids = self.execute_raw_query(query, bind_vars={
-                "@collection": edge_collection,
-                "deprecated_key_ids": deprecated_key_ids,
-            })
+            i+=1
+            progress_bar = tqdm(utils.chunked(deprecated_key_ids, chunk_size), total=len(deprecated_key_ids), desc=f'deprecate_relationships [{i}]')
+            deprecated_key_ids = [] # contains newly deprecated _ids
+            for chunk in progress_bar:
+                deprecated_key_ids.extend(self._deprecate_relationships(chunk, edge_collection))
+                progress_bar.update(len(chunk))
             deprecation_count += len(deprecated_key_ids)
 
         if deprecation_count:
             logging.info("deprecated %d relationships", deprecation_count)
         
         return deprecation_count
+    
+    def _deprecate_relationships(self, deprecated_key_ids: list, edge_collection: str):
+        query = """
+        FOR doc IN @@collection
+        FILTER doc._from IN @deprecated_key_ids AND doc._is_latest
+        UPDATE {_key: doc._key, _is_latest: FALSE} IN @@collection
+        FILTER doc._is_ref != TRUE // no need for further propagation for embedded relationships
+        RETURN doc._id
+        """
+        return self.execute_raw_query(query, bind_vars={
+            "@collection": edge_collection,
+            "deprecated_key_ids": deprecated_key_ids,
+        })
 
     @staticmethod
     def get_db_name(name):
