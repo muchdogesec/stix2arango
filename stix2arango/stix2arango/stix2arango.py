@@ -108,8 +108,8 @@ class Stix2Arango:
         for obj in tqdm(data["objects"], desc='upload_vertices'):
             if obj.get("type") == "relationship":
                 continue
-            obj['_bundle_id'] = self.bundle_id if filename!= "" else ""
-            obj['_file_name'] = self.filename if filename != "" else ""
+            obj['_bundle_id'] = self.bundle_id or ''
+            obj['_file_name'] = self.filename or ''
             obj['_stix2arango_note'] = notes or self.note
             obj['_record_md5_hash'] = utils.generate_md5(obj)
             obj.update(self.arangodb_extra_data)
