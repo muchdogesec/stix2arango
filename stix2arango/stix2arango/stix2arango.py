@@ -98,7 +98,7 @@ class Stix2Arango:
             object_list.append(obj)
         return object_list
 
-    def process_bundle_into_graph(self, filename: str, data, notes=None):
+    def process_bundle_into_graph(self, filename: str, data, notes=None, is_default_objects=False):
         module_logger.info(f"Reading vertex from file {self.file} now")
 
         if data.get("type", None) != "bundle":
@@ -108,11 +108,12 @@ class Stix2Arango:
         for obj in tqdm(data["objects"], desc='upload_vertices'):
             if obj.get("type") == "relationship":
                 continue
-            obj['_bundle_id'] = self.bundle_id if filename!= "" else ""
-            obj['_file_name'] = self.filename if filename != "" else ""
             obj['_stix2arango_note'] = notes or self.note
             obj['_record_md5_hash'] = utils.generate_md5(obj)
-            obj.update(self.arangodb_extra_data)
+            if not is_default_objects:
+                obj['_bundle_id'] = self.bundle_id or ''
+                obj['_file_name'] = self.filename or ''
+                obj.update(self.arangodb_extra_data)
             objects.append(obj)
             insert_data.append([
                     obj.get("type"), obj.get("id"),
@@ -199,7 +200,8 @@ class Stix2Arango:
                 "type": "bundle",
                 "objects": self.default_objects()
             },
-            notes="automatically imported on collection creation"
+            notes="automatically imported on collection creation",
+            is_default_objects=True,
         )
 
 

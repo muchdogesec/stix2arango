@@ -52,7 +52,7 @@ def create_relationship_obj(
         relationship_object["_from"] = f"{arango_obj.core_collection_vertex}/{source}"
         relationship_object["_to"] = f"{arango_obj.core_collection_vertex}/{target}"
         relationship_object['_bundle_id'] = bundle_id
-        relationship_object['_file_name'] = os.path.basename(arango_obj.file)  if len(arango_obj.file.split("/")) > 1 else ""
+        relationship_object['_file_name'] = os.path.basename(arango_obj.file or '')
         relationship_object['_stix2arango_note'] = arango_obj.note
         relationship_object['_record_created'] = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')
         relationship_object['_record_modified'] = relationship_object['_record_created']
