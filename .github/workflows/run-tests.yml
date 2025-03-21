@@ -1,0 +1,52 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    environment: s2a_tests
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: start arangodb
+        run: |
+          docker run --name s2a-action-arangodb -d -p 8529:8529 -e ARANGO_ROOT_PASSWORD= arangodb/arangodb:latest 
+
+          RETRY_DELAY=3
+          RETRY_COUNT=10
+          echo "Waiting for server to start"
+          curl --retry-delay $RETRY_DELAY --retry $RETRY_COUNT --retry-all-errors localhost:8529/_api > /dev/null
+          if [ $? -ne 0 ]; then
+            echo "exiting after waiting $(( $RETRY_DELAY * $RETRY_COUNT )) seconds for arangodb to start"
+            exit 1
+          fi
+    
+          
+      - name: Set .env testing purpose
+        run: |
+            set -a; 
+            source tests/tests.env
+            set +a;
+
+            cp tests/tests.env .env
+
+      - name: test all
+        id: test-endpoints
+        run: |
+          pip install -r tests/requirements.txt .
+
+          pytest tests/
