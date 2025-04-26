@@ -141,14 +141,15 @@ class Stix2Arango:
             raise Exception("Provided file is not a STIX bundle. Aborted")
         module_logger.info("Mapping Prebuilt Relationship Objects -> ")
         objects = []; inserted_data = []
+        obj : dict
         for obj in tqdm(data["objects"], desc='upload_edges'):
             if obj.get("type") == "relationship":
 
                 source_ref = obj.get("source_ref")
                 target_ref = obj.get("target_ref")
                 
-                obj["_from"] = f"{self.core_collection_vertex}/{source_ref}"
-                obj["_to"] = f"{self.core_collection_vertex}/{target_ref}"
+                obj.setdefault('_from', f"{self.core_collection_vertex}/{source_ref}")
+                obj.setdefault('_to', f"{self.core_collection_vertex}/{target_ref}")
                 obj['_bundle_id'] = data.get("id")
                 obj['_file_name'] = filename
                 obj['_stix2arango_note'] = self.note
