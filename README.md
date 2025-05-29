@@ -1,5 +1,7 @@
 # stix2arango
 
+[![codecov](https://codecov.io/gh/muchdogesec/stix2arango/graph/badge.svg?token=YI0CEBBHHL)](https://codecov.io/gh/muchdogesec/stix2arango)
+
 ## Overview
 
 ![](docs/stix2arango.png)

@@ -9,7 +9,7 @@ on:
 jobs:
   run-tests:
     runs-on: ubuntu-latest
-    environment: s2a_tests
+    environment: test_pipeline
     
     steps:
       - name: Checkout repository
