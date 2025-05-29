@@ -1,6 +1,6 @@
 # python3 -m unittest tests/test_13-updating-smos.py
 
-from tests.base_test import BaseTestArangoDBQueries
+from full_tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):
 
@@ -9,15 +9,12 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         super().load_configuration()
         cls.ARANGODB_DATABASE = "s2a_tests"
         cls.ARANGODB_COLLECTION = "test13"
-        cls.STIX2ARANGO_NOTE_1 = "test13"
-        cls.STIX2ARANGO_NOTE_2 = "test13"
-        cls.STIX2ARANGO_NOTE_3 = "test13"
-        cls.TEST_FILE_1 = "smo-original.json"
-        cls.TEST_FILE_2 = "smo-updated.json"
-        cls.TEST_FILE_3 = "smo-updated-2.json"
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_1 = "false"
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_2 = "false"
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_3 = "false"
+        cls.FILES = [
+            dict(file="smo-original.json", ignore_embedded_relationships=False, stix2arango_note="test13"),
+            dict(file="smo-updated.json", ignore_embedded_relationships=False, stix2arango_note="test13"),
+            dict(file="smo-updated-2.json", ignore_embedded_relationships=False, stix2arango_note="test13"),
+        ]
+
 
     def test_query_1(self):
         query = """

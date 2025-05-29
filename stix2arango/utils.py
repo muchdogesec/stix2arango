@@ -78,16 +78,6 @@ def generate_md5(obj: dict):
     return hashlib.md5(json_str).hexdigest()
 
 
-def read_file_data(filename:str):
-    with open(filename, "r") as input_file:
-        file_data = input_file.read()
-        try:
-            data = json.loads(file_data)
-        except Exception as e:
-            raise Exception("Invalid file type") from e
-    return data
-
-
 def get_vertex_and_edge_collection_names(name):
         ENDINGS = ["vertex_collection", "edge_collection"]
         splits = name.split("_")

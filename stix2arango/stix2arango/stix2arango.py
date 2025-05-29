@@ -77,15 +77,6 @@ class Stix2Arango:
                 # self.add_computed_values(collection, dict(name='_source_type', expression='RETURN FIRST(SPLIT(@doc.source_ref, "--"))', overwrite=True))
                 # self.add_computed_values(collection, dict(name='_target_type', expression='RETURN FIRST(SPLIT(@doc.target_ref, "--"))', overwrite=True))
 
-    def add_computed_values(self, collection: StandardCollection, value_computer):
-        properties = collection.properties()
-        computed_values = properties.get('computedValues', [])
-        for i, v in enumerate(computed_values):
-            if v['name'] == value_computer['name']:
-                computed_values.pop(i)
-                break
-        computed_values.append(value_computer)
-        collection.configure(computed_values=computed_values)
 
 
     def default_objects(self):

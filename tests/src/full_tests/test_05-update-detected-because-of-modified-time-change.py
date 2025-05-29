@@ -1,6 +1,6 @@
-# python3 -m unittest tests/test_06-update-detected-because-of-modified-time-change-not-in-order.py
+# python3 -m unittest tests/test_05-update-detected-because-of-modified-time-change.py
 
-from tests.base_test import BaseTestArangoDBQueries
+from full_tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):
 
@@ -8,21 +8,18 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def load_configuration(cls):
         super().load_configuration()
         cls.ARANGODB_DATABASE = "s2a_tests"
-        cls.ARANGODB_COLLECTION = "test06"
-        cls.STIX2ARANGO_NOTE_1 = "test06"
-        cls.STIX2ARANGO_NOTE_2 = "test06"
-        cls.STIX2ARANGO_NOTE_3 = "test06"
-        cls.TEST_FILE_1 = "sigma-rule-bundle-condensed-update-2.json"
-        cls.TEST_FILE_2 = "sigma-rule-bundle-condensed-update-1.json"
-        cls.TEST_FILE_3 = "sigma-rule-bundle-condensed-original.json"
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_1 = "false"
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_2 = "false"
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_3 = "false"
+        cls.ARANGODB_COLLECTION = "test05"
+        cls.FILES = [
+            dict(file="sigma-rule-bundle-condensed-original.json", ignore_embedded_relationships=False, stix2arango_note="test05"),
+            dict(file="sigma-rule-bundle-condensed-update-1.json", ignore_embedded_relationships=False, stix2arango_note="test05"),
+            dict(file="sigma-rule-bundle-condensed-update-2.json", ignore_embedded_relationships=False, stix2arango_note="test05"),
+        ]
+
 
     def test_query_1(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test06_vertex_collection
+            FOR doc IN test05_vertex_collection
                 FILTER doc._is_latest == true
                 AND doc._stix2arango_note != "automatically imported on collection creation"
                 RETURN doc
@@ -37,7 +34,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_2(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test06_vertex_collection
+            FOR doc IN test05_vertex_collection
                 FILTER doc._is_latest == false
                 AND doc._stix2arango_note != "automatically imported on collection creation"
                 RETURN doc
@@ -51,7 +48,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
     def test_query_3(self):
         query = """
-        FOR doc IN test06_vertex_collection
+        FOR doc IN test05_vertex_collection
             FILTER doc._stix2arango_note != "automatically imported on collection creation"
             AND doc.id == "indicator--7a5dedb9-30f9-51c0-a49d-91aeda1fd7fd"
             SORT doc.modified DESC
@@ -90,7 +87,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_4(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test06_edge_collection
+            FOR doc IN test05_edge_collection
                 FILTER doc._is_latest == true
                 AND doc._is_ref == false
                 RETURN doc
@@ -105,7 +102,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_5(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test06_edge_collection
+            FOR doc IN test05_edge_collection
                 FILTER doc._is_latest == false
                 AND doc._is_ref == false
                 RETURN doc
@@ -119,16 +116,16 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
     def test_query_6(self):
         query = """
-        FOR doc IN test06_edge_collection
+        FOR doc IN test05_edge_collection
             FILTER doc._stix2arango_note != "automatically imported on collection creation"
             AND doc._is_ref == false
             AND doc.id == "relationship--3089bdec-3d25-5d1b-a6ac-9d152ab14e35"
             SORT doc.modified DESC
-            RETURN {
-                id: doc.id,
-                _is_latest: doc._is_latest,
-                modified: doc.modified
-            }
+                RETURN {
+                    id: doc.id,
+                    _is_latest: doc._is_latest,
+                    modified: doc.modified
+                }
         """
         expected_result = [
             {
@@ -155,7 +152,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_7(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test06_edge_collection
+            FOR doc IN test05_edge_collection
                 FILTER doc._is_latest == true
                 AND doc._is_ref == true
                 RETURN doc
@@ -170,7 +167,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def test_query_8(self):
         query = """
         RETURN LENGTH(
-            FOR doc IN test06_edge_collection
+            FOR doc IN test05_edge_collection
                 FILTER doc._is_latest == false
                 AND doc._is_ref == true
                 RETURN doc
@@ -185,7 +182,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
     def test_query_9(self):
         query = """
-        FOR doc IN test06_edge_collection
+        FOR doc IN test05_edge_collection
             FILTER doc._is_ref == true
             AND doc.id == "relationship--6b91fcdc-997d-5317-ae08-c001fb6d6d08"
             SORT doc.modified DESC
@@ -205,13 +202,13 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
-        # this object is not updated so only one is_ref object ever created
+        # because this embedded ref was generated from an objects that is not updated
 
     def test_query_10(self):
         query = """
-        FOR doc IN test06_edge_collection
+        FOR doc IN test05_edge_collection
             FILTER doc._is_ref == true
-            AND doc.id == "relationship--5f8d9c38-5c00-53e2-b520-01694d0f8085"
+            AND doc.id == "relationship--fb8916a5-d2b8-5f7e-b381-0c796c354dc3"
             SORT doc.modified DESC
             RETURN {
                 id: doc.id,
@@ -221,17 +218,17 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         """
         expected_result = [
               {
-                "id": "relationship--5f8d9c38-5c00-53e2-b520-01694d0f8085",
+                "id": "relationship--fb8916a5-d2b8-5f7e-b381-0c796c354dc3",
                 "_is_latest": True,
                 "modified": "2024-01-01T00:00:00.000Z"
               },
               {
-                "id": "relationship--5f8d9c38-5c00-53e2-b520-01694d0f8085",
+                "id": "relationship--fb8916a5-d2b8-5f7e-b381-0c796c354dc3",
                 "_is_latest": False,
                 "modified": "2023-12-12T00:00:00.000Z"
               },
               {
-                "id": "relationship--5f8d9c38-5c00-53e2-b520-01694d0f8085",
+                "id": "relationship--fb8916a5-d2b8-5f7e-b381-0c796c354dc3",
                 "_is_latest": False,
                 "modified": "2023-02-28T00:00:00.000Z"
               }
@@ -239,7 +236,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
-        # 3 updates, highest modified time is always is latest
+        # because this embedded ref was generated from an objects that is not updated
 
 if __name__ == '__main__':
     unittest.main()

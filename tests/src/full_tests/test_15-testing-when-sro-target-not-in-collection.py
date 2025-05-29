@@ -1,6 +1,6 @@
-# python3 -m unittest tests/test_16-testing-when-sro-source-not-in-collection.py
+# python3 -m unittest tests/test_15-testing-when-sro-target-not-in-collection.py
 
-from tests.base_test import BaseTestArangoDBQueries
+from full_tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):
 
@@ -8,21 +8,16 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def load_configuration(cls):
         super().load_configuration()
         cls.ARANGODB_DATABASE = "s2a_tests"
-        cls.ARANGODB_COLLECTION = "test16"
-        cls.STIX2ARANGO_NOTE_1 = "test16"
-        cls.STIX2ARANGO_NOTE_2 = ""
-        cls.STIX2ARANGO_NOTE_3 = ""
-        cls.TEST_FILE_1 = "source-object-does-not-exist.json"
-        cls.TEST_FILE_2 = ""
-        cls.TEST_FILE_3 = ""
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_1 = "true"
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_2 = ""
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_3 = ""
+        cls.ARANGODB_COLLECTION = "test15"
+        cls.FILES = [
+            dict(file="target-object-does-not-exist.json", ignore_embedded_relationships=True, stix2arango_note="test15"),
+        ]
+
 
     def test_query_1(self):
         query = """
         RETURN LENGTH(
-          FOR doc IN test16_edge_collection
+          FOR doc IN test15_edge_collection
               RETURN doc
         )
         """
@@ -34,9 +29,9 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
     def test_query_2(self):
         query = """
-        FOR doc IN test16_edge_collection
+        FOR doc IN test15_edge_collection
             FILTER doc.id == "relationship--00038d0e-7fc7-41c3-9055-edb4d87ea912"
-            AND doc._stix2arango_ref_err == true
+                AND doc._stix2arango_ref_err == true
                 RETURN {
                 _stix2arango_ref_err: doc._stix2arango_ref_err,
                 id: doc.id
