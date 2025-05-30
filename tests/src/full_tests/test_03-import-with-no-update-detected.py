@@ -1,6 +1,6 @@
 # python3 -m unittest tests/test_03-import-with-no-update-detected.py
 
-from tests.base_test import BaseTestArangoDBQueries
+from full_tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):
 
@@ -9,15 +9,12 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         super().load_configuration()
         cls.ARANGODB_DATABASE = "s2a_tests"
         cls.ARANGODB_COLLECTION = "test03"
-        cls.STIX2ARANGO_NOTE_1 = "test03"
-        cls.STIX2ARANGO_NOTE_2 = "test03"
-        cls.STIX2ARANGO_NOTE_3 = "test03"
-        cls.TEST_FILE_1 = "sigma-rule-bundle.json"
-        cls.TEST_FILE_2 = "sigma-rule-bundle-another.json"
-        cls.TEST_FILE_3 = "sigma-rule-bundle-yet-another.json"
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_1 = "false"
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_2 = "false"
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_3 = "false"
+
+        cls.FILES = [
+            dict(file="sigma-rule-bundle.json", ignore_embedded_relationships=False, stix2arango_note="test03"),
+            dict(file="sigma-rule-bundle-another.json", ignore_embedded_relationships=False, stix2arango_note="test03"),
+            dict(file="sigma-rule-bundle-yet-another.json", ignore_embedded_relationships=False, stix2arango_note="test03"),
+        ]
 
     def test_query_1(self):
         query = """

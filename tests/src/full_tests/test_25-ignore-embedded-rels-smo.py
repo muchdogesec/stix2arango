@@ -1,6 +1,6 @@
 # python3 -m unittest tests/test_25-ignore-embedded-rels-smo.py
 
-from tests.base_test import BaseTestArangoDBQueries
+from full_tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):
 
@@ -9,18 +9,11 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         super().load_configuration()
         cls.ARANGODB_DATABASE = "s2a_tests"
         cls.ARANGODB_COLLECTION = "test25"
-        cls.STIX2ARANGO_NOTE_1 = "test25"
-        cls.STIX2ARANGO_NOTE_2 = ""
-        cls.STIX2ARANGO_NOTE_3 = ""
-        cls.TEST_FILE_1 = "embedded-ref-sdo-sco-sro-smo.json"
-        cls.TEST_FILE_2 = ""
-        cls.TEST_FILE_3 = ""
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_1 = "false"
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_2 = ""
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_3 = ""
-        cls.CUSTOM_FLAG_1 = "--ignore_embedded_relationships_smo true"
-        cls.CUSTOM_FLAG_2 = ""
-        cls.CUSTOM_FLAG_2 = ""
+
+        cls.FILES = [
+            dict(file="embedded-ref-sdo-sco-sro-smo.json", ignore_embedded_relationships=False, stix2arango_note="test25", ignore_embedded_relationships_smo=True),
+        ]
+
 
 ## SDO has 3 SCO has 2 SRO has 3 = 8
 

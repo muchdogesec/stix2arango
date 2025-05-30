@@ -1,6 +1,6 @@
 # python3 -m unittest tests/test_18-testing-nested-embedded-ref.py
 
-from tests.base_test import BaseTestArangoDBQueries
+from full_tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):
 
@@ -9,15 +9,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         super().load_configuration()
         cls.ARANGODB_DATABASE = "s2a_tests"
         cls.ARANGODB_COLLECTION = "test18"
-        cls.STIX2ARANGO_NOTE_1 = "test18"
-        cls.STIX2ARANGO_NOTE_2 = ""
-        cls.STIX2ARANGO_NOTE_3 = ""
-        cls.TEST_FILE_1 = "nested-embedded-ref.json"
-        cls.TEST_FILE_2 = ""
-        cls.TEST_FILE_3 = ""
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_1 = "false"
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_2 = ""
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_3 = ""
+        cls.FILES = [
+            dict(file="nested-embedded-ref.json", ignore_embedded_relationships=False, stix2arango_note="test18"),
+        ]
+
 
     def test_query_1(self):
         query = """
