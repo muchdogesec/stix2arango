@@ -74,16 +74,11 @@ class Stix2Arango:
                 collection.add_index(dict(type='persistent', fields=["source_ref", "target_ref", "relationship_type"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash", "id"], inBackground=True, name=f"relation_from_{time}"))
                 collection.add_index(dict(type='persistent', fields=["target_ref", "source_ref", "relationship_type"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash", "id"], inBackground=True, name=f"relation_to_{time}"))
                 collection.add_index(dict(type='persistent', fields=["relationship_type", "target_ref", "source_ref"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash", "id"], inBackground=True, name=f"relation_type_{time}"))
-                # self.add_computed_values(collection, dict(name='_source_type', expression='RETURN FIRST(SPLIT(@doc.source_ref, "--"))', overwrite=True))
-                # self.add_computed_values(collection, dict(name='_target_type', expression='RETURN FIRST(SPLIT(@doc.target_ref, "--"))', overwrite=True))
 
 
 
     def default_objects(self):
-        object_list = []
-        for obj in config.DEFAULT_OBJECT_URL:
-            data = json.loads(utils.load_file_from_url(obj))
-            object_list.append(data)
+        object_list = [self.identity_ref, *self.marking_definition_refs]
 
         for obj in json.loads(pkgutil.get_data('stix2arango', "templates/marking-definition.json")):
             object_list.append(obj)
@@ -144,7 +139,7 @@ class Stix2Arango:
                 obj['_bundle_id'] = data.get("id")
                 obj['_file_name'] = filename
                 obj['_stix2arango_note'] = self.note
-                obj['_is_ref'] = False
+                obj.setdefault('_is_ref', False)
                 # obj['_record_md5_hash'] = utils.generate_md5(obj)
                 obj.update(self.arangodb_extra_data)
                 objects.append(obj)

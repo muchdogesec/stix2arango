@@ -1,3 +1,5 @@
+from contextlib import contextmanager
+from functools import lru_cache
 import re
 import requests
 import logging
@@ -8,12 +10,13 @@ import os
 from . import config
 from datetime import datetime
 module_logger = logging.getLogger("data_ingestion_service")
+from arango.database import StandardDatabase
 
 
 EMBEDDED_RELATIONSHIP_RE = re.compile(r"([a-z\-_]+)[_\-]refs{0,1}")
 
 
-
+@lru_cache
 def load_file_from_url(url):
     try:
         response = requests.get(url)
@@ -30,10 +33,9 @@ def create_relationship_obj(
         return []
     for target in targets:
         relationship_object= {
-            "created_by_ref": arango_obj.identity_ref.get("id"),
             "relationship_type": relationship,
         }
-        for key in ["created", "modified", "object_marking_refs"]:
+        for key in ["created", "modified", "object_marking_refs", "created_by_ref"]:
             if key in obj:
                 relationship_object[key] = obj[key]
         
