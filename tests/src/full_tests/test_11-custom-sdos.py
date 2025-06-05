@@ -1,6 +1,6 @@
 # python3 -m unittest tests/test_11-custom-sdos.py
 
-from tests.base_test import BaseTestArangoDBQueries
+from full_tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):
 
@@ -9,15 +9,11 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         super().load_configuration()
         cls.ARANGODB_DATABASE = "s2a_tests"
         cls.ARANGODB_COLLECTION = "test11"
-        cls.STIX2ARANGO_NOTE_1 = "test11"
-        cls.STIX2ARANGO_NOTE_2 = "test11"
-        cls.STIX2ARANGO_NOTE_3 = ""
-        cls.TEST_FILE_1 = "custom-sdo-original.json"
-        cls.TEST_FILE_2 = "custom-sdo-updated.json"
-        cls.TEST_FILE_3 = ""
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_1 = "false"
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_2 = "false"
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_3 = ""
+        cls.FILES = [
+            dict(file="custom-sdo-original.json", ignore_embedded_relationships=False, stix2arango_note="test11"),
+            dict(file="custom-sdo-updated.json", ignore_embedded_relationships=False, stix2arango_note="test11"),
+        ]
+
 
     def test_query_1(self):
         query = """

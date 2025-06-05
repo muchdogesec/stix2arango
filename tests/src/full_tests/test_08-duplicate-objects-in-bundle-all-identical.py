@@ -1,6 +1,6 @@
 # python3 -m unittest tests/test_08-duplicate-objects-in-bundle-all-identical.py
 
-from tests.base_test import BaseTestArangoDBQueries
+from full_tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):
 
@@ -9,15 +9,11 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         super().load_configuration()
         cls.ARANGODB_DATABASE = "s2a_tests"
         cls.ARANGODB_COLLECTION = "test08"
-        cls.STIX2ARANGO_NOTE_1 = "test08"
-        cls.STIX2ARANGO_NOTE_2 = ""
-        cls.STIX2ARANGO_NOTE_3 = ""
-        cls.TEST_FILE_1 = "duplicate-objects-all-properties-same.json"
-        cls.TEST_FILE_2 = ""
-        cls.TEST_FILE_3 = ""
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_1 = "false"
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_2 = ""
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_3 = ""
+        cls.FILES = [
+            dict(file="duplicate-objects-all-properties-same.json", ignore_embedded_relationships=False, stix2arango_note="test08"),
+        ]
+
+
 
     def test_query_1(self):
         query = """
