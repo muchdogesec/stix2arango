@@ -155,7 +155,7 @@ class ArangoDBService:
                 },
             )
         )
-        new_insertions = [obj for obj in objects if obj["id"] not in existing_objects]
+        new_insertions = [obj for obj in objects if f'{obj["id"]};{obj["_record_md5_hash"]}' not in existing_objects]
         self.db.collection(collection_name).import_bulk(new_insertions)
         return [obj["id"] for obj in new_insertions], existing_objects
 
