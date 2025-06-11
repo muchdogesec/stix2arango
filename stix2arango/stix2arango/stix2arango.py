@@ -94,7 +94,7 @@ class Stix2Arango:
         for obj in tqdm(data["objects"], desc='upload_vertices'):
             if obj.get("type") == "relationship":
                 continue
-            obj['_stix2arango_note'] = notes or self.note
+            obj.setdefault('_stix2arango_note',  notes or self.note)
             obj['_record_md5_hash'] = utils.generate_md5(obj)
             if not is_default_objects:
                 obj['_bundle_id'] = self.bundle_id or ''
@@ -138,8 +138,8 @@ class Stix2Arango:
                 obj.setdefault('_to', f"{self.core_collection_vertex}/{target_ref}")
                 obj['_bundle_id'] = data.get("id")
                 obj['_file_name'] = filename
-                obj['_stix2arango_note'] = self.note
                 obj.setdefault('_is_ref', False)
+                obj.setdefault('_stix2arango_note', self.note)
                 # obj['_record_md5_hash'] = utils.generate_md5(obj)
                 obj.update(self.arangodb_extra_data)
                 objects.append(obj)
