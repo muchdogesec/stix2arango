@@ -1,3 +1,5 @@
+from contextlib import contextmanager
+from functools import lru_cache
 import re
 import requests
 import logging
@@ -8,12 +10,13 @@ import os
 from . import config
 from datetime import datetime
 module_logger = logging.getLogger("data_ingestion_service")
+from arango.database import StandardDatabase
 
 
 EMBEDDED_RELATIONSHIP_RE = re.compile(r"([a-z\-_]+)[_\-]refs{0,1}")
 
 
-
+@lru_cache
 def load_file_from_url(url):
     try:
         response = requests.get(url)
@@ -30,10 +33,9 @@ def create_relationship_obj(
         return []
     for target in targets:
         relationship_object= {
-            "created_by_ref": arango_obj.identity_ref.get("id"),
             "relationship_type": relationship,
         }
-        for key in ["created", "modified", "object_marking_refs"]:
+        for key in ["created", "modified", "object_marking_refs", "created_by_ref"]:
             if key in obj:
                 relationship_object[key] = obj[key]
         
@@ -76,16 +78,6 @@ def generate_md5(obj: dict):
             obj_copy[k] = v
     json_str = json.dumps(obj_copy, sort_keys=True, default=str).encode("utf-8")
     return hashlib.md5(json_str).hexdigest()
-
-
-def read_file_data(filename:str):
-    with open(filename, "r") as input_file:
-        file_data = input_file.read()
-        try:
-            data = json.loads(file_data)
-        except Exception as e:
-            raise Exception("Invalid file type") from e
-    return data
 
 
 def get_vertex_and_edge_collection_names(name):

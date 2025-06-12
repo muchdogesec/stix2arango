@@ -1,6 +1,6 @@
 # python3 -m unittest tests/test_24-test-hidden-properties.py
 
-from tests.base_test import BaseTestArangoDBQueries
+from full_tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):
 
@@ -9,15 +9,10 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         super().load_configuration()
         cls.ARANGODB_DATABASE = "s2a_tests"
         cls.ARANGODB_COLLECTION = "test24"
-        cls.STIX2ARANGO_NOTE_1 = "test24"
-        cls.STIX2ARANGO_NOTE_2 = ""
-        cls.STIX2ARANGO_NOTE_3 = ""
-        cls.TEST_FILE_1 = "sigma-rule-bundle.json"
-        cls.TEST_FILE_2 = ""
-        cls.TEST_FILE_3 = ""
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_1 = "false"
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_2 = ""
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_3 = ""
+        cls.FILES = [
+            dict(file="sigma-rule-bundle.json", ignore_embedded_relationships=False, stix2arango_note="test24"),
+        ]
+
         
 # test everything has custom hidden fields in vertex
 

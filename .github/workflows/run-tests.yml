@@ -5,6 +5,8 @@ on:
     branches:
       - main
   pull_request:
+permissions:
+  contents: read
 
 jobs:
   run-tests:
@@ -45,8 +47,21 @@ jobs:
             cp tests/tests.env .env
 
       - name: test all
-        id: test-endpoints
+        id: test-all
         run: |
-          pip install -r tests/requirements.txt .
+          pip install -r tests/requirements.txt
+          pip install -e .
 
-          pytest tests/
+          pytest --cov --cov-branch --cov-report=xml --junitxml=junit.xml -o junit_family=legacy tests/
+
+      - name: Upload coverage reports to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

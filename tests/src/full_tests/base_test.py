@@ -1,10 +1,13 @@
+import sys
 import unittest
+from unittest.mock import patch
 import requests
 import base64
 import json
 import subprocess
 import os
 from dotenv import load_dotenv
+from stix2arango.__main__ import main as run_s2a
 
 # Load environment variables from .env file
 load_dotenv()
@@ -31,6 +34,9 @@ class BaseTestArangoDBQueries(unittest.TestCase):
     def load_configuration(cls):
         cls.ARANGODB_DATABASE = os.getenv("ARANGODB_DATABASE")
         cls.ARANGODB_COLLECTION = os.getenv("ARANGODB_COLLECTION")
+        cls.FILES: list[dict] = []
+
+
         cls.STIX2ARANGO_NOTE_1 = os.getenv("STIX2ARANGO_NOTE_1")
         cls.STIX2ARANGO_NOTE_2 = os.getenv("STIX2ARANGO_NOTE_2")
         cls.STIX2ARANGO_NOTE_3 = os.getenv("STIX2ARANGO_NOTE_3")
@@ -57,7 +63,15 @@ class BaseTestArangoDBQueries(unittest.TestCase):
 
     @classmethod
     def run_script(cls):
-        commands = []
+        for file in cls.FILES:
+            args = ["stix2arango.py"]
+            file.update(database=cls.ARANGODB_DATABASE, collection=cls.ARANGODB_COLLECTION, file=f"tests/files/stix2arango/{file['file']}")
+            for k,v in file.items():
+                args.append("--"+k)
+                args.append(str(v))
+            with patch.object(sys, 'argv', args):
+                setup = run_s2a()
+        return
 
         if cls.TEST_FILE_1:
             command = f'python3 stix2arango.py --file tests/files/stix2arango/{cls.TEST_FILE_1} --database {cls.ARANGODB_DATABASE} --collection {cls.ARANGODB_COLLECTION} --ignore_embedded_relationships {cls.IGNORE_EMBEDDED_RELATIONSHIPS_1}'

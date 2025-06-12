@@ -1,6 +1,6 @@
-# python3 -m unittest tests/test_20-embedded-sro-update-for-sdo.py
+# python3 -m unittest tests/test_22-embedded-sro-update-for-smo.py
 
-from tests.base_test import BaseTestArangoDBQueries
+from full_tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):
 
@@ -8,37 +8,33 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
     def load_configuration(cls):
         super().load_configuration()
         cls.ARANGODB_DATABASE = "s2a_tests"
-        cls.ARANGODB_COLLECTION = "test20"
-        cls.STIX2ARANGO_NOTE_1 = "test20"
-        cls.STIX2ARANGO_NOTE_2 = "test20"
-        cls.STIX2ARANGO_NOTE_3 = ""
-        cls.TEST_FILE_1 = "embedded-ref-object.json"
-        cls.TEST_FILE_2 = "embedded-ref-object-updated.json"
-        cls.TEST_FILE_3 = ""
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_1 = "false"
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_2 = "false"
-        cls.IGNORE_EMBEDDED_RELATIONSHIPS_3 = ""
+        cls.ARANGODB_COLLECTION = "test22"
+        cls.FILES = [
+            dict(file="smo-embedded-ref-1.json", ignore_embedded_relationships=False, stix2arango_note="test22"),
+            dict(file="smo-embedded-ref-2.json", ignore_embedded_relationships=False, stix2arango_note="test22"),
+        ]
+
 
     def test_query_1(self):
         query = """
         RETURN LENGTH(
-          FOR doc IN test20_edge_collection
+          FOR doc IN test22_edge_collection
             FILTER doc._is_latest == true
             AND doc._is_ref == true
             AND doc._stix2arango_note != "automatically imported on collection creation"
               RETURN doc
         )
         """
-        expected_result = [4]
+        expected_result = [3]
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
-        # the latest object has ref properties
+        # the latest object has 3 refs
 
     def test_query_2(self):
         query = """
         RETURN LENGTH(
-          FOR doc IN test20_edge_collection
+          FOR doc IN test22_edge_collection
             FILTER doc._is_latest == false
             AND doc._is_ref == true
             AND doc._stix2arango_note != "automatically imported on collection creation"
@@ -49,28 +45,27 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
-        # the old object had 3 ref properties
+        # whilst the smo is updated with different md5 hash, the embedded sros created have exactly the same md5 hash, so it is not updated
 
     def test_query_3(self):
         query = """
         RETURN LENGTH(
-          FOR doc IN test20_edge_collection
-            FILTER doc.id == "relationship--5b32a703-4317-5f58-b1ce-03735c756035"
-            AND HAS(doc, 'modified') AND HAS(doc, 'created')
+          FOR doc IN test22_edge_collection
+            FILTER doc.id == "relationship--1cce4dca-d80c-5650-a9c2-858ad6707779"
+            AND NOT HAS(doc, 'modified') AND HAS(doc, 'created') AND doc._is_latest
             RETURN doc
         )
         """
-        expected_result = [2]
+        expected_result = [1]
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
-        # the embedded SRO should have modified and created time because the source indicator object does
+        # check created time exists
 
     def test_query_4(self):
         query = """
-        FOR doc IN test20_edge_collection
-            FILTER doc.id == "relationship--5b32a703-4317-5f58-b1ce-03735c756035"
-            SORT doc.modified
+        FOR doc IN test22_edge_collection
+            FILTER doc.id == "relationship--1cce4dca-d80c-5650-a9c2-858ad6707779" AND doc._is_latest
             RETURN {
                 modified: doc.modified,
                 created: doc.created
@@ -78,18 +73,14 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         """
         expected_result = [
           {
-            "modified": "2023-02-14T00:00:00.000Z",
-            "created": "2021-12-07T00:00:00.000Z"
-          },
-          {
-            "modified": "2024-02-14T00:00:00.000Z",
-            "created": "2021-12-07T00:00:00.000Z"
+            "modified": None,
+            "created": "2016-08-01T00:00:00.000Z"
           }
         ]
         result = self.query_arango(query)
         self.assertEqual(result['result'], expected_result)
 
-        # check modified times are correct
+        # follow up to test 3 checking that created property is as expected
 
 if __name__ == '__main__':
     unittest.main()
