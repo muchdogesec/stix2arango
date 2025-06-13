@@ -9,7 +9,7 @@ import re
 import time
 import uuid
 
-from stix2arango.stix2arango.bundle_loader import BundleLoader
+from .bundle_loader import BundleLoader
 
 from .. import config
 from tqdm import tqdm
