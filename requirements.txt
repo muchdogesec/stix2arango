@@ -16,6 +16,8 @@ charset-normalizer==3.4.2
     # via requests
 idna==3.10
     # via requests
+ijson==3.4.0
+    # via stix2arango (pyproject.toml)
 importlib-metadata==8.7.0
     # via python-arango
 jsonschema==4.24.0 ; python_version >= "3.8"
