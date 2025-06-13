@@ -23,6 +23,7 @@ dependencies = [
     "jsonschema>=4.22.0; python_version >= '3.8'",
     "requests>=2.31.0; python_version >= '3.7'",
     "python-dotenv>=1.0.1",
+    "ijson>=3.4.0",
   ]
 [project.urls]
 Homepage = "https://github.com/muchdogesec/stix2arango"
