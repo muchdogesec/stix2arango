@@ -51,8 +51,8 @@ class Stix2Arango:
         self.file = file
         self.is_large_file = is_large_file
         self.note = stix2arango_note or ""
-        self.identity_ref = json.loads(utils.load_file_from_url(config.STIX2ARANGO_IDENTITY))
-        self.marking_definition_refs = [json.loads(utils.load_file_from_url(link)) for link in config.MARKING_DEFINITION_REFS]
+        self.identity_ref = utils.load_file_from_url(config.STIX2ARANGO_IDENTITY)
+        self.default_ref_objects = [utils.load_file_from_url(link) for link in config.MARKING_DEFINITION_REFS + config.IDENTITY_REFS]
         self.bundle_id = bundle_id
         self.ignore_embedded_relationships = ignore_embedded_relationships
         self.ignore_embedded_relationships_smo = ignore_embedded_relationships_smo
@@ -80,8 +80,7 @@ class Stix2Arango:
                 collection.add_index(dict(type='persistent', fields=["relationship_type", "target_ref", "source_ref"], storedValues=["modified", "created", "type", "_record_modified", "spec_version", "_record_md5_hash", "id"], inBackground=True, name=f"relation_type_{time}"))
 
     def default_objects(self):
-        object_list = [self.identity_ref, *self.marking_definition_refs]
-
+        object_list = self.default_ref_objects
         for obj in json.loads(pkgutil.get_data('stix2arango', "templates/marking-definition.json")):
             object_list.append(obj)
         return object_list

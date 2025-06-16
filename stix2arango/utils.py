@@ -22,7 +22,7 @@ def load_file_from_url(url):
     try:
         response = requests.get(url)
         response.raise_for_status()  # Raise an HTTPError for bad responses
-        return response.text
+        return json.loads(response.text)
     except requests.exceptions.RequestException as e:
         raise Exception(f"Error loading JSON from {url}: {e}") from e
 
