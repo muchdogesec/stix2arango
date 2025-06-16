@@ -186,7 +186,6 @@ class Stix2Arango:
             raise Exception("file or data must be passed")
 
         if not data:
-            print(self.is_large_file)
             if self.is_large_file:
                 module_logger.info("using large file mode")
                 os.makedirs("db_loader_tempfiles", exist_ok=True)
@@ -198,7 +197,7 @@ class Stix2Arango:
                         {
                             "type": "bundle",
                             "objects": chunk,
-                            "id": "bundle--" + str(uuid.uuid4()),
+                            "id": bundle_loader.bundle_id,
                         }
                     )
                 return  

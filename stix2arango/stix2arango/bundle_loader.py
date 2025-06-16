@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import sqlite3
 import tempfile
+import uuid
 import ijson
 import json
 from collections import Counter
@@ -14,6 +15,7 @@ class BundleLoader:
         self.file_path = Path(file_path)
         self.chunk_size_min = chunk_size_min
         self.groups = None
+        self.bundle_id = "bundle--" + str(uuid.uuid4())
 
         self.db_path = db_path
         if not self.db_path:
@@ -69,7 +71,7 @@ class BundleLoader:
                 obj_id = obj.get('id')
                 to_insert.append(obj)
                 all_ids.setdefault(obj_id, [])
-                if obj['type'] == 'relationship':
+                if obj['type'] == 'relationship' and all(x in obj for x in ['target_ref', 'source_ref']):
                     sr, tr = [obj['source_ref'], obj['target_ref']]
                     all_ids[obj_id].extend([sr, tr])
                     all_ids.setdefault(sr, []).extend([tr, obj_id])
