@@ -73,7 +73,9 @@ def run_command(command, root_path, ignore_embedded_relationships):
         return True
     try:
         print(f"Inserting {file_path} into database {command['database']}...")
-        Stix2Arango(database=command["database"], collection=command["collection"], file=file_path, ignore_embedded_relationships=ignore_embedded_relationships, is_large_file=True).run()
+        s2a = Stix2Arango(database=command["database"], collection=command["collection"], file=file_path, ignore_embedded_relationships=ignore_embedded_relationships, is_large_file=True, skip_default_indexes=True)
+        s2a.always_latest = False
+        s2a.run()
         manager.set_failed(command['version'], failed=False, reason="uploaded to arango")
         print(f"Successfully inserted {command['version']} into database.")
         return True

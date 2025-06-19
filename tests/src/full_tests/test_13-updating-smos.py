@@ -50,7 +50,7 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
         query = """
         FOR doc IN test13_vertex_collection
             FILTER doc.id == "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41aa"
-            SORT doc.doc._is_latest DESC
+            SORT doc.name ASC
             RETURN {
                 id: doc.id,
                 _is_latest: doc._is_latest,
