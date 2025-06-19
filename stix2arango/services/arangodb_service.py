@@ -213,44 +213,6 @@ class ArangoDBService:
 
     def update_is_latest_several(self, object_ids, collection_name):
         # returns newly deprecated _ids
-        # print(len(self.update_is_latest_several2(object_ids, collection_name)))
-        query = """
-            LET matched_objects = ( // collect all the modified into a single list of {id: ?, modified: ?, _record_modified: ?, _key: ?}
-                FOR object in @@collection FILTER object.id IN @object_ids
-                RETURN KEEP(object, 'id', 'modified', '_record_modified', '_key', '_id')
-            )
-            
-            LET modified_map = MERGE( // get max modified by ID
-                FOR object in matched_objects
-                COLLECT id = object.id INTO objects_by_id
-                RETURN (
-                    FOR id_obj  in objects_by_id[*]
-                        SORT id_obj.object.modified DESC, id_obj.object._record_modified DESC
-                        LIMIT 1
-                        RETURN {[id]: id_obj.object._key}
-                    )[0]
-            )
-            
-            
-            FOR doc IN matched_objects
-            LET _is_latest = modified_map[doc.id] == doc._key
-            UPDATE {_key: doc._key, _is_latest} IN @@collection OPTIONS { waitForSync: true }
-            FILTER _is_latest != doc._is_latest AND _is_latest == FALSE
-            RETURN doc._id
-        """
-        retval = self.execute_raw_query(
-            query,
-            bind_vars={
-                "@collection": collection_name,
-                "object_ids": object_ids,
-            },
-        )
-
-        print('////++', len(retval))
-        return retval
-    
-    def update_is_latest_several_new(self, object_ids, collection_name):
-        # returns newly deprecated _ids
         query = """
             FOR doc IN @@collection OPTIONS {indexHint: "s2a_search", forceIndexHint: true}
             FILTER doc.id IN @object_ids
@@ -285,7 +247,7 @@ class ArangoDBService:
         deprecated_key_ids = []  # contains newly deprecated _ids
         for chunk in progress_bar:
             deprecated_key_ids.extend(
-                self.update_is_latest_several_new(chunk, collection_name)
+                self.update_is_latest_several(chunk, collection_name)
             )
             progress_bar.update(len(chunk))
 
