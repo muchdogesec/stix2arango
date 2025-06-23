@@ -1,6 +1,8 @@
+import contextlib
 import os
 import json
 import logging
+import re
 import time
 from typing import Any
 import arango.database
@@ -10,6 +12,8 @@ from arango.exceptions import ArangoServerError
 
 from datetime import datetime, timezone
 from tqdm import tqdm
+
+from stix2arango.services.version_annotator import annotate_versions
 
 from .. import config
 from .. import utils
@@ -138,25 +142,19 @@ class ArangoDBService:
                     _target_type=obj["target_ref"].split("--")[0],
                     _source_type=obj["source_ref"].split("--")[0],
                 )
+        new_insertions = objects #[obj for obj in objects if f'{obj["id"]};{obj["_record_md5_hash"]}' not in existing_objects]
+        existing_objects = {}
 
-        query = """
-            FOR doc in @@collection
-            FILTER doc.id IN KEYS(@objects) AND @objects[doc.id] == doc._record_md5_hash
-            LET obj_hashkey = CONCAT(doc.id, ";", doc._record_md5_hash)
-            RETURN [obj_hashkey, doc._id]
-        """
-
-        existing_objects = dict(
-            self.execute_raw_query(
-                query,
-                bind_vars={
-                    "@collection": collection_name,
-                    "objects": {obj["id"]: obj["_record_md5_hash"] for obj in objects},
-                },
-            )
-        )
-        new_insertions = [obj for obj in objects if f'{obj["id"]};{obj["_record_md5_hash"]}' not in existing_objects]
-        self.db.collection(collection_name).import_bulk(new_insertions)
+        d = self.db.collection(collection_name).insert_many(new_insertions, overwrite_mode="ignore", sync=True)
+        for i, ret in enumerate(d):
+            obj = objects[i]
+            if isinstance(ret, arango.exceptions.DocumentInsertError):
+                if ret.error_code == 1210:
+                    existing_objects[f'{obj["id"]};{obj["_record_md5_hash"]}'] = collection_name + '/' + re.search(r'conflicting key: (.*)', ret.message).group(1)
+                    if 'relationship--7a1682a3-fec3-53ed-8dd5-68f54b1d6f7a' in ret.message:
+                        print(1)
+                else:
+                    raise ret
         return [obj["id"] for obj in new_insertions], existing_objects
 
     def insert_several_objects_chunked(
@@ -197,51 +195,45 @@ class ArangoDBService:
             target_key = id_to_key_map.get(relationship["target_ref"])
 
             relationship["_stix2arango_ref_err"] = not (target_key and source_key)
-            relationship["_from"] = source_key or relationship["_from"]
-            relationship["_to"] = target_key or relationship["_to"]
+            relationship["_from"] = self.fix_edge_ref(source_key or relationship["_from"])
+            relationship["_to"] = self.fix_edge_ref(target_key or relationship["_to"])
             relationship["_record_md5_hash"] = relationship.get(
                 "_record_md5_hash", utils.generate_md5(relationship)
             )
         return self.insert_several_objects_chunked(
             relationships, collection_name, chunk_size=chunk_size
         )
+    
+    @staticmethod
+    def fix_edge_ref(_id):
+        c, _, _key = _id.partition('/')
+        if not c:
+            c = "missing_collection"
+        return f"{c}/{_key}"
 
     def update_is_latest_several(self, object_ids, collection_name):
         # returns newly deprecated _ids
         query = """
-            LET matched_objects = ( // collect all the modified into a single list of {id: ?, modified: ?, _record_modified: ?, _key: ?}
-                FOR object in @@collection FILTER object.id IN @object_ids
-                RETURN KEEP(object, 'id', 'modified', '_record_modified', '_key', '_id')
-            )
-            
-            LET modified_map = MERGE( // get max modified by ID
-                FOR object in matched_objects
-                COLLECT id = object.id INTO objects_by_id
-                RETURN (
-                    FOR id_obj  in objects_by_id[*]
-                        SORT id_obj.object.modified DESC, id_obj.object._record_modified DESC
-                        LIMIT 1
-                        RETURN {[id]: id_obj.object._key}
-                    )[0]
-            )
-            
-            
-            FOR doc IN matched_objects
-            LET _is_latest = modified_map[doc.id] == doc._key
-            UPDATE {_key: doc._key, _is_latest} IN @@collection OPTIONS { waitForSync: true }
-            FILTER _is_latest != doc._is_latest AND _is_latest == FALSE
-            RETURN doc._id
+            FOR doc IN @@collection OPTIONS {indexHint: "s2a_search", forceIndexHint: true}
+            FILTER doc.id IN @object_ids
+            RETURN [doc.id, doc._key, doc.modified, doc._record_modified, doc._is_latest, doc._id]
         """
-        return self.execute_raw_query(
+        out = self.execute_raw_query(
             query,
             bind_vars={
                 "@collection": collection_name,
                 "object_ids": object_ids,
             },
         )
+        out = [dict(zip(('id', '_key', 'modified', '_record_modified', '_is_latest', '_id'), obj_tuple)) for obj_tuple in out]
+        annotated, deprecated = annotate_versions(out)
+        self.db.collection(collection_name).update_many(annotated, sync=True, keep_none=False)
+        return deprecated
+
+
 
     def update_is_latest_several_chunked(
-        self, object_ids, collection_name, edge_collection=None, chunk_size=500
+        self, object_ids, collection_name, edge_collection=None, chunk_size=5000
     ):
         if self.ALWAYS_LATEST:
             logging.debug("Skipped update _is_latest")
@@ -280,13 +272,13 @@ class ArangoDBService:
         self, deprecated_key_ids: list, edge_collection: str
     ):
         query = """
-        FOR doc IN @@collection
+        FOR doc IN @@collection OPTIONS {indexHint: "s2a_search_edge", forceIndexHint: true}
         FILTER doc._from IN @deprecated_key_ids AND doc._is_latest == TRUE
         RETURN doc._id
         """
         items_to_deprecate_full: set[str] = {*deprecated_key_ids}
 
-        while True:
+        while deprecated_key_ids:
             deprecated_key_ids = self.execute_raw_query(
                 query,
                 bind_vars={
@@ -294,8 +286,6 @@ class ArangoDBService:
                     "deprecated_key_ids": deprecated_key_ids,
                 },
             )
-            if not deprecated_key_ids:
-                break
             items_to_deprecate_full.update(deprecated_key_ids)
         return [_id.split("/", 1)[1] for _id in items_to_deprecate_full]
 
@@ -305,3 +295,17 @@ class ArangoDBService:
         if name.endswith(ENDING):
             return name
         return name + ENDING
+    
+    @contextlib.contextmanager
+    def transactional(self, write=None, exclusive=None, sync=True):
+        original_db = self.db
+        transactional_db = self.db.begin_transaction(allow_implicit=True, write=write, exclusive=exclusive, sync=sync)
+        try:
+            self.db = transactional_db
+            yield self
+            transactional_db.commit_transaction()
+        except:
+            transactional_db.abort_transaction()
+            raise
+        finally:
+            self.db = original_db
