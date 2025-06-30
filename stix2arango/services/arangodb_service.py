@@ -23,7 +23,6 @@ module_logger = logging.getLogger("data_ingestion_service")
 
 
 class ArangoDBService:
-    ALWAYS_LATEST = os.getenv("ALWAYS_LATEST", False)
 
     def __init__(
         self,
@@ -36,7 +35,6 @@ class ArangoDBService:
         username=None,
         password=None,
         host_url=None,
-        always_latest=ALWAYS_LATEST,
         **kwargs,
     ):
         self.ARANGO_DB = self.get_db_name(db)
@@ -45,7 +43,6 @@ class ArangoDBService:
         self.COLLECTIONS_EDGE = edge_collections
         self.FORCE_RELATIONSHIP = [relationship] if relationship else None
         self.missing_collection = True
-        self.ALWAYS_LATEST = always_latest
 
         module_logger.info("Establishing connection...")
         client = ArangoClient(hosts=host_url)
@@ -134,8 +131,6 @@ class ArangoDBService:
             obj["_record_created"] = obj.get("_record_created", now)
             obj["_record_modified"] = now
             obj["_key"] = obj.get("_key", f'{obj["id"]}+{now}')
-            if self.ALWAYS_LATEST:
-                obj["_is_latest"] = True
 
             if obj["type"] == "relationship":
                 obj.update(
@@ -235,9 +230,6 @@ class ArangoDBService:
     def update_is_latest_several_chunked(
         self, object_ids, collection_name, edge_collection=None, chunk_size=5000
     ):
-        if self.ALWAYS_LATEST:
-            logging.debug("Skipped update _is_latest")
-            return []
         logging.info(f"Updating _is_latest for {len(object_ids)} newly inserted items")
         progress_bar = tqdm(
             utils.chunked(object_ids, chunk_size),

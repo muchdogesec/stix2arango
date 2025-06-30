@@ -46,8 +46,15 @@ class Stix2Arango:
         host_url=ARANGODB_URL,
         is_large_file=False,
         skip_default_indexes=False,
+        create_taxii_views=True,
         **kwargs,
     ):
+        """
+        `modify_fn` should modify in-place, returned value is discarded
+        """
+        
+        self.alter_functions = []
+        
         self.core_collection_vertex, self.core_collection_edge = (
             utils.get_vertex_and_edge_collection_names(collection)
         )
@@ -85,9 +92,26 @@ class Stix2Arango:
             self.create_s2a_indexes()
             if not skip_default_indexes:
                 self.create_default_indexes()
+            if create_taxii_views:
+                self.create_taxii_views()
 
         if self.file:
             self.filename = Path(self.file).name
+
+    def alter_objects(self, objects: list[dict]):
+        for obj in objects:
+            obj.update(self.arangodb_extra_data)
+            for fn in self.alter_functions:
+                try:
+                    fn(obj)
+                except Exception as e:
+                    logging.warning(f"alter function {fn} failed on {obj}")
+                    logging.warning(f"alter function {fn} failed on {obj}", exc_info=True)
+
+    def add_object_alter_fn(self, modify_fn):
+        if modify_fn and not callable(modify_fn):
+            raise ValueError("Bad modification function passed")
+        self.alter_functions.append(modify_fn)
 
     def create_s2a_indexes(self):
         for name, collection in self.arango.collections.items():
@@ -132,6 +156,33 @@ class Stix2Arango:
                         storedValues=["_id"],
                     )
                 )
+
+    def create_taxii_views(self):
+        views = set()
+        for name, collection in self.arango.collections.items():
+            collection.add_index(
+                dict(
+                    type="inverted",
+                    name="taxii_search",
+                    sparse=True,
+                    fields=[
+                        "_record_created",
+                        "modified",
+                        "id",
+                        "_taxii.visible",
+                        "_taxii.last",
+                        "_taxii.first",
+                        "spec_version",
+                        "type",
+                    ],
+                    inBackground=True,
+                    storedValues=["_key", "_created"],
+                    primarySort={
+                        "fields": [{"field": "_record_created", "direction": "asc"}]
+                    },
+                )
+            )
+            views.add('ats__' + name.removesuffix('_vertex_collection').removesuffix('_edge_collection'))
 
     def create_default_indexes(self):
         for name, collection in self.arango.collections.items():
@@ -370,10 +421,10 @@ class Stix2Arango:
         self.update_object_key_mapping(self.core_collection_edge, objects, existing_objects)
         return inserted_object_ids, deprecated_key_ids
 
-    def map_embedded_relationships(self, data, inserted_object_ids):
+    def map_embedded_relationships(self, bundle_objects, inserted_object_ids):
         objects = []
         inserted_data = []
-        for obj in tqdm(data["objects"], desc="upload_embedded_edges"):
+        for obj in tqdm(bundle_objects, desc="upload_embedded_edges"):
             if obj["id"] not in inserted_object_ids:
                 continue
             if (
@@ -390,7 +441,7 @@ class Stix2Arango:
                     targets=targets,
                     relationship=ref_type,
                     arango_obj=self,
-                    bundle_id=data["id"],
+                    bundle_id=self.bundle_id or '',
                     insert_statement=objects,
                     extra_data=self.arangodb_extra_data,
                 )
@@ -399,6 +450,7 @@ class Stix2Arango:
             f"Inserting embedded relationship into database. Total objects: {len(objects)}"
         )
 
+        self.alter_objects(objects)
         with self.arango.transactional(exclusive=[self.core_collection_edge, self.core_collection_vertex]):
             inserted_object_ids, existing_objects = (
                 self.arango.insert_relationships_chunked(
@@ -457,6 +509,9 @@ class Stix2Arango:
         if bundle_dict.get("type", None) != "bundle":
             raise Exception("Provided file is not a STIX bundle. Aborted")
 
+        all_objects = bundle_dict["objects"]
+        self.alter_objects(all_objects)
+
         module_logger.info(
             f"Loading default objects from url and store into {self.core_collection_vertex}"
         )
@@ -466,11 +521,11 @@ class Stix2Arango:
             f"Load objects from file: {self.file} and store into {self.core_collection_vertex}"
         )
         inserted_object_ids, _, deprecated_key_ids1 = self.process_bundle_into_graph(
-            bundle_dict["objects"]
+            all_objects
         )
         module_logger.info("Mapping relationships now -> ")
         inserted_relationship_ids, deprecated_key_ids2 = self.map_relationships(
-            self.filename, bundle_dict["objects"]
+            self.filename, all_objects
         )
 
         if not self.ignore_embedded_relationships:
@@ -478,7 +533,7 @@ class Stix2Arango:
                 "Creating new embedded relationships using _refs and _ref"
             )
             self.map_embedded_relationships(
-                bundle_dict, inserted_object_ids + inserted_relationship_ids
+                all_objects, inserted_object_ids + inserted_relationship_ids
             )
 
         
