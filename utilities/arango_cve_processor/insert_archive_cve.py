@@ -1,6 +1,7 @@
 import argparse
 import subprocess
 import os
+import traceback
 import requests
 import time
 import calendar
@@ -66,6 +67,19 @@ def download_file(url, destination):
         print(f"Failed to download {url} - Status Code: {response.status_code}")
         return False
 
+def add_cvss_score_to_cve_object(obj):
+    if obj['type'] == 'vulnerability':
+        x_cvss = list(obj.get('x_cvss', {}).values())
+        if not x_cvss:
+            return
+        primary_cvss = x_cvss[-1]
+        for cvss in reversed(x_cvss):
+            if cvss['type'].lower() == 'primary':
+                primary_cvss = cvss
+                break
+        if primary_cvss:
+            obj['_cvss_base_score'] = primary_cvss['base_score']
+
 def run_command(command, root_path, ignore_embedded_relationships):
     file_path = command["file"]
     if not os.path.exists(file_path):
@@ -74,7 +88,7 @@ def run_command(command, root_path, ignore_embedded_relationships):
     try:
         print(f"Inserting {file_path} into database {command['database']}...")
         s2a = Stix2Arango(database=command["database"], collection=command["collection"], file=file_path, ignore_embedded_relationships=ignore_embedded_relationships, is_large_file=True, skip_default_indexes=True)
-        s2a.always_latest = False
+        s2a.add_object_alter_fn(add_cvss_score_to_cve_object)
         s2a.run()
         manager.set_failed(command['version'], failed=False, reason="uploaded to arango")
         print(f"Successfully inserted {command['version']} into database.")
