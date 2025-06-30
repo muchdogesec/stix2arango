@@ -109,7 +109,7 @@ class Stix2Arango:
                     logging.warning(f"alter function {fn} failed on {obj}", exc_info=True)
 
     def add_object_alter_fn(self, modify_fn):
-        if modify_fn and not callable(modify_fn):
+        if not callable(modify_fn):
             raise ValueError("Bad modification function passed")
         self.alter_functions.append(modify_fn)
 

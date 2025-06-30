@@ -2,6 +2,8 @@ import json
 import os
 from pathlib import Path
 from unittest.mock import MagicMock, patch, call
+
+import pytest
 from stix2arango.stix2arango.stix2arango import Stix2Arango
 
 
@@ -43,6 +45,16 @@ def test_file_normal():
         mock_bundle_loader.assert_not_called()
         mock_run_with_bundle.assert_called_once_with(data)
 
+
+def test_add_object_alter_fn():
+    s2a = Stix2Arango(
+        file='', database="s2a_tests", collection="test_run", is_large_file=False
+    )
+    with pytest.raises(ValueError):
+        s2a.add_object_alter_fn(None)
+
+    with pytest.raises(ValueError):
+        s2a.add_object_alter_fn(['some', 'array', 1])
 
 def test_alter_functions():
     s2a = Stix2Arango(
