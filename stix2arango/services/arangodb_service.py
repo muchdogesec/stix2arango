@@ -146,14 +146,12 @@ class ArangoDBService:
             if isinstance(ret, arango.exceptions.DocumentInsertError):
                 if ret.error_code == 1210:
                     existing_objects[f'{obj["id"]};{obj["_record_md5_hash"]}'] = collection_name + '/' + re.search(r'conflicting key: (.*)', ret.message).group(1)
-                    if 'relationship--7a1682a3-fec3-53ed-8dd5-68f54b1d6f7a' in ret.message:
-                        print(1)
                 else:
                     raise ret
         return [obj["id"] for obj in new_insertions], existing_objects
 
     def insert_several_objects_chunked(
-        self, objects, collection_name, chunk_size=1000, remove_duplicates=True
+        self, objects, collection_name, chunk_size=5000, remove_duplicates=True
     ):
         if remove_duplicates:
             original_length = len(objects)
@@ -183,7 +181,7 @@ class ArangoDBService:
         relationships: list[dict[str, Any]],
         id_to_key_map: dict[str, str],
         collection_name: str,
-        chunk_size=1200,
+        chunk_size=5000,
     ):
         for relationship in relationships:
             source_key = id_to_key_map.get(relationship["source_ref"])
@@ -244,7 +242,7 @@ class ArangoDBService:
             progress_bar.update(len(chunk))
 
         logging.info(
-            f"Updating relationship's _is_latest for {len(deprecated_key_ids)} items"
+            f"Deprecating _is_latest for {len(deprecated_key_ids)} items"
         )
         self.deprecate_relationships(deprecated_key_ids, edge_collection)
         return deprecated_key_ids
@@ -253,11 +251,19 @@ class ArangoDBService:
         self, deprecated_key_ids: list, edge_collection: str, chunk_size=5000
     ):
         keys = self.get_relationships_to_deprecate(deprecated_key_ids, edge_collection)
-        self.db.collection(edge_collection).update_many(
-            tuple(dict(_key=_key, _is_latest=False) for _key in keys),
-            silent=True,
-            raise_on_document_error=True,
+
+        progress_bar = tqdm(
+            utils.chunked(keys, chunk_size),
+            total=len(keys),
+            desc="deprecate_relationships",
         )
+        for chunk in progress_bar:
+            self.db.collection(edge_collection).update_many(
+                tuple(dict(_key=_key, _is_latest=False) for _key in chunk),
+                silent=True,
+                raise_on_document_error=True,
+            )
+            progress_bar.update(len(chunk))
         return len(keys)
 
     def get_relationships_to_deprecate(
