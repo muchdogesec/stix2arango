@@ -4,9 +4,12 @@ build-backend = "hatchling.build"
 
 [project]
 name = "stix2arango"
-version = "0.0.5"
+version = "1.0.0"
 authors = [
-  { name="DOGESEC", email="support@dogesec.com" },
+  { name = "dogesec" }
+]
+maintainers = [
+  { name = "dogesec" }
 ]
 description = "stix2arango is a command line tool that takes a group of STIX 2.1 objects in a bundle and inserts them into ArangoDB. It can also handle updates to existing objects in ArangoDB imported in a bundle."
 readme = "README.md"
@@ -28,6 +31,7 @@ dependencies = [
 [project.urls]
 Homepage = "https://github.com/muchdogesec/stix2arango"
 Issues = "https://github.com/muchdogesec/stix2arango/issues"
+"dogesec HQ" = "https://dogesec.com"
 
 [project.scripts]
 stix2arango = "stix2arango.__main__:main"
