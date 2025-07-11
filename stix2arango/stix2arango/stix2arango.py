@@ -451,15 +451,20 @@ class Stix2Arango:
         )
 
         self.alter_objects(objects)
-        with self.arango.transactional(exclusive=[self.core_collection_edge, self.core_collection_vertex]):
-            inserted_object_ids, existing_objects = (
-                self.arango.insert_relationships_chunked(
-                    objects, self.object_key_mapping, self.core_collection_edge
+        inserted_object_ids = []
+        existing_objects = {}
+        for chunk in utils.chunked(objects, 20_000):
+            with self.arango.transactional(exclusive=[self.core_collection_edge, self.core_collection_vertex]):
+                inserted, existing = (
+                    self.arango.insert_relationships_chunked(
+                        chunk, self.object_key_mapping, self.core_collection_edge
+                    )
                 )
-            )
-            self.arango.update_is_latest_several_chunked(
-                inserted_object_ids, self.core_collection_edge, self.core_collection_edge
-            )
+                inserted_object_ids.extend(inserted)
+                existing_objects.update(existing)
+        self.arango.update_is_latest_several_chunked(
+            inserted_object_ids, self.core_collection_edge, self.core_collection_edge
+        )
         return inserted_object_ids, existing_objects
 
     def import_default_objects(self):
