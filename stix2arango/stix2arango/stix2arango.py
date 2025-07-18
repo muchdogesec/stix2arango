@@ -16,12 +16,14 @@ from tqdm import tqdm
 from ..services.arangodb_service import ArangoDBService
 from jsonschema import validate
 from arango.collection import StandardCollection
+import arango.exceptions
 
 
 from .. import utils
 
 module_logger = logging.getLogger("data_ingestion_service")
 SMO_TYPES = ["marking-definition", "extension-definition", "language-content"]
+LARGE_FILE_SIZE = 80 * 1024 * 1024
 
 
 class Stix2Arango:
@@ -52,9 +54,9 @@ class Stix2Arango:
         """
         `modify_fn` should modify in-place, returned value is discarded
         """
-        
+
         self.alter_functions = []
-        
+
         self.core_collection_vertex, self.core_collection_edge = (
             utils.get_vertex_and_edge_collection_names(collection)
         )
@@ -76,7 +78,7 @@ class Stix2Arango:
         self.arangodb_extra_data = {}
 
         self.file = file
-        self.is_large_file = is_large_file
+        self._is_large_file = is_large_file
         self.note = stix2arango_note or ""
         self.identity_ref = utils.load_file_from_url(config.STIX2ARANGO_IDENTITY)
         self.default_ref_objects = [
@@ -98,6 +100,10 @@ class Stix2Arango:
         if self.file:
             self.filename = Path(self.file).name
 
+    @property
+    def is_large_file(self):
+        return self._is_large_file or os.path.getsize(self.file) > LARGE_FILE_SIZE
+
     def alter_objects(self, objects: list[dict]):
         for obj in objects:
             obj.update(self.arangodb_extra_data)
@@ -106,7 +112,9 @@ class Stix2Arango:
                     fn(obj)
                 except Exception as e:
                     logging.warning(f"alter function {fn} failed on {obj}")
-                    logging.warning(f"alter function {fn} failed on {obj}", exc_info=True)
+                    logging.warning(
+                        f"alter function {fn} failed on {obj}", exc_info=True
+                    )
 
     def add_object_alter_fn(self, modify_fn):
         if not callable(modify_fn):
@@ -157,16 +165,37 @@ class Stix2Arango:
                     )
                 )
 
+    def create_analyzer(self, *args, **kwargs):
+        try:
+            return self.arango.db.create_analyzer(*args, **kwargs)
+        except arango.exceptions.AnalyzerCreateError as e:
+            if e.error_code != 10:
+                raise
+    
     def create_taxii_views(self):
         views = set()
+        self.create_analyzer(
+            name="date_transform",
+            analyzer_type="aql",
+            features=[],
+            properties={
+                "queryString": "RETURN DATE_TIMESTAMP(@param)*1000 + TO_NUMBER(LAST(REGEX_MATCHES(@param, '.+\\\\.(\\\\d{6}).*')))%1000",
+                "collapsePositions": False,
+                "keepNull": True,
+                "batchSize": 1000,
+                "memoryLimit": 10485760,
+                "returnType": "number",
+            },
+        )
         for name, collection in self.arango.collections.items():
+            logging.info(f'creating taxii index for {name}')
             collection.add_index(
                 dict(
                     type="inverted",
                     name="taxii_search",
                     sparse=True,
                     fields=[
-                        "_record_created",
+                        dict(name="_record_created", analyzer="date_transform"),
                         "modified",
                         "id",
                         "_taxii.visible",
@@ -182,7 +211,12 @@ class Stix2Arango:
                     },
                 )
             )
-            views.add('ats__' + name.removesuffix('_vertex_collection').removesuffix('_edge_collection'))
+            views.add(
+                "ats__"
+                + name.removesuffix("_vertex_collection").removesuffix(
+                    "_edge_collection"
+                )
+            )
 
     def create_default_indexes(self):
         for name, collection in self.arango.collections.items():
@@ -354,17 +388,23 @@ class Stix2Arango:
         module_logger.info(
             f"Inserting objects into database. Total objects: {len(objects)}"
         )
-        with self.arango.transactional(exclusive=[self.core_collection_edge, self.core_collection_vertex]):
+        with self.arango.transactional(
+            exclusive=[self.core_collection_edge, self.core_collection_vertex]
+        ):
             inserted_object_ids, existing_objects = (
                 self.arango.insert_several_objects_chunked(
                     objects, self.core_collection_vertex
                 )
             )
             deprecated_key_ids = self.arango.update_is_latest_several_chunked(
-                inserted_object_ids, self.core_collection_vertex, self.core_collection_edge
+                inserted_object_ids,
+                self.core_collection_vertex,
+                self.core_collection_edge,
             )
 
-        self.update_object_key_mapping(self.core_collection_vertex, objects, existing_objects)
+        self.update_object_key_mapping(
+            self.core_collection_vertex, objects, existing_objects
+        )
         return inserted_object_ids, existing_objects, deprecated_key_ids
 
     def update_object_key_mapping(self, collection, objects, existing_objects={}):
@@ -409,16 +449,22 @@ class Stix2Arango:
         module_logger.info(
             f"Inserting relationship into database. Total objects: {len(objects)}"
         )
-        with self.arango.transactional(exclusive=[self.core_collection_edge, self.core_collection_vertex]):
+        with self.arango.transactional(
+            exclusive=[self.core_collection_edge, self.core_collection_vertex]
+        ):
             inserted_object_ids, existing_objects = (
                 self.arango.insert_relationships_chunked(
                     objects, self.object_key_mapping, self.core_collection_edge
                 )
             )
             deprecated_key_ids = self.arango.update_is_latest_several_chunked(
-                inserted_object_ids, self.core_collection_edge, self.core_collection_edge
+                inserted_object_ids,
+                self.core_collection_edge,
+                self.core_collection_edge,
             )
-        self.update_object_key_mapping(self.core_collection_edge, objects, existing_objects)
+        self.update_object_key_mapping(
+            self.core_collection_edge, objects, existing_objects
+        )
         return inserted_object_ids, deprecated_key_ids
 
     def map_embedded_relationships(self, bundle_objects, inserted_object_ids):
@@ -441,7 +487,7 @@ class Stix2Arango:
                     targets=targets,
                     relationship=ref_type,
                     arango_obj=self,
-                    bundle_id=self.bundle_id or '',
+                    bundle_id=self.bundle_id or "",
                     insert_statement=objects,
                     extra_data=self.arangodb_extra_data,
                 )
@@ -454,11 +500,11 @@ class Stix2Arango:
         inserted_object_ids = []
         existing_objects = {}
         for chunk in utils.chunked(objects, 20_000):
-            with self.arango.transactional(exclusive=[self.core_collection_edge, self.core_collection_vertex]):
-                inserted, existing = (
-                    self.arango.insert_relationships_chunked(
-                        chunk, self.object_key_mapping, self.core_collection_edge
-                    )
+            with self.arango.transactional(
+                exclusive=[self.core_collection_edge, self.core_collection_vertex]
+            ):
+                inserted, existing = self.arango.insert_relationships_chunked(
+                    chunk, self.object_key_mapping, self.core_collection_edge
                 )
                 inserted_object_ids.extend(inserted)
                 existing_objects.update(existing)
@@ -541,8 +587,9 @@ class Stix2Arango:
                 all_objects, inserted_object_ids + inserted_relationship_ids
             )
 
-        
-        with self.arango.transactional(exclusive=[self.core_collection_edge, self.core_collection_vertex]):
+        with self.arango.transactional(
+            exclusive=[self.core_collection_edge, self.core_collection_vertex]
+        ):
             self.arango.deprecate_relationships(
                 deprecated_key_ids1, self.core_collection_edge
             )
