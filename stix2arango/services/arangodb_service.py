@@ -220,7 +220,8 @@ class ArangoDBService:
         )
         out = [dict(zip(('id', '_key', 'modified', '_record_modified', '_is_latest', '_id'), obj_tuple)) for obj_tuple in out]
         annotated, deprecated = annotate_versions(out)
-        self.db.collection(collection_name).update_many(annotated, sync=True, keep_none=False)
+        for chunk in utils.chunked(annotated, 10_000):
+            self.db.collection(collection_name).update_many(chunk, sync=True, keep_none=False)
         return deprecated
 
 
@@ -297,8 +298,9 @@ class ArangoDBService:
     @contextlib.contextmanager
     def transactional(self, write=None, exclusive=None, sync=True):
         original_db = self.db
-        transactional_db = self.db.begin_transaction(allow_implicit=True, write=write, exclusive=exclusive, sync=sync)
+        transactional_db = self.db.begin_transaction(allow_implicit=True, write=write, exclusive=exclusive, sync=sync, lock_timeout=300)
         try:
+            logging.info(f"entering transaction: {transactional_db.transaction_status()}")
             self.db = transactional_db
             yield self
             transactional_db.commit_transaction()
@@ -306,4 +308,5 @@ class ArangoDBService:
             transactional_db.abort_transaction()
             raise
         finally:
+            logging.info(f"exiting transaction: {transactional_db.transaction_status()}")
             self.db = original_db
