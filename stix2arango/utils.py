@@ -37,7 +37,6 @@ def create_relationship_obj(
     arango_obj=None,
     extra_data=None,
 ):
-    insert_data = []
     if not isinstance(targets, list):
         return []
     for target in targets:
@@ -75,19 +74,15 @@ def create_relationship_obj(
         relationship_object["_is_ref"] = True
         relationship_object["type"] = "relationship"
         relationship_object["spec_version"] = "2.1"
-        # relationship_object['_record_md5_hash'] = generate_md5(relationship_object)
+        relationship_object["external_references"] = {
+            "source_name": "stix2arango",
+            "description": "embedded-relationship",
+        }
         if extra_data:
             relationship_object.update(extra_data)
 
         insert_statement.append(relationship_object)
-        insert_data.append(
-            [
-                "relationship",
-                relationship_object["id"],
-                True if "modified" in obj else False,
-            ]
-        )
-    return insert_data
+    return
 
 
 def generate_md5(obj: dict):

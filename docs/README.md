@@ -422,6 +422,12 @@ This is done using the STIX2 Python library, and such relationships are generate
     "target_ref": "<REF TARGET PROPERTY>",
     "object_marking_refs": [
         "<object_marking_refs SHOULD MATCH SOURCE_REF OBJECT>"
+    ],
+    "external_references": [
+        {
+            "source_name": "stix2arango",
+            "description": "embedded-relationship"
+        }
     ]
 }
 ```

@@ -469,7 +469,6 @@ class Stix2Arango:
 
     def map_embedded_relationships(self, bundle_objects, inserted_object_ids):
         objects = []
-        inserted_data = []
         for obj in tqdm(bundle_objects, desc="upload_embedded_edges"):
             if obj["id"] not in inserted_object_ids:
                 continue
