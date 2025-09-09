@@ -8,7 +8,7 @@ import json
 import hashlib
 import os
 from . import config
-from datetime import datetime
+from datetime import UTC, datetime
 
 module_logger = logging.getLogger("data_ingestion_service")
 from arango.database import StandardDatabase
@@ -67,10 +67,6 @@ def create_relationship_obj(
         relationship_object["_bundle_id"] = bundle_id
         relationship_object["_file_name"] = os.path.basename(arango_obj.file or "")
         relationship_object["_stix2arango_note"] = arango_obj.note
-        relationship_object["_record_created"] = datetime.now().strftime(
-            "%Y-%m-%dT%H:%M:%S.%f"
-        )
-        relationship_object["_record_modified"] = relationship_object["_record_created"]
         relationship_object["_is_ref"] = True
         relationship_object["type"] = "relationship"
         relationship_object["spec_version"] = "2.1"
