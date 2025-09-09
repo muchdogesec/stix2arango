@@ -80,9 +80,9 @@ class Stix2Arango:
         self.file = file
         self._is_large_file = is_large_file
         self.note = stix2arango_note or ""
-        self.identity_ref = utils.load_file_from_url(config.STIX2ARANGO_IDENTITY)
+        self.identity_ref = utils.load_file_from_url(config.STIX2ARANGO_IDENTITY).copy()
         self.default_ref_objects = [
-            utils.load_file_from_url(link)
+            utils.load_file_from_url(link).copy()
             for link in config.MARKING_DEFINITION_REFS + config.IDENTITY_REFS
         ]
         self.bundle_id = bundle_id
