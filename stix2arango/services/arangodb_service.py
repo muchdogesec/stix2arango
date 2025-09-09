@@ -63,7 +63,7 @@ class ArangoDBService:
 
         if self.db.has_graph(self.ARANGO_GRAPH):
             self.cti2stix_graph = self.db.graph(self.ARANGO_GRAPH)
-        elif create:
+        elif create_db:
             self.cti2stix_graph = self.db.create_graph(self.ARANGO_GRAPH)
 
         self.collections: dict[str, StandardCollection] = {}
@@ -199,7 +199,7 @@ class ArangoDBService:
     
     @staticmethod
     def fix_edge_ref(_id):
-        c, _, _key = _id.partition('/')
+        c, _, _key = _id.rpartition('/')
         if not c:
             c = "missing_collection"
         return f"{c}/{_key}"
