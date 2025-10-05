@@ -42,6 +42,7 @@ class Stix2Arango:
         ignore_embedded_relationships=False,
         ignore_embedded_relationships_sro=True,
         ignore_embedded_relationships_smo=True,
+        include_embedded_relationships_attributes=None,
         bundle_id=None,
         username=config.ARANGODB_USERNAME,
         password=config.ARANGODB_PASSWORD,
@@ -89,6 +90,7 @@ class Stix2Arango:
         self.ignore_embedded_relationships = ignore_embedded_relationships
         self.ignore_embedded_relationships_smo = ignore_embedded_relationships_smo
         self.ignore_embedded_relationships_sro = ignore_embedded_relationships_sro
+        self.include_embedded_relationships_attributes = include_embedded_relationships_attributes
         self.object_key_mapping = {}
         if create_collection:
             self.create_s2a_indexes()
@@ -472,14 +474,16 @@ class Stix2Arango:
         for obj in tqdm(bundle_objects, desc="upload_embedded_edges"):
             if obj["id"] not in inserted_object_ids:
                 continue
-            if (
+            if self.include_embedded_relationships_attributes:
+                pass
+            elif (
                 self.ignore_embedded_relationships_smo and obj["type"] in SMO_TYPES
             ) or (
                 self.ignore_embedded_relationships_sro and obj["type"] == "relationship"
             ):
                 continue
 
-            for ref_type, targets in utils.get_embedded_refs(obj):
+            for ref_type, targets in utils.get_embedded_refs(obj, attributes=self.include_embedded_relationships_attributes):
                 utils.create_relationship_obj(
                     obj=obj,
                     source=obj.get("id"),
@@ -578,7 +582,7 @@ class Stix2Arango:
             self.filename, all_objects
         )
 
-        if not self.ignore_embedded_relationships:
+        if (not self.ignore_embedded_relationships) or self.include_embedded_relationships_attributes:
             module_logger.info(
                 "Creating new embedded relationships using _refs and _ref"
             )

@@ -66,6 +66,23 @@ def test_get_embedded_refs():
     ]
 
 
+def test_get_embedded_refs__attributes_whitelist():
+    assert utils.get_embedded_refs(
+        {
+            "abc_ref": "ref1",
+            "abcd_refs": ["ref1", "ref2"],
+            "abcde": [{"abcdef_ref": "ref7"}, {"abcd_efgh_ref": "ref8"}],
+        },
+        attributes=["abcd_efgh_ref", "abc_ref"],
+    ) == [
+        ("abc", ["ref1"]),
+        (
+            "abcde-abcd-efgh",
+            ["ref8"],
+        ),
+    ]
+
+
 def test_get_vertex_and_edge_collection_names():
     assert utils.get_vertex_and_edge_collection_names("ade") == (
         "ade_vertex_collection",
