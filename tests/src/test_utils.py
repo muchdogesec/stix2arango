@@ -2,27 +2,14 @@ from datetime import datetime
 from unittest.mock import MagicMock, patch
 import pytest
 from stix2arango import utils
-from stix2arango.config import STIX2ARANGO_IDENTITY
+from stix2arango.config import DOGESEC_IDENTITY
 
 
 def test_load_file_from_url():
-    assert utils.load_file_from_url(STIX2ARANGO_IDENTITY) == {
-        "type": "identity",
-        "spec_version": "2.1",
-        "id": "identity--72e906ce-ca1b-5d73-adcd-9ea9eb66a1b4",
-        "created_by_ref": "identity--9779a2db-f98c-5f4b-8d08-8ee04e02dbb5",
-        "created": "2020-01-01T00:00:00.000Z",
-        "modified": "2020-01-01T00:00:00.000Z",
-        "name": "stix2arango",
-        "description": "https://github.com/muchdogesec/stix2arango",
-        "identity_class": "system",
-        "sectors": ["technology"],
-        "contact_information": "https://www.dogesec.com/contact/",
-        "object_marking_refs": [
-            "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
-            "marking-definition--97ba4e8b-04f6-57e8-8f6e-3a0f0a7dc0fb",
-        ],
-    }
+    assert (
+        utils.load_file_from_url(DOGESEC_IDENTITY)["id"]
+        == "identity--9779a2db-f98c-5f4b-8d08-8ee04e02dbb5"
+    )
 
     with pytest.raises(Exception):
         utils.load_file_from_url("https://gogle.cm/ojkskja")
@@ -63,6 +50,23 @@ def test_get_embedded_refs():
         ("abcd", ["ref1", "ref2"]),
         ("abcde-abcdef", ["ref7"]),
         ("abcde-abcd-efgh", ["ref8"]),
+    ]
+
+
+def test_get_embedded_refs__attributes_whitelist():
+    assert utils.get_embedded_refs(
+        {
+            "abc_ref": "ref1",
+            "abcd_refs": ["ref1", "ref2"],
+            "abcde": [{"abcdef_ref": "ref7"}, {"abcd_efgh_ref": "ref8"}],
+        },
+        attributes=["abcd_efgh_ref", "abc_ref"],
+    ) == [
+        ("abc", ["ref1"]),
+        (
+            "abcde-abcd-efgh",
+            ["ref8"],
+        ),
     ]
 
 

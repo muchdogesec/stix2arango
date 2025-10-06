@@ -116,7 +116,7 @@ def remove_duplicates(objects):
     return list(objects_hashmap.values())
 
 
-def get_embedded_refs(object: list | dict, xpath: list = []):
+def get_embedded_refs(object: list | dict, xpath: list = [], attributes=None):
     embedded_refs = []
     if isinstance(object, dict):
         for key, value in object.items():
@@ -125,11 +125,13 @@ def get_embedded_refs(object: list | dict, xpath: list = []):
             if match := EMBEDDED_RELATIONSHIP_RE.fullmatch(key):
                 relationship_type = "-".join(xpath + match.group(1).split("_"))
                 targets = value if isinstance(value, list) else [value]
+                if attributes and key not in attributes:
+                    continue
                 embedded_refs.append((relationship_type, targets))
             elif isinstance(value, list):
-                embedded_refs.extend(get_embedded_refs(value, xpath + [key]))
+                embedded_refs.extend(get_embedded_refs(value, xpath + [key], attributes=attributes))
     elif isinstance(object, list):
         for obj in object:
             if isinstance(obj, dict):
-                embedded_refs.extend(get_embedded_refs(obj, xpath))
+                embedded_refs.extend(get_embedded_refs(obj, xpath, attributes=attributes))
     return embedded_refs
