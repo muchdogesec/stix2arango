@@ -37,20 +37,6 @@ Note, the installation assumes ArangoDB is already installed locally.
 
 [You can install ArangoDB here](https://arangodb.com/download/). stix2arango is compatible with both the Enterprise and Community versions.
 
-#### A note for Mac users
-
-Fellow Mac users, ArangoDB can be installed and run using homebrew as follows;
-
-```shell
-## Install
-brew install arangodb
-## Run
-brew services start arangodb
-## will now be accessible in a browser at: http://127.0.0.1:8529 . Default username is root with no password set (leave blank) 
-## Stop
-brew services stop arangodb
-```
-
 ### Configuration options
 
 stix2arango has various settings that are defined in an `.env` file.
@@ -77,12 +63,14 @@ python3 stix2arango.py \
 Where;
 
 * `--file` (required): is the path to the valid STIX 2.1 bundle .json file
-* `--database` (required): is the name of the Arango database the objects should be stored in. If database does not exist, stix2arango will create it
+* `--database` (required): is the name of the Arango database the objects should be stored in. 
+* `--create_db` (default `true`): If database does not exist, stix2arango will create it. You can set to `false` to stop this behaviour (and avoid the risk of incorrect DBs being created). Generally setting to `false` is a good idea if you know the databases exist. This setting will only work if the Arango user being used to authenticate has permissions to create new databases.
 * `--collection` (required): is the name of the Arango collection in the database specified the objects should be stored in. If the collection does not exist, stix2arango will create it
 * `--stix2arango_note` (optional): Will be stored under the `_stix2arango_note` custom attribute in ArangoDB. Useful as can be used in AQL. `a-z` characters only. Max 24 chars.
 * `--ignore_embedded_relationships` (optional, boolean):  if `true` passed, this will stop ANY embedded relationships from being generated. This applies for all object types (SDO, SCO, SRO, SMO). If you want to target certain object types see `ignore_embedded_relationships_sro` and `ignore_embedded_relationships_sro` flags. ` Default is `false`
 * `--ignore_embedded_relationships_sro` (optional, boolean): if `true` passed, will stop any embedded relationships from being generated from SRO objects (`type` = `relationship`). Default is `false`
-* `--ignore_embedded_relationships_smo` (optional, boolean): if `true` passed, will stop any embedded relationships from being generated from SMO objects (`type` = `marking-definition`, `extension-definition`, `language-content`). Default is `false`
+* `--ignore_embedded_relationships_smo` (optional, boolean): if `true` passed, will stop any embedded relationships from being generated from SMO objects (`type` = `marking-defirnition`, `extension-definition`, `language-content`). Default is `false`
+* `--include_embedded_relationships_attributes` (optional, stix `_ref` or `_refs` attribute): if you only want to create embedded relationships from certain keys (attributes) in a STIX object you can pass a list of attributes here. e.g. `object_refs created_by_ref` . In this example, embedded relationships to all objects listed in `object_refs` and objects in `created_by_ref` will be created between source (the objects that house these attibutes) and destinations (the objects listed as values for these attributes)
 * `--is_large_file` (pass flag): Use this mode when the bundle is very large (>100mb), this will chunk the input into multiple files before loading into memory.
 
 For example, [using the MITRE ATT&CK Enterprise bundle](https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json);
@@ -106,6 +94,18 @@ python3 stix2arango.py \
 	--collection demo_2 \
 	--stix2arango_note v15.1 \
 	--ignore_embedded_relationships false \
+	--is_large_file
+```
+
+If you want to include embedded relationships for `created_by_ref` and `object_marking_refs` attibutes collection, you would run;
+
+```shell
+python3 stix2arango.py \
+	--file cti_knowledge_base_store/mitre-attack-enterprise/enterprise-attack-15_1.json \
+	--database stix2arango_demo \
+	--collection demo_2 \
+	--stix2arango_note v15.1 \
+	--include_embedded_relationships_attributes object_refs created_by_ref \
 	--is_large_file
 ```
 
