@@ -125,6 +125,9 @@ def get_embedded_refs(object: list | dict, xpath: list = [], attributes=None):
             if match := EMBEDDED_RELATIONSHIP_RE.fullmatch(key):
                 relationship_type = "-".join(xpath + match.group(1).split("_"))
                 targets = value if isinstance(value, list) else [value]
+                targets = [_target for _target in targets if _target and isinstance(_target, str)]
+                if not targets:
+                    continue
                 if attributes and key not in attributes:
                     continue
                 embedded_refs.append((relationship_type, targets))

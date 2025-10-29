@@ -52,6 +52,22 @@ def test_get_embedded_refs():
         ("abcde-abcd-efgh", ["ref8"]),
     ]
 
+def test_get_embedded_refs_empty():
+    assert utils.get_embedded_refs(
+        {
+            "abc_ref": "ref1",
+            "empty_ref": "", #skipped entirely
+            "some_empty_refs": ["ref10", "", "ref9"], # empty ref skipped
+            "abcd_refs": ["ref1", "ref2"],
+            "abcde": [{"abcdef_ref": "ref7"}, {"abcd_efgh_ref": "ref8"}],
+        }
+    ) == [
+        ("abc", ["ref1"]),
+        ("some-empty", ["ref10", "ref9"]),
+        ("abcd", ["ref1", "ref2"]),
+        ("abcde-abcdef", ["ref7"]),
+        ("abcde-abcd-efgh", ["ref8"]),
+    ]
 
 def test_get_embedded_refs__attributes_whitelist():
     assert utils.get_embedded_refs(
