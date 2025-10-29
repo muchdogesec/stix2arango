@@ -94,7 +94,6 @@ class BundleLoader:
                     all_ids.setdefault(sr, []).extend([tr, obj_id])
                     all_ids.setdefault(tr, []).extend([sr, obj_id])
                 for ref in self.get_refs(obj):
-                    assert "--" in ref, ref
                     all_ids[obj_id].append(ref)
                     all_ids.setdefault(ref, []).append(obj_id)
                 if len(to_insert) >= self.chunk_size_min:

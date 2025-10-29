@@ -12,7 +12,7 @@ STIX_BUNDLE = {
     "type": "bundle",
     "id": "bundle--example",
     "objects": [
-        {"id": "indicator--1", "type": "indicator"},
+        {"id": "indicator--1", "type": "indicator", "bad_ref": "some-ref--7"},
         {"id": "indicator--2", "type": "indicator"},
         {"id": "relationship--1", "type": "relationship", "source_ref": "indicator--1", "target_ref": "indicator--2"},
         {"id": "attack-pattern--3", "type": "attack-pattern"},
@@ -50,6 +50,7 @@ def test_build_groups_creates_correct_groups(temp_json_file):
     assert "indicator--2" in flat
     assert "relationship--1" in flat
     assert "attack-pattern--3" in flat
+    assert "some-ref--7" in flat
 
 def test_load_objects_by_ids(temp_json_file):
     loader = BundleLoader(file_path=temp_json_file)
