@@ -51,9 +51,9 @@ def test_build_groups_creates_correct_groups(temp_json_file):
     assert "relationship--1" in flat
     assert "attack-pattern--3" in flat
     assert "some-ref--7" in flat
-    assert "marking--1" not in flat
-    assert "marking--2" not in flat
-    assert "creator--1" not in flat
+    assert "marking--1" in flat
+    assert "marking--2" in flat
+    assert "creator--1" in flat
 
 def test_load_objects_by_ids(temp_json_file):
     loader = BundleLoader(file_path=temp_json_file)
