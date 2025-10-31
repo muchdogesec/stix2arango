@@ -65,8 +65,6 @@ class BundleLoader:
     def get_refs(obj):
         refs = []
         for _type, targets in get_embedded_refs(obj):
-            if _type in ["created-by", "object-marking"]:
-                continue
             refs.extend(targets)
         return refs
 
@@ -95,7 +93,6 @@ class BundleLoader:
                     all_ids.setdefault(tr, []).extend([sr, obj_id])
                 for ref in self.get_refs(obj):
                     all_ids[obj_id].append(ref)
-                    all_ids.setdefault(ref, []).append(obj_id)
                 if len(to_insert) >= self.chunk_size_min:
                     self.save_to_sqlite(to_insert)
                     to_insert.clear()
