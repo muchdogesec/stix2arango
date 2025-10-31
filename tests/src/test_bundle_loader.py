@@ -5,30 +5,50 @@ import tempfile
 from pathlib import Path
 from unittest.mock import patch
 
-from stix2arango.stix2arango.bundle_loader import BundleLoader  # adjust this import path
+from stix2arango.stix2arango.bundle_loader import (
+    BundleLoader,
+)  # adjust this import path
 
 # Sample bundle with related and unrelated objects
 STIX_BUNDLE = {
     "type": "bundle",
     "id": "bundle--example",
     "objects": [
-        {"id": "indicator--1", "type": "indicator", "bad_ref": "some-ref--7", "created_by_ref": "creator--1"},
-        {"id": "indicator--2", "type": "indicator", "object_marking_refs": ["marking--1", "marking--2"]},
-        {"id": "relationship--1", "type": "relationship", "source_ref": "indicator--1", "target_ref": "indicator--2"},
+        {
+            "id": "indicator--1",
+            "type": "indicator",
+            "bad_ref": "some-ref--7",
+            "created_by_ref": "creator--1",
+        },
+        {
+            "id": "indicator--2",
+            "type": "indicator",
+            "object_marking_refs": ["marking--1", "marking--2"],
+        },
+        {
+            "id": "relationship--1",
+            "type": "relationship",
+            "source_ref": "indicator--1",
+            "target_ref": "indicator--2",
+        },
         {"id": "attack-pattern--3", "type": "attack-pattern"},
-    ]
+        {"id": "marking--1", "type": "marking-definition"},
+    ],
 }
+
 
 @pytest.fixture
 def temp_json_file():
-    with tempfile.NamedTemporaryFile(delete=False, mode='w', suffix='.json') as f:
+    with tempfile.NamedTemporaryFile(delete=False, mode="w", suffix=".json") as f:
         json.dump(STIX_BUNDLE, f)
         return f.name
+
 
 def test_init_db_and_tempfile_creation():
     loader = BundleLoader(file_path=tempfile.mkstemp()[1])
     assert isinstance(loader.db_path, str)
     assert Path(loader.db_path).exists()
+
 
 def test_save_to_sqlite_inserts_objects(temp_json_file):
     loader = BundleLoader(file_path=temp_json_file)
@@ -39,21 +59,24 @@ def test_save_to_sqlite_inserts_objects(temp_json_file):
     count = cursor.fetchone()[0]
     assert count == len(objects)
 
+
 def test_build_groups_creates_correct_groups(temp_json_file):
-    loader = BundleLoader(file_path=temp_json_file, chunk_size_min=1)
+    loader = BundleLoader(file_path=temp_json_file, chunk_size_min=3)
     groups = loader.build_groups()
 
     # There should be at least 2 groups: one for related indicators, one for attack-pattern
     assert isinstance(groups, list)
     flat = [id_ for group in groups for id_ in group]
-    assert "indicator--1" in flat
-    assert "indicator--2" in flat
-    assert "relationship--1" in flat
-    assert "attack-pattern--3" in flat
-    assert "some-ref--7" in flat
-    assert "marking--1" in flat
-    assert "marking--2" in flat
-    assert "creator--1" in flat
+    assert set(flat) == {
+        "some-ref--7",
+        "indicator--2",
+        "indicator--1",
+        "relationship--1",
+        "creator--1",
+        "attack-pattern--3",
+        "marking--1",
+    }
+
 
 def test_load_objects_by_ids(temp_json_file):
     loader = BundleLoader(file_path=temp_json_file)
@@ -63,6 +86,7 @@ def test_load_objects_by_ids(temp_json_file):
     assert isinstance(result, list)
     assert {obj["id"] for obj in result} == {"indicator--1", "attack-pattern--3"}
 
+
 def test_get_objects_returns_objects(temp_json_file):
     loader = BundleLoader(file_path=temp_json_file)
     loader.save_to_sqlite(STIX_BUNDLE["objects"])
@@ -70,6 +94,7 @@ def test_get_objects_returns_objects(temp_json_file):
     result = loader.get_objects(["indicator--1"])
     assert isinstance(result, list)
     assert result[0]["id"] == "indicator--1"
+
 
 def test_chunks_generator(temp_json_file):
     loader = BundleLoader(file_path=temp_json_file, chunk_size_min=1)
@@ -80,18 +105,20 @@ def test_chunks_generator(temp_json_file):
         assert isinstance(chunk, list)
         assert all("id" in obj for obj in chunk)
 
+
 def test_chunks_with_no_existing_groups_calls_build_groups(temp_json_file):
     loader = BundleLoader(file_path=temp_json_file, chunk_size_min=1)
-    with patch.object(loader, 'build_groups', wraps=loader.build_groups) as mocked:
+    with patch.object(loader, "build_groups", wraps=loader.build_groups) as mocked:
         chunks = list(loader.chunks)
         mocked.assert_called_once()
         assert len(chunks) > 0
+
 
 def test_no_crash_on_missing_relationship_fields(temp_json_file):
     # Remove `source_ref` and `target_ref` to simulate bad data
     bad_bundle = {
         "type": "bundle",
-        "objects": [{"id": "bad--1", "type": "relationship"}]
+        "objects": [{"id": "bad--1", "type": "relationship"}],
     }
     with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".json") as f:
         json.dump(bad_bundle, f)
@@ -108,4 +135,3 @@ def test_sqlite_file_removed_after_gc(temp_json_file):
     assert db_path.exists()
     del loader
     assert not db_path.exists(), "should already be deleted"
-
