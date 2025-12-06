@@ -60,7 +60,7 @@ stix2-patterns==2.0.0
     # via stix2
 tqdm==4.67.1 ; python_version >= "3.7"
     # via stix2arango (pyproject.toml)
-urllib3==2.5.0
+urllib3==2.6.0
     # via
     #   python-arango
     #   requests
