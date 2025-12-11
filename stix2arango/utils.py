@@ -70,10 +70,12 @@ def create_relationship_obj(
         relationship_object["_is_ref"] = True
         relationship_object["type"] = "relationship"
         relationship_object["spec_version"] = "2.1"
-        relationship_object["external_references"] = {
-            "source_name": "stix2arango",
-            "description": "embedded-relationship",
-        }
+        relationship_object["external_references"] = [
+            {
+                "source_name": "stix2arango",
+                "description": "embedded-relationship",
+            }
+        ]
         if extra_data:
             relationship_object.update(extra_data)
 
@@ -125,16 +127,24 @@ def get_embedded_refs(object: list | dict, xpath: list = [], attributes=None):
             if match := EMBEDDED_RELATIONSHIP_RE.fullmatch(key):
                 relationship_type = "-".join(xpath + match.group(1).split("_"))
                 targets = value if isinstance(value, list) else [value]
-                targets = [_target for _target in targets if _target and isinstance(_target, str)]
+                targets = [
+                    _target
+                    for _target in targets
+                    if _target and isinstance(_target, str)
+                ]
                 if not targets:
                     continue
                 if attributes and key not in attributes:
                     continue
                 embedded_refs.append((relationship_type, targets))
             elif isinstance(value, list):
-                embedded_refs.extend(get_embedded_refs(value, xpath + [key], attributes=attributes))
+                embedded_refs.extend(
+                    get_embedded_refs(value, xpath + [key], attributes=attributes)
+                )
     elif isinstance(object, list):
         for obj in object:
             if isinstance(obj, dict):
-                embedded_refs.extend(get_embedded_refs(obj, xpath, attributes=attributes))
+                embedded_refs.extend(
+                    get_embedded_refs(obj, xpath, attributes=attributes)
+                )
     return embedded_refs

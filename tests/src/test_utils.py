@@ -52,12 +52,13 @@ def test_get_embedded_refs():
         ("abcde-abcd-efgh", ["ref8"]),
     ]
 
+
 def test_get_embedded_refs_empty():
     assert utils.get_embedded_refs(
         {
             "abc_ref": "ref1",
-            "empty_ref": "", #skipped entirely
-            "some_empty_refs": ["ref10", "", "ref9"], # empty ref skipped
+            "empty_ref": "",  # skipped entirely
+            "some_empty_refs": ["ref10", "", "ref9"],  # empty ref skipped
             "abcd_refs": ["ref1", "ref2"],
             "abcde": [{"abcdef_ref": "ref7"}, {"abcd_efgh_ref": "ref8"}],
         }
@@ -68,6 +69,7 @@ def test_get_embedded_refs_empty():
         ("abcde-abcdef", ["ref7"]),
         ("abcde-abcd-efgh", ["ref8"]),
     ]
+
 
 def test_get_embedded_refs__attributes_whitelist():
     assert utils.get_embedded_refs(
@@ -154,10 +156,12 @@ def test_create_relationships():
             "_is_ref": True,
             "type": "relationship",
             "spec_version": "2.1",
-            "external_references": {
-                "source_name": "stix2arango",
-                "description": "embedded-relationship",
-            },
+            "external_references": [
+                {
+                    "source_name": "stix2arango",
+                    "description": "embedded-relationship",
+                }
+            ],
             "confidence": 80,
             "labels": ["example"],
         },
@@ -178,10 +182,12 @@ def test_create_relationships():
             "_is_ref": True,
             "type": "relationship",
             "spec_version": "2.1",
-            "external_references": {
-                "source_name": "stix2arango",
-                "description": "embedded-relationship",
-            },
+            "external_references": [
+                {
+                    "source_name": "stix2arango",
+                    "description": "embedded-relationship",
+                }
+            ],
             "confidence": 80,
             "labels": ["example"],
         },
