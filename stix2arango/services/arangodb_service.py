@@ -220,8 +220,9 @@ class ArangoDBService:
         )
         out = [dict(zip(('id', '_key', 'modified', '_record_modified', '_is_latest', '_id'), obj_tuple)) for obj_tuple in out]
         annotated, deprecated = annotate_versions(out)
-        for chunk in utils.chunked(annotated, 10_000):
-            self.db.collection(collection_name).update_many(chunk, sync=True, keep_none=False)
+        logging.info(f"Updating annotated versions for {len(annotated)} items, deprecating {len(deprecated)} items")
+        for chunk in utils.chunked(annotated, 5000):
+            self.db.collection(collection_name).update_many(chunk, sync=True, keep_none=False, silent=True)
         return deprecated
 
 
