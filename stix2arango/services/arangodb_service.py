@@ -209,7 +209,7 @@ class ArangoDBService:
         query = """
             FOR doc IN @@collection OPTIONS {indexHint: "s2a_search", forceIndexHint: true}
             FILTER doc.id IN @object_ids
-            RETURN [doc.id, doc._key, doc.modified, doc._record_modified, doc._is_latest, doc._id]
+            RETURN [doc.id, doc._key, doc.modified, doc._record_modified, doc._is_latest, doc._id, doc._taxii]
         """
         out = self.execute_raw_query(
             query,
@@ -218,11 +218,11 @@ class ArangoDBService:
                 "object_ids": object_ids,
             },
         )
-        out = [dict(zip(('id', '_key', 'modified', '_record_modified', '_is_latest', '_id'), obj_tuple)) for obj_tuple in out]
+        out = [dict(zip(('id', '_key', 'modified', '_record_modified', '_is_latest', '_id', '_taxii'), obj_tuple)) for obj_tuple in out]
         annotated, deprecated = annotate_versions(out)
         logging.info(f"Updating annotated versions for {len(annotated)} items, deprecating {len(deprecated)} items")
         for chunk in utils.chunked(annotated, 5000):
-            self.db.collection(collection_name).update_many(chunk, sync=True, keep_none=False, silent=True)
+            self.db.collection(collection_name).update_many(chunk, sync=True, keep_none=False, silent=True, raise_on_document_error=True)
         return deprecated
 
 

@@ -411,13 +411,11 @@ class Stix2Arango:
 
     def update_object_key_mapping(self, collection, objects, existing_objects={}):
         for obj in objects:
-            if db_key := existing_objects.get(f"{obj['id']};{obj['_record_md5_hash']}"):
+            db_key = existing_objects.get(f"{obj['id']};{obj['_record_md5_hash']}")
+            if not db_key and obj.get("_key"):
+                db_key = f"{collection}/{obj['_key']}"
+            if db_key:
                 self.object_key_mapping[obj["id"]] = db_key
-            else:
-                self.object_key_mapping[obj["id"]] = "{collection}/{_key}".format(
-                    collection=collection,
-                    _key=obj.get("_key", "not_imported"),
-                )
 
     def map_relationships(self, filename, objects_in):
 
