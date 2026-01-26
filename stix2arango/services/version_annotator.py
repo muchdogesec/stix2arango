@@ -84,7 +84,7 @@ def annotate_versions(objects: List[Dict]):
                 first=is_earliest,
                 last=is_latest,
             )
-            if taxii_ == item["_taxii"]:
+            if taxii_ == item["_taxii"] and item['_is_latest'] == is_latest:
                 continue  # No change
             annotations.append(
                 dict(
