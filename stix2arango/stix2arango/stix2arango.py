@@ -31,6 +31,10 @@ class Stix2Arango:
     filename = "bundle.json"
     ARANGODB_URL = f"http://{config.ARANGODB_HOST}:{config.ARANGODB_PORT}"
 
+    # Class-level hooks - stored as tuples: (hook_fn, fail_on_error)
+    _pre_upload_hooks = []
+    _post_upload_hooks = []
+
     def __init__(
         self,
         database,
@@ -90,7 +94,9 @@ class Stix2Arango:
         self.ignore_embedded_relationships = ignore_embedded_relationships
         self.ignore_embedded_relationships_smo = ignore_embedded_relationships_smo
         self.ignore_embedded_relationships_sro = ignore_embedded_relationships_sro
-        self.include_embedded_relationships_attributes = include_embedded_relationships_attributes
+        self.include_embedded_relationships_attributes = (
+            include_embedded_relationships_attributes
+        )
         self.object_key_mapping = {}
         if create_collection:
             self.create_s2a_indexes()
@@ -109,6 +115,7 @@ class Stix2Arango:
     def alter_objects(self, objects: list[dict]):
         for obj in objects:
             obj.update(self.arangodb_extra_data)
+            # Apply instance-level alter functions
             for fn in self.alter_functions:
                 try:
                     fn(obj)
@@ -118,10 +125,106 @@ class Stix2Arango:
                         f"alter function {fn} failed on {obj}", exc_info=True
                     )
 
+    def _run_pre_upload_hooks(self, collection_name: str, objects: list[dict]):
+        self.alter_objects(objects)
+        # Apply class-level pre-upload hooks (run on entire list)
+        for hook_fn, fail_on_error in self._pre_upload_hooks:
+            try:
+                hook_fn(self, collection_name, objects)
+            except Exception as e:
+                logging.warning(f"pre-upload hook {hook_fn} failed")
+                logging.warning(f"pre-upload hook {hook_fn} failed", exc_info=True)
+                if fail_on_error:
+                    raise
+
     def add_object_alter_fn(self, modify_fn):
         if not callable(modify_fn):
             raise ValueError("Bad modification function passed")
         self.alter_functions.append(modify_fn)
+
+    @classmethod
+    def register_pre_upload_hook(cls, hook_fn, fail_on_error=False):
+        """Register a class-level pre-upload hook that modifies objects before upload.
+
+        Args:
+            hook_fn: A callable that takes (instance, collection_name, objects) and modifies them in-place.
+                     - instance: The Stix2Arango instance
+                     - collection_name: The name of the collection being uploaded to
+                     - objects: List of object dicts to modify
+                     The return value is ignored.
+            fail_on_error: If True, an exception in this hook will stop the entire process.
+                          If False (default), exceptions are logged but processing continues.
+
+        Example:
+            def add_custom_field(instance, collection_name, objects):
+                for obj in objects:
+                    obj['_custom_field'] = 'value'
+                    obj['_collection'] = collection_name
+
+            Stix2Arango.register_pre_upload_hook(add_custom_field, fail_on_error=True)
+        """
+        if not callable(hook_fn):
+            raise ValueError("Hook must be callable")
+        cls._pre_upload_hooks.append((hook_fn, fail_on_error))
+
+    @classmethod
+    def register_post_upload_hook(cls, hook_fn, fail_on_error=False):
+        """Register a class-level post-upload hook that runs after objects are uploaded.
+
+        Args:
+            hook_fn: A callable that takes (instance, collection_name, objects, **kwargs).
+                     Positional arguments:
+                     - instance: The Stix2Arango instance
+                     - collection_name: The name of the collection uploaded to
+                     - objects: List of objects that were uploaded
+
+                     Keyword arguments:
+                     - inserted_ids: List of IDs of newly inserted objects
+                     - existing_objects: Dict of existing objects
+            fail_on_error: If True, an exception in this hook will stop the entire process.
+                          If False (default), exceptions are logged but processing continues.
+
+        Example:
+            def log_upload(instance, collection_name, objects, **kwargs):
+                inserted_ids = kwargs.get('inserted_ids', [])
+                print(f"Uploaded {len(inserted_ids)} objects to {collection_name}")
+
+            Stix2Arango.register_post_upload_hook(log_upload, fail_on_error=True)
+        """
+        if not callable(hook_fn):
+            raise ValueError("Hook must be callable")
+        cls._post_upload_hooks.append((hook_fn, fail_on_error))
+
+    @classmethod
+    def clear_pre_upload_hooks(cls):
+        """Clear all registered pre-upload hooks."""
+        cls._pre_upload_hooks.clear()
+
+    @classmethod
+    def clear_post_upload_hooks(cls):
+        """Clear all registered post-upload hooks."""
+        cls._post_upload_hooks.clear()
+
+    def _run_post_upload_hooks(
+        self, collection_name, objects, inserted_ids, existing_objects
+    ):
+        """Run all registered post-upload hooks."""
+        logging.info(f"Running {len(self._post_upload_hooks)} post-upload hooks")
+        for i, (hook_fn, fail_on_error) in enumerate(self._post_upload_hooks, start=1):
+            logging.info(f"Running {i} of {len(self._post_upload_hooks)} post-upload hook {hook_fn}")
+            try:
+                hook_fn(
+                    self,
+                    collection_name,
+                    objects,
+                    inserted_ids=inserted_ids,
+                    existing_objects=existing_objects,
+                )
+            except Exception as e:
+                logging.warning(f"post-upload hook {hook_fn} failed")
+                logging.warning(f"post-upload hook {hook_fn} failed", exc_info=True)
+                if fail_on_error:
+                    raise
 
     def create_s2a_indexes(self):
         for name, collection in self.arango.collections.items():
@@ -173,7 +276,7 @@ class Stix2Arango:
         except arango.exceptions.AnalyzerCreateError as e:
             if e.error_code != 10:
                 raise
-    
+
     def create_taxii_views(self):
         views = set()
         self.create_analyzer(
@@ -190,7 +293,7 @@ class Stix2Arango:
             },
         )
         for name, collection in self.arango.collections.items():
-            logging.info(f'creating taxii index for {name}')
+            logging.info(f"creating taxii index for {name}")
             collection.add_index(
                 dict(
                     type="inverted",
@@ -387,6 +490,8 @@ class Stix2Arango:
                 [obj.get("type"), obj.get("id"), True if "modified" in obj else False]
             )
 
+        self._run_pre_upload_hooks(self.core_collection_vertex, objects)
+
         module_logger.info(
             f"Inserting objects into database. Total objects: {len(objects)}"
         )
@@ -407,6 +512,12 @@ class Stix2Arango:
         self.update_object_key_mapping(
             self.core_collection_vertex, objects, existing_objects
         )
+
+        # Run post-upload hooks
+        self._run_post_upload_hooks(
+            self.core_collection_vertex, objects, inserted_object_ids, existing_objects
+        )
+
         return inserted_object_ids, existing_objects, deprecated_key_ids
 
     def update_object_key_mapping(self, collection, objects, existing_objects={}):
@@ -446,6 +557,8 @@ class Stix2Arango:
                     ]
                 )
 
+        self._run_pre_upload_hooks(self.core_collection_edge, objects)
+
         module_logger.info(
             f"Inserting relationship into database. Total objects: {len(objects)}"
         )
@@ -465,6 +578,12 @@ class Stix2Arango:
         self.update_object_key_mapping(
             self.core_collection_edge, objects, existing_objects
         )
+
+        # Run post-upload hooks
+        self._run_post_upload_hooks(
+            self.core_collection_edge, objects, inserted_object_ids, existing_objects
+        )
+
         return inserted_object_ids, deprecated_key_ids
 
     def map_embedded_relationships(self, bundle_objects, inserted_object_ids):
@@ -481,7 +600,9 @@ class Stix2Arango:
             ):
                 continue
 
-            for ref_type, targets in utils.get_embedded_refs(obj, attributes=self.include_embedded_relationships_attributes):
+            for ref_type, targets in utils.get_embedded_refs(
+                obj, attributes=self.include_embedded_relationships_attributes
+            ):
                 utils.create_relationship_obj(
                     obj=obj,
                     source=obj.get("id"),
@@ -497,7 +618,7 @@ class Stix2Arango:
             f"Inserting embedded relationship into database. Total objects: {len(objects)}"
         )
 
-        self.alter_objects(objects)
+        self._run_pre_upload_hooks(self.core_collection_edge, objects)
         inserted_object_ids = []
         existing_objects = {}
         for chunk in utils.chunked(objects, 20_000):
@@ -512,6 +633,12 @@ class Stix2Arango:
         self.arango.update_is_latest_several_chunked(
             inserted_object_ids, self.core_collection_edge, self.core_collection_edge
         )
+
+        # Run post-upload hooks
+        self._run_post_upload_hooks(
+            self.core_collection_edge, objects, inserted_object_ids, existing_objects
+        )
+
         return inserted_object_ids, existing_objects
 
     def import_default_objects(self):
@@ -562,7 +689,6 @@ class Stix2Arango:
             raise Exception("Provided file is not a STIX bundle. Aborted")
 
         all_objects = bundle_dict["objects"]
-        self.alter_objects(all_objects)
 
         module_logger.info(
             f"Loading default objects from url and store into {self.core_collection_vertex}"
@@ -572,6 +698,7 @@ class Stix2Arango:
         module_logger.info(
             f"Load objects from file: {self.file} and store into {self.core_collection_vertex}"
         )
+        # Pre-upload hooks will be called within process_bundle_into_graph and map_relationships
         inserted_object_ids, _, deprecated_key_ids1 = self.process_bundle_into_graph(
             all_objects
         )
@@ -580,7 +707,9 @@ class Stix2Arango:
             self.filename, all_objects
         )
 
-        if (not self.ignore_embedded_relationships) or self.include_embedded_relationships_attributes:
+        if (
+            not self.ignore_embedded_relationships
+        ) or self.include_embedded_relationships_attributes:
             module_logger.info(
                 "Creating new embedded relationships using _refs and _ref"
             )
@@ -597,3 +726,44 @@ class Stix2Arango:
             self.arango.deprecate_relationships(
                 deprecated_key_ids2, self.core_collection_edge
             )
+
+
+def pre_upload_hook(fail_on_error=False):
+    """Decorator to register a function as a pre-upload hook.
+
+    Args:
+        fail_on_error: If True, exceptions in this hook will stop the entire process.
+                      If False (default), exceptions are logged but processing continues.
+
+    Example:
+        @pre_upload_hook(fail_on_error=True)
+        def add_metadata(instance, collection_name, objects):
+            for obj in objects:
+                obj['_custom_field'] = 'value'
+    """
+
+    def decorator(func):
+        Stix2Arango.register_pre_upload_hook(func, fail_on_error=fail_on_error)
+        return func
+
+    return decorator
+
+
+def post_upload_hook(fail_on_error=False):
+    """Decorator to register a function as a post-upload hook.
+
+    Args:
+        fail_on_error: If True, exceptions in this hook will stop the entire process.
+                      If False (default), exceptions are logged but processing continues.
+
+    Example:
+        @post_upload_hook(fail_on_error=True)
+        def log_stats(instance, collection_name, objects, **kwargs):
+            inserted_ids = kwargs.get('inserted_ids', [])
+            print(f"Inserted {len(inserted_ids)} objects")
+    """
+    def decorator(func):
+        Stix2Arango.register_post_upload_hook(func, fail_on_error=fail_on_error)
+        return func
+
+    return decorator
