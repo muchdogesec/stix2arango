@@ -1,5 +1,7 @@
 # python3 -m unittest tests/test_02-basic-import-no-stix2arango_note.py
 
+import unittest
+
 from full_tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):

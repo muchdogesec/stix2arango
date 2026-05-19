@@ -1,5 +1,7 @@
 # python3 -m unittest tests/test_03-import-with-no-update-detected.py
 
+import unittest
+
 from full_tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):

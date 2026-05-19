@@ -61,6 +61,12 @@ def parse_arguments():
         nargs="+",
         type=parse_ref
     )
+    parser.add_argument(
+        "--versioning_mode",
+        required=False,
+        default="default",
+        choices=["default", "versionless"]
+    )
     return parser.parse_args()
 
 
@@ -77,5 +83,6 @@ def main():
         ignore_embedded_relationships_smo=args.ignore_embedded_relationships_smo,
         is_large_file=args.is_large_file,
         include_embedded_relationships_attributes=args.include_embedded_relationships_attributes,
+        versioning_mode=args.versioning_mode
     )
     stix_obj.run()

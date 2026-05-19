@@ -1,5 +1,7 @@
 # python3 -m unittest tests/test_04-update-detected-because-of-stix2arango-note.py
 
+import unittest
+
 from full_tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):

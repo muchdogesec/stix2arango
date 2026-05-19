@@ -36,6 +36,23 @@ def test_database_and_file_required(monkeypatch, args):
                 "ignore_embedded_relationships_sro": False,
                 "ignore_embedded_relationships_smo": False,
                 "include_embedded_relationships_attributes": None,
+                "versioning_mode": "default",
+            },
+        ),
+        (
+            ["--collection", "somefile", "--database", "somedb", "--file", "some-file", "--versioning_mode", "versionless"],
+            {
+                "file": "some-file",
+                "is_large_file": False,
+                "database": "somedb",
+                "create_db": True,
+                "collection": "somefile",
+                "stix2arango_note": "",
+                "ignore_embedded_relationships": False,
+                "ignore_embedded_relationships_sro": False,
+                "ignore_embedded_relationships_smo": False,
+                "include_embedded_relationships_attributes": None,
+                "versioning_mode": "versionless",
             },
         ),
         (
@@ -60,6 +77,7 @@ def test_database_and_file_required(monkeypatch, args):
                 "ignore_embedded_relationships_sro": False,
                 "ignore_embedded_relationships_smo": True,
                 "include_embedded_relationships_attributes": None,
+                "versioning_mode": "default",
             },
         ),
         (
@@ -87,6 +105,7 @@ def test_database_and_file_required(monkeypatch, args):
                 "ignore_embedded_relationships_sro": False,
                 "ignore_embedded_relationships_smo": True,
                 "include_embedded_relationships_attributes": ["abc_ref", "abcdef_refs"],
+                "versioning_mode": "default",
             },
         ),
     ],
@@ -127,5 +146,6 @@ def test_main_calls_correctly(monkeypatch):
                 "ignore_embedded_relationships_sro": False,
                 "ignore_embedded_relationships_smo": True,
                 "include_embedded_relationships_attributes": ["abc_ref", "abcdef_refs"],
+                "versioning_mode": "default",
             }
         )

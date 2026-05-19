@@ -4,6 +4,10 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch, call
 
 import pytest
+from stix2arango.services.arangodb_service import (
+    ArangoDBService,
+    VersionlessArangoDBService,
+)
 from stix2arango.stix2arango.stix2arango import Stix2Arango
 
 
@@ -48,25 +52,58 @@ def test_file_normal():
 
 def test_add_object_alter_fn():
     s2a = Stix2Arango(
-        file='', database="s2a_tests", collection="test_run", is_large_file=False
+        file="", database="s2a_tests", collection="test_run", is_large_file=False
     )
     with pytest.raises(ValueError):
         s2a.add_object_alter_fn(None)
 
     with pytest.raises(ValueError):
-        s2a.add_object_alter_fn(['some', 'array', 1])
+        s2a.add_object_alter_fn(["some", "array", 1])
+
+
+def test_init__uses_correct_service():
+    s2a = Stix2Arango(
+        file="", database="s2a_tests", collection="test_run", is_large_file=False
+    )
+    assert s2a.arango_service_class == ArangoDBService
+
+    s2a_versionless = Stix2Arango(
+        file="",
+        database="s2a_tests",
+        collection="test_run",
+        is_large_file=False,
+        versioning_mode="versionless",
+    )
+    assert s2a_versionless.arango_service_class == VersionlessArangoDBService
+
+    s2a_default = Stix2Arango(
+        file="",
+        database="s2a_tests",
+        collection="test_run",
+        is_large_file=False,
+        versioning_mode="default",
+    )
+    assert s2a_default.arango_service_class == ArangoDBService
+
 
 def test_alter_functions():
     s2a = Stix2Arango(
-        file='', database="s2a_tests", collection="test_run", is_large_file=False
+        file="", database="s2a_tests", collection="test_run", is_large_file=False
     )
     fn1 = MagicMock()
     fn2 = MagicMock()
-    fn3 = lambda x: 1/0
-    bundle = {"type": "bundle", "id": "some-id", "objects": [{'id': 'obj--1', 'type': 'some-type'}, {'id': 'obj--2', 'type': 'some-type'}]}
+    fn3 = lambda x: 1 / 0
+    bundle = {
+        "type": "bundle",
+        "id": "some-id",
+        "objects": [
+            {"id": "obj--1", "type": "some-type"},
+            {"id": "obj--2", "type": "some-type"},
+        ],
+    }
     s2a.add_object_alter_fn(fn1)
     s2a.add_object_alter_fn(fn2)
     s2a.add_object_alter_fn(fn3)
     s2a.run(data=bundle)
-    fn1.assert_has_calls([call(x) for x in bundle['objects']], any_order=True)
-    fn2.assert_has_calls([call(x) for x in bundle['objects']], any_order=True)
+    fn1.assert_has_calls([call(x) for x in bundle["objects"]], any_order=True)
+    fn2.assert_has_calls([call(x) for x in bundle["objects"]], any_order=True)
