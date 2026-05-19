@@ -23,6 +23,7 @@ module_logger = logging.getLogger("data_ingestion_service")
 
 
 class ArangoDBService:
+    versioning_mode = "default"
 
     def __init__(
         self,
@@ -137,15 +138,21 @@ class ArangoDBService:
                     _target_type=obj["target_ref"].split("--")[0],
                     _source_type=obj["source_ref"].split("--")[0],
                 )
-        new_insertions = objects #[obj for obj in objects if f'{obj["id"]};{obj["_record_md5_hash"]}' not in existing_objects]
+        new_insertions = objects  # [obj for obj in objects if f'{obj["id"]};{obj["_record_md5_hash"]}' not in existing_objects]
         existing_objects = {}
 
-        d = self.db.collection(collection_name).insert_many(new_insertions, overwrite_mode="ignore", sync=True)
+        d = self.db.collection(collection_name).insert_many(
+            new_insertions, overwrite_mode="ignore", sync=True
+        )
         for i, ret in enumerate(d):
             obj = objects[i]
             if isinstance(ret, arango.exceptions.DocumentInsertError):
                 if ret.error_code == 1210:
-                    existing_objects[f'{obj["id"]};{obj["_record_md5_hash"]}'] = collection_name + '/' + re.search(r'conflicting key: (.*)', ret.message).group(1)
+                    existing_objects[f'{obj["id"]};{obj["_record_md5_hash"]}'] = (
+                        collection_name
+                        + "/"
+                        + re.search(r"conflicting key: (.*)", ret.message).group(1)
+                    )
                 else:
                     raise ret
         return [obj["id"] for obj in new_insertions], existing_objects
@@ -188,7 +195,9 @@ class ArangoDBService:
             target_key = id_to_key_map.get(relationship["target_ref"])
 
             relationship["_stix2arango_ref_err"] = not (target_key and source_key)
-            relationship["_from"] = self.fix_edge_ref(source_key or relationship["_from"])
+            relationship["_from"] = self.fix_edge_ref(
+                source_key or relationship["_from"]
+            )
             relationship["_to"] = self.fix_edge_ref(target_key or relationship["_to"])
             relationship["_record_md5_hash"] = relationship.get(
                 "_record_md5_hash", utils.generate_md5(relationship)
@@ -196,10 +205,10 @@ class ArangoDBService:
         return self.insert_several_objects_chunked(
             relationships, collection_name, chunk_size=chunk_size
         )
-    
+
     @staticmethod
     def fix_edge_ref(_id):
-        c, _, _key = _id.rpartition('/')
+        c, _, _key = _id.rpartition("/")
         if not c:
             c = "missing_collection"
         return f"{c}/{_key}"
@@ -218,14 +227,36 @@ class ArangoDBService:
                 "object_ids": object_ids,
             },
         )
-        out = [dict(zip(('id', '_key', 'modified', '_record_modified', '_is_latest', '_id', '_taxii'), obj_tuple)) for obj_tuple in out]
+        out = [
+            dict(
+                zip(
+                    (
+                        "id",
+                        "_key",
+                        "modified",
+                        "_record_modified",
+                        "_is_latest",
+                        "_id",
+                        "_taxii",
+                    ),
+                    obj_tuple,
+                )
+            )
+            for obj_tuple in out
+        ]
         annotated, deprecated = annotate_versions(out)
-        logging.info(f"Updating annotated versions for {len(annotated)} items, deprecating {len(deprecated)} items")
+        logging.info(
+            f"Updating annotated versions for {len(annotated)} items, deprecating {len(deprecated)} items"
+        )
         for chunk in utils.chunked(annotated, 5000):
-            self.db.collection(collection_name).update_many(chunk, sync=True, keep_none=False, silent=True, raise_on_document_error=True)
+            self.db.collection(collection_name).update_many(
+                chunk,
+                sync=True,
+                keep_none=False,
+                silent=True,
+                raise_on_document_error=True,
+            )
         return deprecated
-
-
 
     def update_is_latest_several_chunked(
         self, object_ids, collection_name, edge_collection=None, chunk_size=5000
@@ -243,9 +274,7 @@ class ArangoDBService:
             )
             progress_bar.update(len(chunk))
 
-        logging.info(
-            f"Deprecating _is_latest for {len(deprecated_key_ids)} items"
-        )
+        logging.info(f"Deprecating _is_latest for {len(deprecated_key_ids)} items")
         self.deprecate_relationships(deprecated_key_ids, edge_collection)
         return deprecated_key_ids
 
@@ -287,7 +316,12 @@ class ArangoDBService:
                 },
             )
             items_to_deprecate_full.update(deprecated_key_ids)
-        return [_id.split("/", 1)[1] for _id in items_to_deprecate_full]
+        return [self.split_collection_key(_id)[1] for _id in items_to_deprecate_full]
+
+    @staticmethod
+    def split_collection_key(collection_key):
+        collection, _, key = collection_key.partition("/")
+        return collection, key
 
     @staticmethod
     def get_db_name(name):
@@ -295,13 +329,21 @@ class ArangoDBService:
         if name.endswith(ENDING):
             return name
         return name + ENDING
-    
+
     @contextlib.contextmanager
     def transactional(self, write=None, exclusive=None, sync=True):
         original_db = self.db
-        transactional_db = self.db.begin_transaction(allow_implicit=True, write=write, exclusive=exclusive, sync=sync, lock_timeout=300)
+        transactional_db = self.db.begin_transaction(
+            allow_implicit=True,
+            write=write,
+            exclusive=exclusive,
+            sync=sync,
+            lock_timeout=300,
+        )
         try:
-            logging.info(f"entering transaction: {transactional_db.transaction_status()}")
+            logging.info(
+                f"entering transaction: {transactional_db.transaction_status()}"
+            )
             self.db = transactional_db
             yield self
             transactional_db.commit_transaction()
@@ -309,5 +351,94 @@ class ArangoDBService:
             transactional_db.abort_transaction()
             raise
         finally:
-            logging.info(f"exiting transaction: {transactional_db.transaction_status()}")
+            logging.info(
+                f"exiting transaction: {transactional_db.transaction_status()}"
+            )
             self.db = original_db
+
+
+class VersionlessArangoDBService(ArangoDBService):
+    versioning_mode = "versionless"
+
+    def deprecate_relationships(self, *args, **kwargs):
+        return 0
+
+    def update_is_latest_several_chunked(self, *args, **kwargs):
+        return []
+
+    def insert_several_objects(self, objects: list[dict], collection_name: str) -> None:
+        if not collection_name:
+            module_logger.info(f"Object has unknown type: {objects}")
+            return
+
+        for _, obj in enumerate(objects):
+            now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+            obj["_is_latest"] = False
+            obj["_record_created"] = obj.get("_record_created", now)
+            obj["_record_modified"] = now
+            obj["_key"] = obj.get("_key", f'{obj["id"]}+{now}')
+
+            if obj["type"] == "relationship":
+                obj.update(
+                    _target_type=obj["target_ref"].split("--")[0],
+                    _source_type=obj["source_ref"].split("--")[0],
+                )
+            self.add_taxii_annotation(obj)
+        new_insertions, existing_objects = self.find_existing_objects(
+            objects, collection_name
+        )
+        d = self.db.collection(collection_name).insert_many(
+            new_insertions,
+            overwrite_mode="replace-insert",
+            sync=True,
+            overwrite=True,
+            silent=True,
+            raise_on_document_error=True,
+        )
+        return [obj["id"] for obj in new_insertions], existing_objects
+
+    @staticmethod
+    def add_taxii_annotation(object):
+        object.update(
+            _is_latest=True,
+            _taxii=dict(
+                first=True,
+                last=True,
+                visible=True,
+            ),
+        )
+
+    def find_existing_objects(self, objects, collection_name):
+        query = """
+        FOR doc IN @@collection OPTIONS {indexHint: "s2a_search", forceIndexHint: true}
+        FILTER doc.id IN @object_ids
+        RETURN [doc.id, [doc._id, doc._record_created, doc._record_md5_hash]]
+        """
+        out = dict(
+            self.execute_raw_query(
+                query,
+                bind_vars={
+                    "@collection": collection_name,
+                    "object_ids": [obj["id"] for obj in objects],
+                },
+            )
+        )
+
+        existing_objects = {}
+        objects_to_send = []
+        for obj in objects:
+            existing = out.get(obj["id"])
+            if existing:
+                obj["_id"] = existing[0]
+                _, obj["_key"] = self.split_collection_key(existing[0])
+                obj.update(
+                    _record_created=existing[1],
+                    _id=existing[0],
+                )
+                if existing[2] == obj["_record_md5_hash"]:
+                    existing_objects[f'{obj["id"]};{obj["_record_md5_hash"]}'] = obj[
+                        "_id"
+                    ]
+                    continue
+            objects_to_send.append(obj)
+        return objects_to_send, existing_objects

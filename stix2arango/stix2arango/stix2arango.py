@@ -13,7 +13,7 @@ from .bundle_loader import BundleLoader
 
 from .. import config
 from tqdm import tqdm
-from ..services.arangodb_service import ArangoDBService
+from ..services.arangodb_service import ArangoDBService, VersionlessArangoDBService
 from jsonschema import validate
 from arango.collection import StandardCollection
 import arango.exceptions
@@ -34,6 +34,7 @@ class Stix2Arango:
     # Class-level hooks - stored as tuples: (hook_fn, fail_on_error)
     _pre_upload_hooks = []
     _post_upload_hooks = []
+    arango_service_class : type[ArangoDBService] = ArangoDBService
 
     def __init__(
         self,
@@ -54,6 +55,7 @@ class Stix2Arango:
         is_large_file=False,
         skip_default_indexes=False,
         create_taxii_views=True,
+        versioning_mode='default',
         **kwargs,
     ):
         """
@@ -61,6 +63,9 @@ class Stix2Arango:
         """
 
         self.alter_functions = []
+        self.versioning_mode = versioning_mode
+        if self.versioning_mode == 'versionless':
+            self.arango_service_class = VersionlessArangoDBService
 
         self.core_collection_vertex, self.core_collection_edge = (
             utils.get_vertex_and_edge_collection_names(collection)
@@ -68,7 +73,7 @@ class Stix2Arango:
         EDGE_COLLECTIONS = [self.core_collection_edge]
         VERTEX_COLLECTIONS = [self.core_collection_vertex]
 
-        self.arango = ArangoDBService(
+        self.arango = self.arango_service_class(
             database,
             VERTEX_COLLECTIONS,
             EDGE_COLLECTIONS,
@@ -242,16 +247,19 @@ class Stix2Arango:
                     storedValues=["_record_modified", "_key", "_id"],
                 )
             )
+            if self.versioning_mode == 'versionless':
+                version_index_name = 's2a_unique_id_constraint'
+                version_index_fields = ['id']
+            else:
+                version_index_name = 's2a_unique_constraint'
+                version_index_fields = ['id', '_record_md5_hash']
 
             collection.add_index(
                 dict(
                     type="persistent",
-                    name="s2a_unique_constraint",
+                    name=version_index_name,
                     unique=True,
-                    fields=[
-                        "id",
-                        "_record_md5_hash",
-                    ],
+                    fields=version_index_fields,
                     inBackground=True,
                 )
             )
