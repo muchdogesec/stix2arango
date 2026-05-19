@@ -247,12 +247,9 @@ class Stix2Arango:
                     storedValues=["_record_modified", "_key", "_id"],
                 )
             )
-            if self.versioning_mode == 'versionless':
-                version_index_name = 's2a_unique_id_constraint'
-                version_index_fields = ['id']
-            else:
-                version_index_name = 's2a_unique_constraint'
-                version_index_fields = ['id', '_record_md5_hash']
+            
+            version_index_name = 's2a_unique_constraint'
+            version_index_fields = ['id', '_record_md5_hash']
 
             collection.add_index(
                 dict(
