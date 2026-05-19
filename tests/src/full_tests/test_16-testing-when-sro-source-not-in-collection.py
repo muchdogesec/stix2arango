@@ -1,5 +1,7 @@
 # python3 -m unittest tests/test_16-testing-when-sro-source-not-in-collection.py
 
+import unittest
+
 from full_tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):
@@ -48,3 +50,5 @@ class TestArangoDBQueries(BaseTestArangoDBQueries):
 
         # because the target does not exist, the relationship should show a _stix2arango_ref_err property
                   
+if __name__ == '__main__':
+    unittest.main()

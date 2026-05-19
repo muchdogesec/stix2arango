@@ -1,5 +1,7 @@
 # python3 -m unittest tests/test_13-updating-smos.py
 
+import unittest
+
 from full_tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):

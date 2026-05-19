@@ -1,5 +1,7 @@
 # python3 -m unittest tests/test_06-update-detected-because-of-modified-time-change-not-in-order.py
 
+import unittest
+
 from full_tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):

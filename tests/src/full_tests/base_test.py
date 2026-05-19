@@ -50,6 +50,7 @@ class BaseTestArangoDBQueries(unittest.TestCase):
         cls.CUSTOM_FLAG_1 = os.getenv("CUSTOM_FLAG_1")
         cls.CUSTOM_FLAG_2 = os.getenv("CUSTOM_FLAG_2")
         cls.CUSTOM_FLAG_3 = os.getenv("CUSTOM_FLAG_3")
+        cls.VERSIONING_MODE = None
 
     @classmethod
     def clear_collections(cls):
@@ -67,6 +68,8 @@ class BaseTestArangoDBQueries(unittest.TestCase):
         for file in cls.FILES:
             args = ["stix2arango.py"]
             file.update(database=cls.ARANGODB_DATABASE, collection=cls.ARANGODB_COLLECTION, file=f"tests/files/stix2arango/{file['file']}")
+            if cls.VERSIONING_MODE:
+                file.update(versioning_mode=cls.VERSIONING_MODE)
             for k,v in file.items():
                 args.append("--"+k)
                 args.append(str(v))

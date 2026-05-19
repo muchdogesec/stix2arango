@@ -1,5 +1,7 @@
 # python3 -m unittest tests/test_22-embedded-sro-update-for-smo.py
 
+import unittest
+
 from full_tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):

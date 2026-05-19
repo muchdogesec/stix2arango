@@ -1,5 +1,7 @@
 # python3 -m unittest tests/test_17-testing-update-of-embedded-refs.py
 
+import unittest
+
 from full_tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):

@@ -1,5 +1,7 @@
 # python3 -m unittest tests/test_23-embedded-sro-removed.py
 
+import unittest
+
 from full_tests.base_test import BaseTestArangoDBQueries
 
 class TestArangoDBQueries(BaseTestArangoDBQueries):
