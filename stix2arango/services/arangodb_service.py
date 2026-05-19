@@ -374,9 +374,10 @@ class VersionlessArangoDBService(ArangoDBService):
         for _, obj in enumerate(objects):
             now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
             obj["_is_latest"] = False
-            obj["_record_created"] = obj.get("_record_created", now)
+            obj.setdefault('_record_created', now)
+            obj.setdefault('_key', f'{obj["id"]}+{now}')
+            obj.setdefault('_id', f'{collection_name}/{obj["_key"]}')
             obj["_record_modified"] = now
-            obj["_key"] = obj.get("_key", f'{obj["id"]}+{now}')
 
             if obj["type"] == "relationship":
                 obj.update(
