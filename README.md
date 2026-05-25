@@ -57,7 +57,8 @@ python3 stix2arango.py \
 	--database NAME \
 	--collection NAME \
 	--stix2arango_note SOMETHING \
-	--ignore_embedded_relationships BOOLEAN
+	--ignore_embedded_relationships BOOLEAN \
+	--versioning_mode MODE
 ```
 
 Where;
@@ -72,6 +73,7 @@ Where;
 * `--ignore_embedded_relationships_smo` (optional, boolean): if `true` passed, will stop any embedded relationships from being generated from SMO objects (`type` = `marking-defirnition`, `extension-definition`, `language-content`). Default is `false`
 * `--include_embedded_relationships_attributes` (optional, stix `_ref` or `_refs` attribute): if you only want to create embedded relationships from certain keys (attributes) in a STIX object you can pass a list of attributes here. e.g. `object_refs created_by_ref` . In this example, embedded relationships to all objects listed in `object_refs` and objects in `created_by_ref` will be created between source (the objects that house these attibutes) and destinations (the objects listed as values for these attributes)
 * `--is_large_file` (pass flag): Use this mode when the bundle is very large (>100mb), this will chunk the input into multiple files before loading into memory.
+* `--versioning_mode` (optional, `default` or `versionless`): default is `default`. In `default` mode stix2arango keeps each exact version of the same STIX `id` and marks the latest version using `_is_latest`. In `versionless` mode, stix2arango keeps only one exact version of an object with the same STIX `id`; duplicate `_record_md5_hash` imports are skipped and changed objects replace the stored object.
 
 For example, [using the MITRE ATT&CK Enterprise bundle](https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json);
 
