@@ -117,6 +117,22 @@ ALL STIX objects all contain an `id`. An `id` denotes a single objects. Updates 
 
 The way stix2arango handles this is dependent on the object type due to their differences (e.g. SDOs have a `modified` property, but SCOs do not).
 
+The default behaviour is versioned. In this mode, stix2arango keeps each exact version of an object and uses `_is_latest` to mark the most recent version.
+
+stix2arango can also be run in versionless mode using `--versioning_mode versionless`. In this mode, stix2arango uses `VersionlessArangoDBService`. There is only ever one exact version of an object with the same STIX `id` in a collection.
+
+If an imported object has the same `id` and the same `_record_md5_hash` as the existing object, it is considered a duplicate and is skipped.
+
+If an imported object has the same `id` and a different `_record_md5_hash`, the existing object is replaced. The same ArangoDB `_key` is used, `_record_created` is kept, `_record_modified` is updated, and `_is_latest` is set to `true`.
+
+All objects inserted in versionless mode are marked with the following TAXII annotations;
+
+* `_taxii.first`: `true`
+* `_taxii.last`: `true`
+* `_taxii.visible`: `true`
+
+It is recommended to use the same versioning mode for a collection over time. Versionless mode assumes the collection has at most one object for a STIX `id`, and will not prune older versions from a collection that was previously populated in default mode.
+
 The logic for each object type of UPDATE is described later in this document.
 
 ### INSERT New Objects (all types) to Vertex Collections
@@ -271,6 +287,29 @@ If
 
 Then the new object should be considered a duplicate AND NOT imported (the record is skipped for insert).
 
+#### 3. Versionless update mode
+
+If `--versioning_mode versionless` is used, the default update logic described above is not used to keep historical versions.
+
+If:
+
+* the `_record_md5_hash` is the same for the object with same `id`
+
+Then the new object should be considered a duplicate AND NOT imported (the record is skipped for insert).
+
+If:
+
+* an object with the same `id` already exists
+* and the `_record_md5_hash` is different
+
+Then the existing object is replaced with the newly imported object.
+
+The existing `_key` and `_record_created` values are kept. `_record_modified` is updated to the time of import.
+
+This record should be stored as `_is_latest==true`.
+
+No older version of the object is kept in the collection.
+
 ### Adding New Objects to Edge collections
 
 #### A note on `_to` and `_from` validation
@@ -356,6 +395,8 @@ INSERT relationship INTO demo_edge_collection
 #### Updates to SROs
 
 Because `relationship` objects must contain `created` and `modified` properties, updates to `relationship` SROs are done in the same way as those in vertex collections.
+
+In `versionless` mode, `relationship` SROs are updated in the same way as other objects. If a relationship with the same `id` and a different `_record_md5_hash` is imported, the existing relationship is replaced and remains `_is_latest==true`.
 
 #### Dealing with duplicate objects in a bundle
 
@@ -484,3 +525,5 @@ Then new embedded relationship are created for the object in the same way as des
 Sometimes old versions of an object can be inserted (`_is_latest==true`).
 
 In which case, a new embedded relationship are created for the object in the same way as described for New Embedded Relationships HOWEVER the only difference is the `_is_latest` value is marked as false.
+
+In `versionless` mode, embedded relationships use the same versionless behaviour as other SROs. If the same embedded relationship `id` is generated again with a different `_record_md5_hash`, the existing embedded relationship is replaced and remains `_is_latest==true`.
