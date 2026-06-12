@@ -21,6 +21,7 @@ class BundleLoader:
         self.bundle_id = "bundle--" + str(uuid.uuid4())
 
         self.db_path = db_path
+        self.inserted = 0
         if not self.db_path:
             self.temp_path = tempfile.NamedTemporaryFile(
                 prefix="s2a_bundle_loader--", suffix=".sqlite"
@@ -47,7 +48,6 @@ class BundleLoader:
 
     def save_to_sqlite(self, objects):
         """Save one STIX object to the SQLite database."""
-        self.inserted = getattr(self, "inserted", 0)
 
         try:
             self.conn.executemany(
