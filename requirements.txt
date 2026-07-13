@@ -30,7 +30,7 @@ pyjwt==2.12.0
     # via python-arango
 python-arango==8.2.0 ; python_version >= "3.8"
     # via stix2arango (pyproject.toml)
-python-dotenv==1.1.0
+python-dotenv==1.2.2
     # via stix2arango (pyproject.toml)
 pytz==2025.2
     # via stix2
