@@ -94,12 +94,12 @@ These can be found in `templates/marking-definition.json`
 
 #### Marking definitions
 
-* https://raw.githubusercontent.com/muchdogesec/stix4doge/main/objects/marking-definition/stix2arango.json
+* https://stix4doge.dogesec.com/stix4doge/objects/marking-definition/stix2arango.json
 
 #### Identities (`identity`) SDOs
 
-* https://raw.githubusercontent.com/muchdogesec/stix4doge/main/objects/identity/stix2arango.json (identity used to create embedded relationship objects)
-* https://raw.githubusercontent.com/muchdogesec/stix4doge/main/objects/identity/dogesec.json (seeded in all bundles)
+* https://stix4doge.dogesec.com/stix4doge/objects/identity/stix2arango.json (identity used to create embedded relationship objects)
+* https://stix4doge.dogesec.com/stix4doge/objects/identity/dogesec.json (seeded in all bundles)
 
 #### Identify default objects in the DB
 
